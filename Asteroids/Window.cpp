@@ -34,6 +34,21 @@ void Window::initWindow() {
 	glfwSetKeyCallback(window, Controller::key_callback);
 }
 
+void Window::initViewport() {
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+
+	windowSize = { width, height };
+
+	glViewport(0, 0, width, height);
+}
+
+void Window::initProjectionMatrix() {
+	Mat4 projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width), static_cast<GLfloat>(windowSize.height), 0.0f, -1.0f, 1.0f);
+
+	renderer->setProjection(projection);
+}
+
 void Window::loop() {
 	GLfloat start = 0;
 	GLfloat dt = 0;

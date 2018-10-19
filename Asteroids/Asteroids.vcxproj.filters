@@ -19,6 +19,27 @@
     <Filter Include="Header Files\view">
       <UniqueIdentifier>{e9dffdda-975d-4b5e-ab69-a7d5f202d99c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{c454d5ce-d427-4769-b5c7-292956edf717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{f5052872-deec-40e4-b63b-476a1e677efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\api">
+      <UniqueIdentifier>{adb74072-59d4-4e88-90bc-3669cd8c7f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\api\math">
+      <UniqueIdentifier>{2fb6bd4d-769f-4261-8f10-9133c3ac5ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\math">
+      <UniqueIdentifier>{971a8434-90c8-4e71-8b48-73a0a42c2bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\view\shader">
+      <UniqueIdentifier>{658391c0-240a-45eb-af52-9b906dd673c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\view\shader">
+      <UniqueIdentifier>{901cc689-e903-43cd-a252-ea8ad3c65551}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -30,6 +51,30 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\view</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.h">
+      <Filter>Header Files\core\api</Filter>
+    </ClCompile>
+    <ClCompile Include="Mat4.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Mat3.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec2.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\view\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>Source Files\view\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -38,5 +83,34 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files\view</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Mat3.h">
+      <Filter>Header Files\core\api\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Mat4.h">
+      <Filter>Header Files\core\api\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Header Files\core\api\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\view\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>Header Files\view\shader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
