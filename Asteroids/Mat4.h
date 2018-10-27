@@ -51,6 +51,8 @@ public:
 	*/
 	static Mat4 ortho(float left, float right, float bottom, float top, float zNear, float zFar);
 
+	static Mat4 getTransformation(const Vec2 position, const Vec2 size);
+
 
 	/*
 	@return gibt den Pointer, der auf das 1. Element zeigt, zurück.

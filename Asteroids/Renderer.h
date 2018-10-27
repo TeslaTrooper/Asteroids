@@ -9,8 +9,10 @@ class Renderer {
 
 	Game* game;
 
-	GLuint shaderProgramID;
+	GLuint shaderProgramID, vbo, vao, ebo;
 	Shader* shader;
+
+	void initVertexData();
 
 public:
 	Renderer();

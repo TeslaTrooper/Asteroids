@@ -6,6 +6,9 @@ Window::Window() {
 	initWindow();
 
 	renderer = new Renderer();
+
+	initViewport();
+	initProjectionMatrix();
 }
 
 Window::~Window() {

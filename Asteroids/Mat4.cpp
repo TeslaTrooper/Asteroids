@@ -14,6 +14,15 @@ Mat4 Mat4::ortho(float left, float right, float bottom, float top, float zNear, 
 	return mat;
 }
 
+Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size) {
+	Mat4 transform;
+
+	transform.translate(position);
+	transform.scale(size);
+
+	return transform;
+}
+
 const float* Mat4::ptr(Mat4 mat) {
 	return &(mat.elements.at(0).at(0));
 }

@@ -31,14 +31,17 @@
     <Filter Include="Header Files\core\api\math">
       <UniqueIdentifier>{2fb6bd4d-769f-4261-8f10-9133c3ac5ae1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\math">
-      <UniqueIdentifier>{971a8434-90c8-4e71-8b48-73a0a42c2bc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\view\shader">
       <UniqueIdentifier>{658391c0-240a-45eb-af52-9b906dd673c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\view\shader">
       <UniqueIdentifier>{901cc689-e903-43cd-a252-ea8ad3c65551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\api">
+      <UniqueIdentifier>{9d764652-e9b7-4e24-b71c-4f44752233f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\api\math">
+      <UniqueIdentifier>{971a8434-90c8-4e71-8b48-73a0a42c2bc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,13 +64,13 @@
       <Filter>Header Files\core\api</Filter>
     </ClCompile>
     <ClCompile Include="Mat4.cpp">
-      <Filter>Source Files\core\math</Filter>
+      <Filter>Source Files\core\api\math</Filter>
     </ClCompile>
     <ClCompile Include="Mat3.cpp">
-      <Filter>Source Files\core\math</Filter>
+      <Filter>Source Files\core\api\math</Filter>
     </ClCompile>
     <ClCompile Include="Vec2.cpp">
-      <Filter>Source Files\core\math</Filter>
+      <Filter>Source Files\core\api\math</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\view\shader</Filter>
