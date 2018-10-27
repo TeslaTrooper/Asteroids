@@ -107,6 +107,9 @@
     <ClInclude Include="ShaderProgram.h">
       <Filter>Header Files\view\shader</Filter>
     </ClInclude>
+    <ClInclude Include="ModelData.h">
+      <Filter>Header Files\core\api</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vert">

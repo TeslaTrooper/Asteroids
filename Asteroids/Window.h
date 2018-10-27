@@ -6,7 +6,6 @@
 
 #include "Controller.h"
 #include "Renderer.h"
-#include "Util.h"
 #include "Mat4.h"
 
 class Window {
