@@ -13,6 +13,7 @@ Window::Window() {
 
 Window::~Window() {
 	glfwDestroyWindow(window);
+	delete renderer;
 }
 
 void Window::initOpenGL() {

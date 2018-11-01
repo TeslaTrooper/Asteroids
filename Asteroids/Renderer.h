@@ -1,6 +1,8 @@
 #ifndef RENDERER
 #define RENDERER
 
+#include <map>
+
 #include "ShaderProgram.h"
 #include "Shader.h"
 #include "Game.h"
@@ -9,15 +11,22 @@
 
 class Renderer {
 
+	struct BufferData {
+		unsigned int vao;
+		unsigned int ebo;
+		unsigned int vbo;
+		int indexCount;
+	};
+
 	Game* game;
 
 	GLuint shaderProgramID;
 	Shader* shader;
-	ModelData asteriod1, asteriod2;
+	map<Model, BufferData> modelMap;
 
-	int configureBuffers(const VertexData& vertexData, const IndexData& indexData);
-	void loadModelData();
-	IndexData calcIndices(const float* vertexData, int arraySize);
+	BufferData configureBuffers(const VertexData& vertexData, const IndexData& indexData);
+	void loadModelDatas();
+	void loadModelData(Model model);
 
 public:
 	Renderer();

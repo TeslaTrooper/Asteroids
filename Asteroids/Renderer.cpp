@@ -1,26 +1,37 @@
 #include "Renderer.h"
 
 Renderer::Renderer() {
+	game = new Game();
+	modelMap = map<Model, BufferData>();
+
 	ShaderProgram shaderProgramm = ShaderProgram();
 	shaderProgramID = shaderProgramm.createShaderProgram();
 
 	shader = new Shader(shaderProgramID);
 
-	loadModelData();
+	loadModelDatas();
 }
 
 void Renderer::render(const float dt) {
 	shader->use();
-	shader->setUniformMatrix4("transform", Mat4::getTransformation(Vec2(10, 10), Vec2(1, 1)));
 
-	glBindVertexArray(asteriod2.vao);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glEnable(GL_LINE_SMOOTH);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	vector<RenderUnit> units = game->getRenderUnits();
+	for (int i = 0; i < units.size(); i++) {
+		RenderUnit unit = units.at(i);
 
-	glDrawElements(GL_LINES, asteriod2.indexCount, GL_UNSIGNED_INT, 0);
+		shader->setUniformMatrix4("transform", unit.transformation);
 
-	glBindVertexArray(0);
+		BufferData data = modelMap[unit.model];
+
+		glBindVertexArray(data.vao);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glEnable(GL_LINE_SMOOTH);
+		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+
+		glDrawElements(GL_LINES, data.indexCount, GL_UNSIGNED_INT, 0);
+
+		glBindVertexArray(0);
+	}
 }
 
 void Renderer::setProjection(const Mat4 projection) {
@@ -28,7 +39,7 @@ void Renderer::setProjection(const Mat4 projection) {
 	shader->setUniformMatrix4("projection", projection);
 }
 
-int Renderer::configureBuffers(const VertexData& vertexData, const IndexData& indexData) {
+Renderer::BufferData Renderer::configureBuffers(const VertexData& vertexData, const IndexData& indexData) {
 	GLuint vao, vbo, ebo;
 
 	glGenVertexArrays(1, &vao);
@@ -39,50 +50,37 @@ int Renderer::configureBuffers(const VertexData& vertexData, const IndexData& in
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexData.count * sizeof(int), indexData.indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexData.count * VERTEX_COMP_SIZE * sizeof(GLuint), indexData.indices, GL_STATIC_DRAW);
 
-	glBufferData(GL_ARRAY_BUFFER, vertexData.count * sizeof(float), vertexData.vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexData.count * VERTEX_COMP_SIZE * sizeof(GLfloat), vertexData.vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, VERTEX_COMP_SIZE * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	return vao;
+	return { vao, ebo, vbo, indexData.count * VERTEX_COMP_SIZE };
 }
 
-IndexData Renderer::calcIndices(const float* vertexData, int arraySize) {
-	int vertexCount = arraySize / sizeof(float);
-
-	int* indices = new int[vertexCount];
-
-	for (int i = 0, j = 0; i < vertexCount; i++, j += 2) {
-		indices[j] = i;
-		indices[j + 1] = (i + 1) % (vertexCount / 2);
-	}
-
-	return { indices, vertexCount };
+void Renderer::loadModelDatas() {
+	loadModelData(Model::ASTEROID1);
+	loadModelData(Model::ASTEROID2);
 }
 
-void Renderer::loadModelData() {
-	IndexData indexData1 = calcIndices(a1Vertices, sizeof(a1Vertices));
-	VertexData vertexData1 = { a1Vertices, sizeof(a1Vertices) };
-	int vao1 = configureBuffers(vertexData1, indexData1);
-
-	asteriod1 = { vao1, indexData1.count };
-
-	IndexData indexData2 = calcIndices(a2Vertices, sizeof(a2Vertices));
-	VertexData vertexData2 = { a2Vertices, sizeof(a2Vertices) };
-	int vao2 = configureBuffers(vertexData2, indexData2);
-
-	asteriod2 = { vao2, indexData2.count };
+void Renderer::loadModelData(Model model) {
+	Bindable bindable = game->getBindable(model);
+	modelMap[model] = configureBuffers(bindable.vertexData, bindable.indexData);
 }
 
 Renderer::~Renderer() {
-	/*glDeleteVertexArrays(1, &asteriod1.vao);
-	/*glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ebo);*/
+	for (const pair<Model, BufferData>& value : modelMap) {
+		BufferData data = value.second;
+
+		glDeleteVertexArrays(1, &data.vao);
+		glDeleteBuffers(1, &data.ebo);
+		glDeleteBuffers(1, &data.vbo);
+	}
 
 	delete game;
 	delete shader;

@@ -78,6 +78,9 @@
     <ClCompile Include="ShaderProgram.cpp">
       <Filter>Source Files\view\shader</Filter>
     </ClCompile>
+    <ClCompile Include="ModelData.cpp">
+      <Filter>Source Files\core\api</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
