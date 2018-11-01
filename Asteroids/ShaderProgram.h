@@ -10,11 +10,11 @@ ein fertiges Shader Program zu erzeugen.
 */
 class ShaderProgram {
 
-	void compileShader(GLuint shader, const GLchar* shaderSource);
+	void compileShader(const GLuint shader, const GLchar* shaderSource) const;
 
-	GLuint createShader(GLenum shaderType, const GLchar* shaderSource);
+	GLuint createShader(const GLenum shaderType, const GLchar* shaderSource) const;
 
-	char* readShaderFile(char* file);
+	char* readShaderFile(char const * const file) const;
 
 public:
 	ShaderProgram();
@@ -24,7 +24,7 @@ public:
 	Erzeugt aus den zwei Shadern ein fertiges Shader Program.
 	@return Gibt die von OpenGL erzeugte ID zu diesem Program zurück.
 	*/
-	GLuint createShaderProgram();
+	GLuint createShaderProgram() const;
 
 };
 

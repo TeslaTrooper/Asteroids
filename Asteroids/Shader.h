@@ -8,6 +8,9 @@
 #include "Mat4.h"
 #include "Mat3.h"
 
+#define PROJECTION "projection"
+#define TRANSFORM "transform"
+
 /*
 Die Klasse kapselt das Shader Programm und erlaubt es, uniforms der Shader,
 die zu diesem Shader Program gehören, zu manipulieren.
@@ -30,7 +33,7 @@ public:
 	@param uniform ist der Name des uniforms, der im Shader verwendet wird.
 	@param value ist die Matrix, die diesem uniform zugeordnet werden soll.
 	*/
-	void setUniformMatrix4(const GLchar* uniform, Mat4 value);
+	void setUniformMatrix4(const GLchar* uniform, Mat4 value) const;
 
 
 	/*
@@ -38,7 +41,7 @@ public:
 	@param uniform ist der Name des uniforms, der im Shader verwendet wird.
 	@param value ist der Integer, der diesem uniform zugeordnet werden soll.
 	*/
-	void setInteger(const GLchar* uniform, GLint value);
+	void setInteger(const GLchar* uniform, GLint value) const;
 
 
 	/*
@@ -46,7 +49,7 @@ public:
 	@param uniform ist der Name des uniforms, der im Shader verwendet wird.
 	@param value ist der Vektor, der diesem uniform zugeordnet werden soll.
 	*/
-	void setVector2(const GLchar* uniform, Vec2 value);
+	void setVector2(const GLchar* uniform, Vec2 value) const;
 
 
 	/*
@@ -54,13 +57,13 @@ public:
 	@param uniform ist der Name des uniforms, der im Shader verwendet wird.
 	@param value ist die Matrix, die diesem uniform zugeordnet werden soll.
 	*/
-	void setUniformMatrix3(const GLchar* uniform, Mat3 value);
+	void setUniformMatrix3(const GLchar* uniform, Mat3 value) const;
 
 
 	/*
 	Verwendet das Program.
 	*/
-	void use();
+	void use() const;
 };
 
 #endif SHADER

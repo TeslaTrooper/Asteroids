@@ -81,6 +81,9 @@
     <ClCompile Include="ModelData.cpp">
       <Filter>Source Files\core\api</Filter>
     </ClCompile>
+    <ClCompile Include="BufferConfigurator.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="ModelData.h">
       <Filter>Header Files\core\api</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferConfigurator.h">
+      <Filter>Header Files\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

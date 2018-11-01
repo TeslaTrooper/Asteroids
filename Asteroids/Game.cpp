@@ -11,7 +11,7 @@ void Game::update(const float dt) {
 
 }
 
-vector<RenderUnit> Game::getRenderUnits() {
+vector<RenderUnit> Game::getRenderUnits() const {
 	Mat4 transformation = Mat4::getTransformation(Vec2(10, 10), Vec2(1, 1));
 
 	RenderUnit r = { transformation, Model::ASTEROID2 };
@@ -22,6 +22,6 @@ vector<RenderUnit> Game::getRenderUnits() {
 	return list;
 }
 
-Bindable Game::getBindable(Model model) {
+Bindable Game::getBindable(const Model model) const {
 	return modelData->getBindable(model);
 }

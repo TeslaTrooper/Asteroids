@@ -10,7 +10,7 @@ class ModelData {
 
 	map<Model, VertexData> vertexDataMap;
 
-	IndexData calcIndices(const int vertexCount);
+	IndexData calcIndices(const int vertexCount) const;
 
 public:
 	ModelData();
@@ -22,7 +22,7 @@ public:
 	static const int a1VertexCount;
 	static const int a2VertexCount;
 
-	Bindable getBindable(Model model);
+	Bindable getBindable(const Model model) const;
 };
 
 #endif MODEL_DATA

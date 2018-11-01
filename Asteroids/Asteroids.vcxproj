@@ -163,11 +163,13 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="BufferConfigurator.cpp" />
     <ClCompile Include="Util.h" />
     <ClCompile Include="Vec2.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BufferConfigurator.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Mat3.h" />

@@ -4,11 +4,10 @@
 Window::Window() {
 	initOpenGL();
 	initWindow();
-
-	renderer = new Renderer();
-
 	initViewport();
 	initProjectionMatrix();
+
+	renderer = new Renderer();
 }
 
 Window::~Window() {
@@ -48,14 +47,15 @@ void Window::initViewport() {
 }
 
 void Window::initProjectionMatrix() {
-	Mat4 projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width), static_cast<GLfloat>(windowSize.height), 0.0f, -1.0f, 1.0f);
-
-	renderer->setProjection(projection);
+	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width), 
+		static_cast<GLfloat>(windowSize.height), 0.0f, -1.0f, 1.0f);
 }
 
 void Window::loop() {
 	GLfloat start = 0;
 	GLfloat dt = 0;
+
+	renderer->setProjection(projection);
 
 	while (!glfwWindowShouldClose(window)) {
 		start = (GLfloat)glfwGetTime();

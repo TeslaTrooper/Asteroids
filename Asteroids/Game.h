@@ -16,7 +16,7 @@ public:
 
 	void update(const float dt);
 
-	vector<RenderUnit> getRenderUnits();
+	vector<RenderUnit> getRenderUnits() const;
 
 	/*
 		Provides access to model data such as vertex and index information for a given model.
@@ -26,7 +26,7 @@ public:
 		@returns
 			a Bindable reference containing the model information.
 	*/
-	Bindable getBindable(Model model);
+	Bindable getBindable(const Model model) const;
 };
 
 #endif GAME

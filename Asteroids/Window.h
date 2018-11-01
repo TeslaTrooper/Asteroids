@@ -13,6 +13,8 @@ class Window {
 	Renderer* renderer;
 	Dimension windowSize;
 
+	Mat4 projection;
+
 	void initOpenGL();
 	void initWindow();
 	void initViewport();

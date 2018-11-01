@@ -33,8 +33,6 @@ const float ModelData::a2Vertices[] = {
 const int ModelData::a2VertexCount = 12;
 
 ModelData::ModelData() {
-	vertexDataMap = map<Model, VertexData>();
-
 	vertexDataMap[Model::ASTEROID1] = { a1Vertices, a1VertexCount };
 	vertexDataMap[Model::ASTEROID2] = { a2Vertices, a2VertexCount };
 }
@@ -44,14 +42,14 @@ ModelData::~ModelData() {
 	delete[] a2Vertices;
 }
 
-Bindable ModelData::getBindable(Model model) {
-	VertexData vertexData = vertexDataMap[model];
+Bindable ModelData::getBindable(const Model model) const {
+	VertexData vertexData = vertexDataMap.at(model);
 	IndexData indexData = calcIndices(vertexData.count);
 
 	return { vertexData, indexData };
 }
 
-IndexData ModelData::calcIndices(const int vertexCount) {
+IndexData ModelData::calcIndices(const int vertexCount) const {
 	int* indices = new int[vertexCount * VERTEX_COMP_SIZE];
 
 	for (int i = 0, j = 0; i < vertexCount; i++, j += 2) {

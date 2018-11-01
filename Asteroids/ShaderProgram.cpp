@@ -2,7 +2,7 @@
 
 ShaderProgram::ShaderProgram() {}
 
-GLuint ShaderProgram::createShaderProgram() {
+GLuint ShaderProgram::createShaderProgram() const {
 	char* vertexShaderSource = readShaderFile("shader.vert");
 	char* fragmentShaderSource = readShaderFile("shader.frag");
 
@@ -26,7 +26,7 @@ GLuint ShaderProgram::createShaderProgram() {
 	return shaderProgram;
 }
 
-void ShaderProgram::compileShader(GLuint shader, const GLchar* shaderSource) {
+void ShaderProgram::compileShader(const GLuint shader, const GLchar* shaderSource) const {
 	glShaderSource(shader, 1, &shaderSource, NULL);
 	glCompileShader(shader);
 
@@ -38,14 +38,14 @@ void ShaderProgram::compileShader(GLuint shader, const GLchar* shaderSource) {
 	}
 }
 
-GLuint ShaderProgram::createShader(GLenum shaderType, const GLchar* shaderSource) {
+GLuint ShaderProgram::createShader(const GLenum shaderType, const GLchar* shaderSource) const {
 	GLuint shader = glCreateShader(shaderType);
 	compileShader(shader, shaderSource);
 
 	return shader;
 }
 
-char* ShaderProgram::readShaderFile(char* file) {
+char* ShaderProgram::readShaderFile(char const * const file) const {
 	FILE *f = fopen(file, "rb");
 
 	fseek(f, 0, SEEK_END);
