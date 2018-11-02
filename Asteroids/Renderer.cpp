@@ -24,12 +24,12 @@ void Renderer::draw(const RenderUnit unit) const {
 	BufferConfigurator::BufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
-	glDrawElements(GL_LINES, data.indexCount, GL_UNSIGNED_INT, 0);
-
+	glDrawElements(data.drawMode, data.indexCount, GL_UNSIGNED_INT, 0);
+	
 	glBindVertexArray(0);
 }
 
@@ -39,13 +39,28 @@ void Renderer::setProjection(const Mat4 projection) const {
 }
 
 void Renderer::loadModelDatas() {
-	loadModelData(Model::ASTEROID1);
-	loadModelData(Model::ASTEROID2);
+	loadModelData(Model::ASTEROID1, GL_LINES);
+	loadModelData(Model::ASTEROID2, GL_LINES);
+
+	loadModelData(Model::CHARA, GL_TRIANGLES);
+	loadModelData(Model::CHAR0, GL_TRIANGLES);
+	loadModelData(Model::CHAR1, GL_TRIANGLES);
+	loadModelData(Model::CHAR2, GL_TRIANGLES);
+	loadModelData(Model::CHAR3, GL_TRIANGLES);
+	loadModelData(Model::CHAR4, GL_TRIANGLES);
+	loadModelData(Model::CHAR5, GL_TRIANGLES);
+	loadModelData(Model::CHAR6, GL_TRIANGLES);
+	loadModelData(Model::CHAR7, GL_TRIANGLES);
+	loadModelData(Model::CHAR8, GL_TRIANGLES);
+	loadModelData(Model::CHAR9, GL_TRIANGLES);
 }
 
-void Renderer::loadModelData(const Model model) {
+void Renderer::loadModelData(const Model model, const int drawMode) {
 	Bindable bindable = game.getBindable(model);
-	modelMap[model] = bufferConfigurator.configure(bindable.vertexData, bindable.indexData);
+	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
+	data.drawMode = drawMode;
+
+	modelMap[model] = data;
 }
 
 Renderer::~Renderer() {

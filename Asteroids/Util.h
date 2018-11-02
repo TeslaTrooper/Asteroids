@@ -11,7 +11,7 @@ struct Dimension {
 };
 
 struct IndexData {
-	int* indices;
+	const int* indices;
 	int count;
 };
 
@@ -26,9 +26,9 @@ struct Bindable {
 };
 
 enum Model {
-	ASTEROID1, ASTEROID2
+	ASTEROID1, ASTEROID2, CHARA, CHAR0, CHAR1,
+	CHAR2, CHAR3, CHAR4, CHAR5, CHAR6, CHAR7, CHAR8, CHAR9
 };
-
 
 struct RenderUnit {
 	Mat4 transformation;

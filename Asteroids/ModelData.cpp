@@ -32,6 +32,7 @@ const float ModelData::a2Vertices[] = {
 };
 const int ModelData::a2VertexCount = 12;
 
+
 ModelData::ModelData() {
 	vertexDataMap[Model::ASTEROID1] = { a1Vertices, a1VertexCount };
 	vertexDataMap[Model::ASTEROID2] = { a2Vertices, a2VertexCount };
@@ -57,5 +58,5 @@ IndexData ModelData::calcIndices(const int vertexCount) const {
 		indices[j + 1] = (i + 1) % vertexCount;
 	}
 
-	return { indices, vertexCount };
+	return { indices, vertexCount * 2 };
 }

@@ -84,6 +84,9 @@
     <ClCompile Include="BufferConfigurator.cpp">
       <Filter>Source Files\view</Filter>
     </ClCompile>
+    <ClCompile Include="FontData.cpp">
+      <Filter>Source Files\core\api</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="BufferConfigurator.h">
       <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="FontData.h">
+      <Filter>Header Files\core\api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

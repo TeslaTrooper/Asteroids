@@ -20,7 +20,7 @@ class Renderer {
 	map<Model, BufferConfigurator::BufferData> modelMap;
 
 	void loadModelDatas();
-	void loadModelData(const Model model);
+	void loadModelData(const Model model, const int drawMode);
 	void draw(const RenderUnit unit) const;
 
 public:

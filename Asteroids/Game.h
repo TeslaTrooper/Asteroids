@@ -5,10 +5,12 @@
 
 #include "Util.h"
 #include "ModelData.h"
+#include "FontData.h"
 
 class Game {
 
-	ModelData* modelData;
+	ModelData modelData;
+	FontData fontdata;
 
 public:
 	Game();

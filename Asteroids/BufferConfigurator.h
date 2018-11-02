@@ -14,9 +14,10 @@ public:
 		unsigned int ebo;
 		unsigned int vbo;
 		int indexCount;
+		int drawMode;
 	};
 
-	BufferData configure(const VertexData& vertexData, const IndexData& indexData) const;
+	BufferData configure(const Bindable& bindable) const;
 
 };
 

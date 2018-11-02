@@ -1,6 +1,9 @@
 #include "BufferConfigurator.h"
 
-BufferConfigurator::BufferData BufferConfigurator::configure(const VertexData& vertexData, const IndexData& indexData) const {
+BufferConfigurator::BufferData BufferConfigurator::configure(const Bindable& bindable) const {
+	VertexData vertexData = bindable.vertexData;
+	IndexData indexData = bindable.indexData;
+	
 	GLuint vao, vbo, ebo;
 
 	glGenVertexArrays(1, &vao);
@@ -21,5 +24,5 @@ BufferConfigurator::BufferData BufferConfigurator::configure(const VertexData& v
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	return { vao, ebo, vbo, indexData.count * VERTEX_COMP_SIZE };
+	return { vao, ebo, vbo, indexData.count };
 }
