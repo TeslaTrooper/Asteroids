@@ -39,8 +39,8 @@ ModelData::ModelData() {
 }
 
 ModelData::~ModelData() {
-	delete[] a1Vertices;
-	delete[] a2Vertices;
+	delete[] &a1Vertices;
+	delete[] &a2Vertices;
 }
 
 Bindable ModelData::getBindable(const Model model) const {

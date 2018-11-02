@@ -33,7 +33,7 @@ Vec2 Vec2::rotateTo(Vec2 vec, float length) {
 }
 
 float Vec2::length() {
-	return sqrt(pow(this->x, 2) + pow(this->y, 2));
+	return (float) sqrt(pow(this->x, 2) + pow(this->y, 2));
 }
 
 void Vec2::clear() {

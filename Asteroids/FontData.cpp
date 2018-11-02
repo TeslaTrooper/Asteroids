@@ -3,25 +3,25 @@
 const float FontData::w = 3.6f;
 const float FontData::h = 5.3f;
 const float FontData::a = 0.35f;
-const float FontData::b = (h / 2.0) + (a / 2.0);
-const float FontData::c = (h / 2.0) - (a / 2.0);
+const float FontData::b = (h / 2.0f) + (a / 2.0f);
+const float FontData::c = (h / 2.0f) - (a / 2.0f);
 
 const float FontData::charAVertices[] = {
 	0, 0,
-	0, 3.7,
-	1.69, 5.31,
-	1.93, 5.31,
-	3.63, 3.7,
-	3.63, 0,
-	3.28, 0,
-	3.28, 1.6,
-	0.35, 1.6,
-	0.35, 0,
-	0.35, 1.95,
-	3.28, 1.95,
-	3.28, 3.58,
-	1.81, 4.96,
-	0.35, 3.58
+	0, 3.7f,
+	1.69f, 5.31f,
+	1.93f, 5.31f,
+	3.63f, 3.7f,
+	3.63f, 0,
+	3.28f, 0,
+	3.28f, 1.6f,
+	0.35f, 1.6f,
+	0.35f, 0,
+	0.35f, 1.95f,
+	3.28f, 1.95f,
+	3.28f, 3.5f,
+	1.81f, 4.96f,
+	0.35f, 3.58f
 };
 const int FontData::charAVertexCount = 15;
 
@@ -231,8 +231,8 @@ FontData::FontData() {
 }
 
 FontData::~FontData() {
-	delete[] charAVertices;
-	delete[] charAIndices;
+	delete[] &charAVertices;
+	delete[] &charAIndices;
 }
 
 Bindable FontData::getBindable(const Model character) const {

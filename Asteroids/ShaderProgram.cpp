@@ -46,7 +46,13 @@ GLuint ShaderProgram::createShader(const GLenum shaderType, const GLchar* shader
 }
 
 char* ShaderProgram::readShaderFile(char const * const file) const {
-	FILE *f = fopen(file, "rb");
+	FILE *f = nullptr;
+
+	errno_t error;
+	error = fopen_s(&f, file, "r");
+	if (error != 0) {
+		printf("Unable to open file %s \n", file);
+	}
 
 	fseek(f, 0, SEEK_END);
 	long lSize = ftell(f);
