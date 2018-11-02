@@ -1,12 +1,17 @@
 #ifndef MAT4
 #define MAT4
 
+#define _USE_MATH_DEFINES 
+
 #include <array>
+#include <cmath>
+
 #include "Vec2.h"
 
 using namespace std;
 
 class Mat4 {
+	// Index with elements.at(col).at(row)
 	array<array<float, 4>, 4> elements;
 
 public:
@@ -22,22 +27,7 @@ public:
 	*/
 	Mat4(array<array<float, 4>, 4> elements);
 
-
-	/*
-	Erzeugt eine Translationsmatrix.
-	@param vec ist der Vektor, der die Translation angibt.
-	@return gibt die Translationsmatrix zurück.
-	*/
-	Mat4 translate(Vec2 vec);
-
-
-	/*
-	Erzeugt eine Skalierungsmatrix.
-	@param vec ist der Vektor, der die Skalierung angibt.
-	@return gibt die Skalierungsmatrix zurück.
-	*/
-	Mat4 scale(Vec2 vec);
-
+	Mat4 mul(const Mat4 mat4) const;
 
 	/*
 	Erzeugt eine orthographische Projektionsmatrix.
@@ -53,11 +43,27 @@ public:
 
 	static Mat4 getTransformation(const Vec2 position, const Vec2 size);
 
+	static Mat4 rotateX(const float angleDeg);
+
+	/*
+	Erzeugt eine Translationsmatrix.
+	@param vec ist der Vektor, der die Translation angibt.
+	@return gibt die Translationsmatrix zurück.
+	*/
+	static Mat4 translate(const Vec2 vec);
+
+	/*
+	Erzeugt eine Skalierungsmatrix.
+	@param vec ist der Vektor, der die Skalierung angibt.
+	@return gibt die Skalierungsmatrix zurück.
+	*/
+	static Mat4 scale(const Vec2 vec);
+
 
 	/*
 	@return gibt den Pointer, der auf das 1. Element zeigt, zurück.
 	*/
-	static const float* ptr(Mat4 mat);
+	static const float* ptr(const Mat4 mat);
 
 	~Mat4();
 };

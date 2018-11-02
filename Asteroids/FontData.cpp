@@ -231,8 +231,38 @@ FontData::FontData() {
 }
 
 FontData::~FontData() {
-	delete[] &charAVertices;
-	delete[] &charAIndices;
+	delete[] & charAVertices;
+	delete[] & charAIndices;
+
+	delete[] & char0Vertices;
+	delete[] & char0Indices;
+
+	delete[] & char1Vertices;
+	delete[] & char1Indices;
+
+	delete[] & char2Vertices;
+	delete[] & char2Indices;
+
+	delete[] & char3Vertices;
+	delete[] & char3Indices;
+
+	delete[] & char4Vertices;
+	delete[] & char4Indices;
+
+	delete[] & char5Vertices;
+	delete[] & char5Indices;
+
+	delete[] & char6Vertices;
+	delete[] & char6Indices;
+
+	delete[] & char7Vertices;
+	delete[] & char7Indices;
+
+	delete[] & char8Vertices;
+	delete[] & char8Indices;
+
+	delete[] & char9Vertices;
+	delete[] & char9Indices;
 }
 
 Bindable FontData::getBindable(const Model character) const {

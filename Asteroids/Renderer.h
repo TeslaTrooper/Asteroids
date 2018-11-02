@@ -21,6 +21,8 @@ class Renderer {
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
+	void drawUI(const RenderUnit unit) const;
+	void drawGameObject(const RenderUnit unit) const;
 	void draw(const RenderUnit unit) const;
 
 public:

@@ -6,15 +6,6 @@
 
 class FontData {
 
-	/*
-		Defines glyph metrics for this font.
-		w: total possible glyph width
-		h: total possible glyph height
-		a: thickness of glyph
-		b and c: helper variables to keep calculations easy and clear
-	*/
-	static const float w, h, a, b, c;
-
 	map<Model, Bindable> vertexDataMap;
 
 	static const float charAVertices[];
@@ -66,6 +57,16 @@ class FontData {
 	static const int char9IndexCount;
 
 public:
+
+	/*
+	Defines glyph metrics for this font.
+	w: total possible glyph width
+	h: total possible glyph height
+	a: thickness of glyph
+	b and c: helper variables to keep calculations easy and clear
+	*/
+	static const float w, h, a, b, c;
+
 	FontData();
 	~FontData();
 

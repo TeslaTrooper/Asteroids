@@ -12,15 +12,33 @@ Renderer::Renderer() {
 void Renderer::render(const float dt) const {
 	shader->use();
 
-	vector<RenderUnit> units = game.getRenderUnits();
-	for (int i = 0; i < units.size(); i++) {
-		draw(units.at(i));
+	vector<RenderUnit> uiUnits = game.getRenderUnits(RenderUnitType::UI);
+	for (int i = 0; i < uiUnits.size(); i++) {
+		drawUI(uiUnits.at(i));
+	}
+
+	vector<RenderUnit> gameUnits = game.getRenderUnits(RenderUnitType::GAME_OBJECT);
+	for (int i = 0; i < gameUnits.size(); i++) {
+		drawGameObject(gameUnits.at(i));
 	}
 }
 
-void Renderer::draw(const RenderUnit unit) const {
-	shader->setUniformMatrix4(TRANSFORM, unit.transformation);
+void Renderer::drawUI(const RenderUnit unit) const {
+	Mat4 unitTransformation = unit.transformation;
+	Mat4 rotationX = Mat4::rotateX(180);
+	Mat4 translationY = Mat4::translate(Vec2(0, -FontData::h));
+	Mat4 transformation = translationY.mul(rotationX.mul(unit.transformation));
 
+	shader->setUniformMatrix4(TRANSFORM, transformation);
+	draw(unit);
+}
+
+void Renderer::drawGameObject(const RenderUnit unit) const {
+	shader->setUniformMatrix4(TRANSFORM, unit.transformation);
+	draw(unit);
+}
+
+void Renderer::draw(const RenderUnit unit) const {
 	BufferConfigurator::BufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
@@ -29,7 +47,7 @@ void Renderer::draw(const RenderUnit unit) const {
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
 	glDrawElements(data.drawMode, data.indexCount, GL_UNSIGNED_INT, 0);
-	
+
 	glBindVertexArray(0);
 }
 

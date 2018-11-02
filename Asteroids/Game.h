@@ -12,13 +12,15 @@ class Game {
 	ModelData modelData;
 	FontData fontdata;
 
+	map<RenderUnitType, vector<RenderUnit>> renderUnits;
+
 public:
 	Game();
 	~Game();
 
 	void update(const float dt);
 
-	vector<RenderUnit> getRenderUnits() const;
+	vector<RenderUnit> getRenderUnits(const RenderUnitType type) const;
 
 	/*
 		Provides access to model data such as vertex and index information for a given model.

@@ -26,3 +26,9 @@ BufferConfigurator::BufferData BufferConfigurator::configure(const Bindable& bin
 
 	return { vao, ebo, vbo, indexData.count };
 }
+
+float* BufferConfigurator::transformVerticesToOpenGL(const float* vertices) const {
+	Mat4 rotation = Mat4::rotateX(180);
+
+	return nullptr;
+}

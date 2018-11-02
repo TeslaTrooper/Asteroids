@@ -30,6 +30,10 @@ enum Model {
 	CHAR2, CHAR3, CHAR4, CHAR5, CHAR6, CHAR7, CHAR8, CHAR9
 };
 
+enum RenderUnitType {
+	UI, GAME_OBJECT
+};
+
 struct RenderUnit {
 	Mat4 transformation;
 	Model model;
