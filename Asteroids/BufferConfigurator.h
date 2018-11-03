@@ -7,8 +7,6 @@
 
 class BufferConfigurator {
 
-	float* transformVerticesToOpenGL(const float* vertices) const;
-
 public:
 
 	struct BufferData {

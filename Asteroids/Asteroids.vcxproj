@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="FontBuilder.cpp" />
     <ClCompile Include="FontData.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="BufferConfigurator.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="FontBuilder.h" />
     <ClInclude Include="FontData.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Mat3.h" />

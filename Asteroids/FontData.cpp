@@ -2,9 +2,10 @@
 
 const float FontData::w = 3.6f;
 const float FontData::h = 5.3f;
-const float FontData::a = 0.35f;
+const float FontData::a = 0.7f;
 const float FontData::b = (h / 2.0f) + (a / 2.0f);
 const float FontData::c = (h / 2.0f) - (a / 2.0f);
+const float FontData::GLYPH_GAP_RATIO = 0.2f;
 
 const float FontData::charAVertices[] = {
 	0, 0,
@@ -48,10 +49,10 @@ const int FontData::char0Indices[] = {
 const int FontData::char0IndexCount = 24;
 
 const float FontData::char1Vertices[] = {
-	0, 0,
-	0, h,
-	a, h,
-	a, 0
+	(w/2.0f)-(a/2.0f), 0,
+	(w / 2.0f) - (a / 2.0f), h,
+	(w / 2.0f) + (a / 2.0f), h,
+	(w / 2.0f) + (a / 2.0f), 0
 };
 const int FontData::char1VertexCount = 4;
 

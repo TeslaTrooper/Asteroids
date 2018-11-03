@@ -66,6 +66,7 @@ public:
 	b and c: helper variables to keep calculations easy and clear
 	*/
 	static const float w, h, a, b, c;
+	static const float GLYPH_GAP_RATIO;
 
 	FontData();
 	~FontData();

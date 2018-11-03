@@ -87,6 +87,9 @@
     <ClCompile Include="FontData.cpp">
       <Filter>Source Files\core\api</Filter>
     </ClCompile>
+    <ClCompile Include="FontBuilder.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="FontData.h">
       <Filter>Header Files\core\api</Filter>
+    </ClInclude>
+    <ClInclude Include="FontBuilder.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

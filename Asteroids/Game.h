@@ -6,11 +6,13 @@
 #include "Util.h"
 #include "ModelData.h"
 #include "FontData.h"
+#include "FontBuilder.h"
 
 class Game {
 
 	ModelData modelData;
 	FontData fontdata;
+	FontBuilder fontBuilder;
 
 	map<RenderUnitType, vector<RenderUnit>> renderUnits;
 
