@@ -10,6 +10,11 @@ Vec2::Vec2(float x, float y) {
 	this->y = y;
 }
 
+Vec2::Vec2(int x, int y) {
+	this->x = (float) x;
+	this->y = (float) y;
+}
+
 Vec2 Vec2::add(Vec2 vec) {
 	return Vec2(this->x + vec.x, this->y + vec.y);
 }

@@ -8,9 +8,12 @@
 #include "Renderer.h"
 #include "Mat4.h"
 
+#define FRAME_RATE 30
+
 class Window {
 	GLFWwindow* window;
 	Renderer* renderer;
+	Game* game;
 	Dimension windowSize;
 
 	Mat4 projection;

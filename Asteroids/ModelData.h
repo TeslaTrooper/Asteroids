@@ -16,6 +16,8 @@ public:
 	ModelData();
 	~ModelData();
 
+	static const Vec2 CROP_BOX;
+
 	static const float a1Vertices[];
 	static const float a2Vertices[];
 

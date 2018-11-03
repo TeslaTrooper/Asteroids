@@ -2,6 +2,7 @@
 #define GAME
 
 #include <vector>
+#include <string>
 
 #include "Util.h"
 #include "ModelData.h"

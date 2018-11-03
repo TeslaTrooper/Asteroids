@@ -7,7 +7,8 @@ Window::Window() {
 	initViewport();
 	initProjectionMatrix();
 
-	renderer = new Renderer();
+	game = new Game();
+	renderer = new Renderer(game);
 }
 
 Window::~Window() {
@@ -62,9 +63,15 @@ void Window::loop() {
 
 		glfwPollEvents();
 
+		if (dt < (GLfloat)(1000.f / FRAME_RATE) / 1000.f && dt > 0) {
+			dt += (GLfloat)glfwGetTime() - start;
+			continue;
+		}
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		game->update(dt);
 		renderer->render(dt);
 
 		glfwSwapBuffers(window);
@@ -74,5 +81,3 @@ void Window::loop() {
 
 	glfwTerminate();
 }
-
-

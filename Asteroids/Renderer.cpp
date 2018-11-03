@@ -1,6 +1,8 @@
 #include "Renderer.h"
 
-Renderer::Renderer() {
+Renderer::Renderer(Game* game) {
+	this->game = game;
+
 	ShaderProgram shaderProgramm;
 	shaderProgramID = shaderProgramm.createShaderProgram();
 
@@ -12,33 +14,25 @@ Renderer::Renderer() {
 void Renderer::render(const float dt) const {
 	shader->use();
 
-	vector<RenderUnit> uiUnits = game.getRenderUnits(RenderUnitType::UI);
+	vector<RenderUnit> uiUnits = game->getRenderUnits(RenderUnitType::UI);
 	for (int i = 0; i < uiUnits.size(); i++) {
-		drawUI(uiUnits.at(i));
+		draw(uiUnits.at(i), -FontData::h);
 	}
 
-	vector<RenderUnit> gameUnits = game.getRenderUnits(RenderUnitType::GAME_OBJECT);
+	vector<RenderUnit> gameUnits = game->getRenderUnits(RenderUnitType::GAME_OBJECT);
 	for (int i = 0; i < gameUnits.size(); i++) {
-		drawGameObject(gameUnits.at(i));
+		draw(gameUnits.at(i), -ModelData::CROP_BOX.y);
 	}
 }
 
-void Renderer::drawUI(const RenderUnit unit) const {
+void Renderer::draw(const RenderUnit unit, const float invTranslation) const {
 	Mat4 unitTransformation = unit.transformation;
 	Mat4 rotationX = Mat4::rotateX(180);
-	Mat4 translationY = Mat4::translate(Vec2(0, -FontData::h));
+	Mat4 translationY = Mat4::translate(Vec2(0.0f, invTranslation));
 	Mat4 transformation = translationY.mul(rotationX.mul(unit.transformation));
 
 	shader->setUniformMatrix4(TRANSFORM, transformation);
-	draw(unit);
-}
 
-void Renderer::drawGameObject(const RenderUnit unit) const {
-	shader->setUniformMatrix4(TRANSFORM, unit.transformation);
-	draw(unit);
-}
-
-void Renderer::draw(const RenderUnit unit) const {
 	BufferConfigurator::BufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
@@ -74,7 +68,7 @@ void Renderer::loadModelDatas() {
 }
 
 void Renderer::loadModelData(const Model model, const int drawMode) {
-	Bindable bindable = game.getBindable(model);
+	Bindable bindable = game->getBindable(model);
 	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
 	data.drawMode = drawMode;
 

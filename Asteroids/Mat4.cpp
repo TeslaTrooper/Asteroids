@@ -24,7 +24,7 @@ Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size) {
 Mat4 Mat4::rotateX(const float angleDeg) {
 	Mat4 rotation;
 
-	float angleRad = angleDeg * M_PI / 180.0f;
+	float angleRad = angleDeg * (float) M_PI / 180.0f;
 
 	rotation.elements.at(1).at(1) = (float) cos(angleRad);
 	rotation.elements.at(2).at(2) = (float) cos(angleRad);

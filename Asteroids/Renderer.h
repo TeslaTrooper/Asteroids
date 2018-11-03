@@ -12,7 +12,7 @@
 
 class Renderer {
 
-	Game game;
+	Game* game;
 
 	GLuint shaderProgramID;
 	Shader* shader;
@@ -21,12 +21,10 @@ class Renderer {
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
-	void drawUI(const RenderUnit unit) const;
-	void drawGameObject(const RenderUnit unit) const;
-	void draw(const RenderUnit unit) const;
+	void draw(const RenderUnit unit, const float invTranslation) const;
 
 public:
-	Renderer();
+	Renderer(Game* game);
 	~Renderer();
 
 	void render(const float dt) const;

@@ -4,7 +4,7 @@ Game::Game() {
 	vector<RenderUnit> gameObjects;
 
 	Mat4 transformation3 = Mat4::getTransformation(Vec2(0, 0), Vec2(1, 1));
-	gameObjects.push_back({ transformation3, Model::ASTEROID2 });
+	//gameObjects.push_back({ transformation3, Model::ASTEROID1 });
 
 	renderUnits[RenderUnitType::UI] = fontBuilder.buildString("0123456789", 11, Vec2(10, 100));
 	renderUnits[RenderUnitType::GAME_OBJECT] = gameObjects;
@@ -14,7 +14,13 @@ Game::~Game() {
 }
 
 void Game::update(const float dt) {
+	int fps = (float) (1000 / (dt * 1e3));
+	if (fps < 0) fps = 0;
 
+	std::string s = ::to_string(fps);
+
+	renderUnits.at(RenderUnitType::UI) = fontBuilder.buildString(s.c_str() , 5, Vec2(5, 5));
+	printf("FPS: %f \n", (dt * 1e3));
 }
 
 vector<RenderUnit> Game::getRenderUnits(const RenderUnitType type) const {
