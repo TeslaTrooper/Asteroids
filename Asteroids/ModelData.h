@@ -20,9 +20,17 @@ public:
 
 	static const float a1Vertices[];
 	static const float a2Vertices[];
+	static const float a3Vertices[];
+	static const float a4Vertices[];
+	static const float shipVertices[];
+	static const float saucerVertices[];
 
 	static const int a1VertexCount;
 	static const int a2VertexCount;
+	static const int a3VertexCount;
+	static const int a4VertexCount;
+	static const int shipVertexCount;
+	static const int saucerVertexCount;
 
 	Bindable getBindable(const Model model) const;
 };

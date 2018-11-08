@@ -53,6 +53,10 @@ void Renderer::setProjection(const Mat4 projection) const {
 void Renderer::loadModelDatas() {
 	loadModelData(Model::ASTEROID1, GL_LINES);
 	loadModelData(Model::ASTEROID2, GL_LINES);
+	loadModelData(Model::ASTEROID3, GL_LINES);
+	loadModelData(Model::ASTEROID4, GL_LINES);
+	loadModelData(Model::SHIP, GL_LINES);
+	loadModelData(Model::SAUCER, GL_LINES);
 
 	loadModelData(Model::CHARA, GL_TRIANGLES);
 	loadModelData(Model::CHAR0, GL_TRIANGLES);

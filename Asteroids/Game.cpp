@@ -3,8 +3,14 @@
 Game::Game() {
 	vector<RenderUnit> gameObjects;
 
-	Mat4 transformation3 = Mat4::getTransformation(Vec2(0, 0), Vec2(1, 1));
-	//gameObjects.push_back({ transformation3, Model::ASTEROID1 });
+	float scale = 1.5;
+
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(0, 100), Vec2(scale, scale)), Model::ASTEROID1 });
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(200, 100), Vec2(scale, scale)), Model::ASTEROID2 });
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(400, 100), Vec2(scale, scale)), Model::ASTEROID3 });
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(0, 250), Vec2(scale, scale)), Model::ASTEROID4 });
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(200, 250), Vec2(scale, scale)), Model::SHIP });
+	gameObjects.push_back({ Mat4::getTransformation(Vec2(400, 250), Vec2(scale, scale)), Model::SAUCER });
 
 	renderUnits[RenderUnitType::UI] = fontBuilder.buildString("0123456789", 11, Vec2(10, 100));
 	renderUnits[RenderUnitType::GAME_OBJECT] = gameObjects;
@@ -20,7 +26,6 @@ void Game::update(const float dt) {
 	std::string s = ::to_string(fps);
 
 	renderUnits.at(RenderUnitType::UI) = fontBuilder.buildString(s.c_str() , 5, Vec2(5, 5));
-	printf("FPS: %f \n", (dt * 1e3));
 }
 
 vector<RenderUnit> Game::getRenderUnits(const RenderUnitType type) const {
@@ -30,7 +35,11 @@ vector<RenderUnit> Game::getRenderUnits(const RenderUnitType type) const {
 Bindable Game::getBindable(const Model model) const {
 	switch (model) {
 		case Model::ASTEROID1:
-		case Model::ASTEROID2: return modelData.getBindable(model);
+		case Model::ASTEROID2:
+		case Model::ASTEROID3:
+		case Model::ASTEROID4:
+		case Model::SAUCER:
+		case Model::SHIP: return modelData.getBindable(model);
 		case Model::CHARA:
 		case Model::CHAR0:
 		case Model::CHAR1:
