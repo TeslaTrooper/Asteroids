@@ -1,19 +1,13 @@
 #include "Game.h"
 
-Game::Game() {
+Game::Game(const Dimension windowBounds) {
+	this->windowBounds = windowBounds;
+
 	renderUnits[RenderUnitType::TYPE_UI] = &uiElements;
 	renderUnits[RenderUnitType::TYPE_GAME_OBJECT] = &gameObjects;
 
-	float scale = 2;
-
-	GameObject* obja = entityHandler.create(Model::SHIP, Vec2(50, 50), scale);
-	obja->setDirection(Vec2(1.f, 0.3f));
-	obja->setVMax(3);
-	obja->setAcceleration(0.5f);
-
-	GameObject* obj = entityHandler.create(Model::ASTEROID1, Vec2(0, 100), scale);
-	obj->setVMax(1);
-	obj->setAcceleration(1);
+	this->player = entityHandler.create(Model::SHIP, Vec2(0, 0), 1.5f);
+	this->player->setVMax(5);
 }
 
 Game::~Game() {
@@ -27,6 +21,15 @@ void Game::update(const float dt) {
 }
 
 void Game::doGameLogic(const float dt) {
+	vector<GameObject*> objects = entityHandler.get();
+	for each (GameObject* obj in objects) {
+		if (obj->getPosition().x >= windowBounds.width) {
+			obj->setPosition(Vec2(0.f, obj->getPosition().y));
+		}
+		if (obj->getPosition().x < 0) {
+			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
+		}
+	}
 
 }
 
@@ -36,7 +39,7 @@ void Game::updateUIElements(const float dt) {
 	int fps = (float)(1000 / (dt * 1e3));
 	if (fps < 0) fps = 0;
 
-	printf("FPS: %i \n", fps);
+	//printf("FPS: %i \n", fps);
 
 	std::string s = ::to_string(fps);
 	fontBuilder.buildString(s.c_str(), 5, Vec2(5, 5));
@@ -85,5 +88,13 @@ Bindable Game::getBindable(const Model model) const {
 		case Model::CHAR8:
 		case Model::CHAR9: return fontdata.getBindable(model);
 		default: return modelData.getBindable(model);
+	}
+}
+
+void Game::moveShip(const bool moving, const float dt) {
+	if (moving) {
+		player->setAcceleration(2);
+	} else {
+		player->setAcceleration(0);
 	}
 }

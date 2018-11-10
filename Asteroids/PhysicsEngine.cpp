@@ -27,7 +27,11 @@ void PhysicsEngine::updateSpeed(const vector<GameObject*> objects, const float d
 		float currentSpeed = obj->getSpeed();
 		float acceleration = obj->getAcceleration();
 
-		if (currentSpeed >= obj->getVMax()) {
+		if (acceleration == 0) {
+			// Calculate a "friction-like" acceleration
+			acceleration = currentSpeed / 2;
+			acceleration = -acceleration;
+		} else if (currentSpeed >= obj->getVMax()) {
 			continue;
 		}
 

@@ -9,7 +9,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float size)
 	this->vmax = 0;
 
 	// Default direction points downwards
-	this->direction = Vec2(0, 1);
+	this->direction = Vec2(1,0);
 }
 
 void GameObject::useFriction() {
@@ -27,10 +27,10 @@ void GameObject::setDirection(const Vec2 direction) {
 
 void GameObject::setAcceleration(const float value) {
 	if (value == 0) {
-		return;
+		this->acceleration = 0;
+	} else {
+		this->acceleration = vmax / value;
 	}
-
-	this->acceleration = vmax / value;
 }
 
 void GameObject::setSpeed(const float value) {

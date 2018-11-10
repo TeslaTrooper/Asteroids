@@ -7,7 +7,7 @@ Window::Window() {
 	initViewport();
 	initProjectionMatrix();
 
-	game = new Game();
+	game = new Game(windowSize);
 	renderer = new Renderer(game);
 }
 
@@ -52,6 +52,28 @@ void Window::initProjectionMatrix() {
 		static_cast<GLfloat>(windowSize.height), 0.0f, -100.0f, 100.0f);
 }
 
+void Window::checkKeys(const float dt) {
+	if (Controller::isKeyDownPressed()) {
+		printf("Down\n");
+	}
+	if (Controller::isKeyUpPressed()) {
+		printf("Up\n");
+	}
+	game->moveShip(Controller::isKeyUpPressed(), dt);
+	
+	if (Controller::isKeyRightPressed()) {
+		printf("Right\n");
+		game->rotateRight(dt);
+	}
+	if (Controller::isKeyLeftPressed()) {
+		printf("Left\n");
+		game->rotateLeft(dt);
+	}
+	if (Controller::isKeySpacePressed()) {
+		printf("Space\n");
+	}
+}
+
 void Window::loop() {
 	GLfloat start = 0;
 	GLfloat dt = 0;
@@ -73,6 +95,7 @@ void Window::loop() {
 
 		game->update(dt);
 		renderer->render(dt);
+		checkKeys(dt);
 
 		glfwSwapBuffers(window);
 

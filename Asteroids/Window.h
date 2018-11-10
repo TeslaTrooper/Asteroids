@@ -23,6 +23,8 @@ class Window {
 	void initViewport();
 	void initProjectionMatrix();
 
+	void checkKeys(const float dt);
+
 public:
 	Window();
 	~Window();

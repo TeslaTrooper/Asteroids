@@ -23,16 +23,18 @@ class Game {
 	vector<RenderUnit> gameObjects;
 	vector<RenderUnit> uiElements;
 
+	Dimension windowBounds;
+	GameObject* player;
+
 	void doGameLogic(const float dt);
 	void updateUIElements(const float dt);
 	void prepareRenderUnits();
 
 public:
-	Game();
+	Game(const Dimension windowBounds);
 	~Game();
 
 	void update(const float dt);
-
 	vector<RenderUnit> getRenderUnits(const RenderUnitType type) const;
 
 	/*
@@ -44,6 +46,12 @@ public:
 			a Bindable reference containing the model information.
 	*/
 	Bindable getBindable(const Model model) const;
+
+	void moveShip(const bool moving, const float dt);
+	void rotateLeft(const float dt) {};
+	void rotateRight(const float dt) {};
+
+
 };
 
 #endif GAME
