@@ -8,7 +8,7 @@
 #include "Renderer.h"
 #include "Mat4.h"
 
-#define FRAME_RATE 30
+#define FRAME_RATE 60
 
 class Window {
 	GLFWwindow* window;

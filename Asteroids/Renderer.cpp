@@ -14,12 +14,12 @@ Renderer::Renderer(Game* game) {
 void Renderer::render(const float dt) const {
 	shader->use();
 
-	vector<RenderUnit> uiUnits = game->getRenderUnits(RenderUnitType::UI);
+	vector<RenderUnit> uiUnits = game->getRenderUnits(RenderUnitType::TYPE_UI);
 	for (int i = 0; i < uiUnits.size(); i++) {
 		draw(uiUnits.at(i), -FontData::h);
 	}
 
-	vector<RenderUnit> gameUnits = game->getRenderUnits(RenderUnitType::GAME_OBJECT);
+	vector<RenderUnit> gameUnits = game->getRenderUnits(RenderUnitType::TYPE_GAME_OBJECT);
 	for (int i = 0; i < gameUnits.size(); i++) {
 		draw(gameUnits.at(i), -ModelData::CROP_BOX.y);
 	}

@@ -90,6 +90,15 @@
     <ClCompile Include="FontBuilder.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityHandler.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -129,6 +138,15 @@
       <Filter>Header Files\core\api</Filter>
     </ClInclude>
     <ClInclude Include="FontBuilder.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityHandler.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>

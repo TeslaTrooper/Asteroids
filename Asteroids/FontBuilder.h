@@ -10,12 +10,15 @@ class FontBuilder {
 
 	map<char, Model> charModelMap;
 
+	vector<RenderUnit> characters;
+
 public:
 	FontBuilder();
-	~FontBuilder();
+	~FontBuilder() {};
 
-	vector<RenderUnit> buildString(char const * const string, const int fontSize, const Vec2 position) const;
-
+	void buildString(char const * const string, const int fontSize, const Vec2 position);
+	void clear();
+	vector<RenderUnit> get() const;
 };
 
 #endif FONT_BUILDER

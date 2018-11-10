@@ -8,14 +8,24 @@
 #include "ModelData.h"
 #include "FontData.h"
 #include "FontBuilder.h"
+#include "PhysicsEngine.h"
+#include "EntityHandler.h"
 
 class Game {
 
 	ModelData modelData;
 	FontData fontdata;
 	FontBuilder fontBuilder;
+	PhysicsEngine physicsEngine;
+	EntityHandler entityHandler;
 
-	map<RenderUnitType, vector<RenderUnit>> renderUnits;
+	map<RenderUnitType, vector<RenderUnit>*> renderUnits;
+	vector<RenderUnit> gameObjects;
+	vector<RenderUnit> uiElements;
+
+	void doGameLogic(const float dt);
+	void updateUIElements(const float dt);
+	void prepareRenderUnits();
 
 public:
 	Game();

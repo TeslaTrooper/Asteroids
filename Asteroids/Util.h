@@ -34,12 +34,24 @@ enum Model {
 };
 
 enum RenderUnitType {
-	UI, GAME_OBJECT
+	TYPE_UI, TYPE_GAME_OBJECT
 };
 
 struct RenderUnit {
 	Mat4 transformation;
 	Model model;
+};
+
+static Vec2 operator+(const Vec2& vec1, const Vec2& vec2) {
+	return Vec2(vec1.x + vec2.x, vec1.y + vec2.y);
+};
+
+static Vec2 operator*(const float scalar, const Vec2& vec) {
+	return Vec2(vec.x * scalar, vec.y * scalar);
+};
+
+static Vec2 operator*(const Vec2& vec, const float scalar) {
+	return Vec2(vec.x * scalar, vec.y * scalar);
 };
 
 #endif UTIL

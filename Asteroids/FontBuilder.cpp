@@ -13,13 +13,7 @@ FontBuilder::FontBuilder() {
 	charModelMap['9'] = Model::CHAR9;
 }
 
-FontBuilder::~FontBuilder() {
-
-}
-
-vector<RenderUnit> FontBuilder::buildString(char const * const string, const int fontSize, const Vec2 position) const {
-	vector<RenderUnit> units;
-	
+void FontBuilder::buildString(char const * const string, const int fontSize, const Vec2 position) {
 	for (int i = 0; string[i] != '\0'; i++) {
 		char c = string[i];
 
@@ -33,8 +27,14 @@ vector<RenderUnit> FontBuilder::buildString(char const * const string, const int
 		Mat4 transformation = Mat4::getTransformation(tmpPos, Vec2(fontSize, fontSize));
 		Model model = charModelMap.at(c);
 
-		units.push_back({ transformation, model });
+		characters.push_back({ transformation, model });
 	}
+}
 
-	return units;
+vector<RenderUnit> FontBuilder::get() const {
+	return characters;
+}
+
+void FontBuilder::clear() {
+	characters.clear();
 }
