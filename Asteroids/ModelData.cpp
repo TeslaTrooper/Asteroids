@@ -1,6 +1,8 @@
 #include "ModelData.h"
 
-const Vec2 ModelData::CROP_BOX = Vec2(150.f, 100.f);
+const Dimension ModelData::ASTEROID_CROP_BOX = { 150, 100 };
+const Dimension ModelData::SHIP_CROP_BOX = { 40, 17 };
+const Dimension ModelData::SAUCER_CROP_BOX = { 45, 20 };
 
 const float ModelData::a1Vertices[] = {
 	0, 25,
@@ -113,7 +115,15 @@ Bindable ModelData::getBindable(const Model model) const {
 	VertexData vertexData = vertexDataMap.at(model);
 	IndexData indexData = calcIndices(vertexData.count);
 
-	return { vertexData, indexData };
+	if (model == Model::SHIP) {
+		return{ vertexData, indexData, SHIP_CROP_BOX };
+	}
+
+	if (model == Model::SAUCER) {
+		return{ vertexData, indexData, SAUCER_CROP_BOX };
+	}
+
+	return { vertexData, indexData, ASTEROID_CROP_BOX };
 }
 
 IndexData ModelData::calcIndices(const int vertexCount) const {

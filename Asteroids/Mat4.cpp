@@ -18,18 +18,39 @@ Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size) {
 	Mat4 translation = Mat4::translate(position);
 	Mat4 scaling = Mat4::scale(size);
 
-	return scaling.mul(translation);
+	return translation.mul(scaling);
+}
+
+Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size, const float angleDeg) {
+	Mat4 translation = Mat4::translate(position);
+	Mat4 scaling = Mat4::scale(size);
+	Mat4 rotation = Mat4::rotateZ(angleDeg);
+
+	return translation.mul(rotation.mul(scaling));
 }
 
 Mat4 Mat4::rotateX(const float angleDeg) {
 	Mat4 rotation;
 
-	float angleRad = angleDeg * (float) M_PI / 180.0f;
+	float angleRad = angleDeg * (float)M_PI / 180.0f;
 
-	rotation.elements.at(1).at(1) = (float) cos(angleRad);
-	rotation.elements.at(2).at(2) = (float) cos(angleRad);
-	rotation.elements.at(1).at(2) = (float) sin(angleRad);
-	rotation.elements.at(2).at(1) = (float) -sin(angleRad);
+	rotation.elements.at(1).at(1) = (float)cos(angleRad);
+	rotation.elements.at(2).at(2) = (float)cos(angleRad);
+	rotation.elements.at(1).at(2) = (float)-sin(angleRad);
+	rotation.elements.at(2).at(1) = (float)sin(angleRad);
+
+	return rotation;
+}
+
+Mat4 Mat4::rotateZ(const float angleDeg) {
+	Mat4 rotation;
+
+	float angleRad = angleDeg * (float)M_PI / 180.0f;
+
+	rotation.elements.at(0).at(0) = (float)cos(angleRad);
+	rotation.elements.at(2).at(2) = (float)cos(angleRad);
+	rotation.elements.at(1).at(0) = (float)sin(angleRad);
+	rotation.elements.at(0).at(1) = (float)-sin(angleRad);
 
 	return rotation;
 }
@@ -60,12 +81,21 @@ Mat4 Mat4::mul(const Mat4 mat4) const {
 			float value = 0;
 
 			for (int i = 0; i < 4; i++) {
-				value += elements.at(column).at(i) * mat4.elements.at(i).at(row);
+				value += elements.at(i).at(row) * mat4.elements.at(column).at(i);
 			}
 
 			result.elements.at(column).at(row) = value;
 		}
 	}
+
+	return result;
+}
+
+Vec2 Mat4::transform(const Vec2 vec) const {
+	Vec2 result;
+
+	result.x = elements.at(0).at(0) * vec.x + elements.at(1).at(0) * vec.y + elements.at(3).at(0);
+	result.y = elements.at(0).at(1) * vec.x + elements.at(1).at(1) * vec.y + elements.at(3).at(1);
 
 	return result;
 }

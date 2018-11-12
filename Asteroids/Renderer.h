@@ -21,7 +21,8 @@ class Renderer {
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
-	void draw(const RenderUnit unit, const float invTranslation) const;
+	void draw(const RenderUnit unit) const;
+	Bindable transformVertexDataToOpenGLSpace(const Bindable& bindable) const;
 
 public:
 	Renderer(Game* game);

@@ -29,6 +29,8 @@ public:
 
 	Mat4 mul(const Mat4 mat4) const;
 
+	Vec2 transform(const Vec2 vec) const;
+
 	/*
 	Erzeugt eine orthographische Projektionsmatrix.
 	@param left ist linke Rand.
@@ -43,7 +45,11 @@ public:
 
 	static Mat4 getTransformation(const Vec2 position, const Vec2 size);
 
+	static Mat4 getTransformation(const Vec2 position, const Vec2 size, const float angleDeg);
+
 	static Mat4 rotateX(const float angleDeg);
+
+	static Mat4 rotateZ(const float angleDeg);
 
 	/*
 	Erzeugt eine Translationsmatrix.

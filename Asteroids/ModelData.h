@@ -16,7 +16,9 @@ public:
 	ModelData();
 	~ModelData();
 
-	static const Vec2 CROP_BOX;
+	static const Dimension ASTEROID_CROP_BOX;
+	static const Dimension SHIP_CROP_BOX;
+	static const Dimension SAUCER_CROP_BOX;
 
 	static const float a1Vertices[];
 	static const float a2Vertices[];

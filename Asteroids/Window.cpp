@@ -42,7 +42,7 @@ void Window::initViewport() {
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 
-	windowSize = { width, height };
+	windowSize = { (float) width, (float) height };
 
 	glViewport(0, 0, width, height);
 }
@@ -59,14 +59,13 @@ void Window::checkKeys(const float dt) {
 	if (Controller::isKeyUpPressed()) {
 		printf("Up\n");
 	}
+
 	game->moveShip(Controller::isKeyUpPressed(), dt);
 	
 	if (Controller::isKeyRightPressed()) {
-		printf("Right\n");
 		game->rotateRight(dt);
 	}
 	if (Controller::isKeyLeftPressed()) {
-		printf("Left\n");
 		game->rotateLeft(dt);
 	}
 	if (Controller::isKeySpacePressed()) {

@@ -3,10 +3,7 @@
 Game::Game(const Dimension windowBounds) {
 	this->windowBounds = windowBounds;
 
-	renderUnits[RenderUnitType::TYPE_UI] = &uiElements;
-	renderUnits[RenderUnitType::TYPE_GAME_OBJECT] = &gameObjects;
-
-	this->player = entityHandler.create(Model::SHIP, Vec2(0, 0), 1.5f);
+	this->player = entityHandler.create(Model::SAUCER, Vec2(100, 100), 5.f);
 	this->player->setVMax(5);
 }
 
@@ -30,7 +27,6 @@ void Game::doGameLogic(const float dt) {
 			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
 		}
 	}
-
 }
 
 void Game::updateUIElements(const float dt) {
@@ -46,26 +42,22 @@ void Game::updateUIElements(const float dt) {
 }
 
 void Game::prepareRenderUnits() {
-	uiElements.clear();
-	gameObjects.clear();
+	renderUnits.clear();
 
 	vector<RenderUnit> ui = fontBuilder.get();
 	vector<GameObject*> entities = entityHandler.get();
 
 	for each (RenderUnit uiElem in ui) {
-		uiElements.push_back(uiElem);
+		renderUnits.push_back(uiElem);
 	}
 
 	for each (GameObject* entity in entities) {
-		gameObjects.push_back(entity->getRenderUnit());
+		renderUnits.push_back(entity->getRenderUnit());
 	}
-
-	renderUnits.at(RenderUnitType::TYPE_UI) = &uiElements;
-	renderUnits.at(RenderUnitType::TYPE_GAME_OBJECT) = &gameObjects;
 }
 
-vector<RenderUnit> Game::getRenderUnits(const RenderUnitType type) const {
-	return *renderUnits.at(type);
+vector<RenderUnit> Game::getRenderUnits() const {
+	return renderUnits;
 }
 
 Bindable Game::getBindable(const Model model) const {
@@ -92,9 +84,15 @@ Bindable Game::getBindable(const Model model) const {
 }
 
 void Game::moveShip(const bool moving, const float dt) {
-	if (moving) {
-		player->setAcceleration(2);
-	} else {
-		player->setAcceleration(0);
-	}
+	player->setAcceleration(moving ? 2.f : 0.f);
+}
+
+void Game::rotateLeft(const float dt) {
+	player->rotate(GameObject::POSITIVE_ROTATION, dt);
+	printf("Rotation: %i \n", player->getAngle());
+}
+
+void Game::rotateRight(const float dt) {
+	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
+	printf("Rotation: %i \n", player->getAngle());
 }

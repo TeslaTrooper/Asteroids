@@ -15,10 +15,15 @@ class GameObject {
 	float speed;
 	float acceleration;
 	float vmax;
+	int angle;
 
 	bool friction;
 
 public:
+
+	static const int POSITIVE_ROTATION = 1;
+	static const int NEGATIVE_ROTATION = -1;
+
 	GameObject(const Model model, const Vec2 position, const float size);
 	~GameObject() {};
 
@@ -28,6 +33,8 @@ public:
 	void setSpeed(const float value);
 	void setVMax(const float value);
 	void setPosition(const Vec2 position);
+	void setAngle(const int angle);
+	void rotate(const int direction, const float dt);
 
 	bool hasFriction() const { return friction; };
 	Vec2 getPosition() { return position; };
@@ -35,6 +42,7 @@ public:
 	float getSpeed() const { return speed; };
 	float getAcceleration() const { return acceleration; };
 	float getVMax() const { return vmax; };
+	int getAngle() const { return angle; };
 	RenderUnit getRenderUnit() const;
 
 };

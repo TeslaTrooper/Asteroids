@@ -19,9 +19,7 @@ class Game {
 	PhysicsEngine physicsEngine;
 	EntityHandler entityHandler;
 
-	map<RenderUnitType, vector<RenderUnit>*> renderUnits;
-	vector<RenderUnit> gameObjects;
-	vector<RenderUnit> uiElements;
+	vector<RenderUnit> renderUnits;
 
 	Dimension windowBounds;
 	GameObject* player;
@@ -35,7 +33,7 @@ public:
 	~Game();
 
 	void update(const float dt);
-	vector<RenderUnit> getRenderUnits(const RenderUnitType type) const;
+	vector<RenderUnit> getRenderUnits() const;
 
 	/*
 		Provides access to model data such as vertex and index information for a given model.
@@ -48,8 +46,8 @@ public:
 	Bindable getBindable(const Model model) const;
 
 	void moveShip(const bool moving, const float dt);
-	void rotateLeft(const float dt) {};
-	void rotateRight(const float dt) {};
+	void rotateLeft(const float dt);
+	void rotateRight(const float dt);
 
 
 };

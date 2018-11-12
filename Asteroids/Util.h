@@ -6,8 +6,8 @@
 #define VERTEX_COMP_SIZE 2
 
 struct Dimension {
-	int width;
-	int height;
+	float width;
+	float height;
 };
 
 struct IndexData {
@@ -23,6 +23,7 @@ struct VertexData {
 struct Bindable {
 	VertexData vertexData;
 	IndexData indexData;
+	Dimension cropBox;
 };
 
 enum Model {
@@ -31,10 +32,6 @@ enum Model {
 	CHAR2, CHAR3, CHAR4,
 	CHAR5, CHAR6, CHAR7,
 	CHAR8, CHAR9
-};
-
-enum RenderUnitType {
-	TYPE_UI, TYPE_GAME_OBJECT
 };
 
 struct RenderUnit {

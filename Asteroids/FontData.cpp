@@ -267,5 +267,8 @@ FontData::~FontData() {
 }
 
 Bindable FontData::getBindable(const Model character) const {
-	return vertexDataMap.at(character);
+	Bindable bindable = vertexDataMap.at(character);
+	bindable.cropBox = { w, h };
+
+	return bindable;
 }
