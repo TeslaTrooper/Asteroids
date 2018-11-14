@@ -3,6 +3,7 @@
 const Dimension ModelData::ASTEROID_CROP_BOX = { 150, 100 };
 const Dimension ModelData::SHIP_CROP_BOX = { 40, 17 };
 const Dimension ModelData::SAUCER_CROP_BOX = { 45, 20 };
+const Vec2 ModelData::SHIP_CENTER = { 20.f, 8.5f };
 
 const float ModelData::a1Vertices[] = {
 	0, 25,
@@ -91,7 +92,6 @@ const float ModelData::saucerVertices[] = {
 	12.5f, 13.5f
 };
 const int ModelData::saucerVertexCount = 14;
-
 
 ModelData::ModelData() {
 	vertexDataMap[Model::ASTEROID1] = { a1Vertices, a1VertexCount };

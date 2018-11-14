@@ -21,12 +21,12 @@ Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size) {
 	return translation.mul(scaling);
 }
 
-Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size, const float angleDeg) {
+Mat4 Mat4::getTransformation(const Vec2 position, const Vec2 size, const float angleDeg, const Vec2 rotationPoint) {
 	Mat4 translation = Mat4::translate(position);
 	Mat4 scaling = Mat4::scale(size);
-	Mat4 rotation = Mat4::rotateZ(angleDeg);
+	Mat4 rotation = Mat4::rotateZ(angleDeg, rotationPoint);
 
-	return translation.mul(rotation.mul(scaling));
+	return translation.mul(scaling.mul(rotation));
 }
 
 Mat4 Mat4::rotateX(const float angleDeg) {
@@ -48,11 +48,19 @@ Mat4 Mat4::rotateZ(const float angleDeg) {
 	float angleRad = angleDeg * (float)M_PI / 180.0f;
 
 	rotation.elements.at(0).at(0) = (float)cos(angleRad);
-	rotation.elements.at(2).at(2) = (float)cos(angleRad);
-	rotation.elements.at(1).at(0) = (float)sin(angleRad);
-	rotation.elements.at(0).at(1) = (float)-sin(angleRad);
+	rotation.elements.at(1).at(1) = (float)cos(angleRad);
+	rotation.elements.at(1).at(0) = (float)-sin(angleRad);
+	rotation.elements.at(0).at(1) = (float)sin(angleRad);
 
 	return rotation;
+}
+
+Mat4 Mat4::rotateZ(const float angleDeg, const Vec2 origin) {
+	Mat4 translation = Mat4::translate(origin);
+	Mat4 rotation = Mat4::rotateZ(angleDeg);
+	Mat4 invTranslation = Mat4::translate(origin.inv());
+
+	return translation.mul(rotation.mul(invTranslation));
 }
 
 Mat4 Mat4::translate(const Vec2 vec) {

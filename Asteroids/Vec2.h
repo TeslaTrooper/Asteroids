@@ -1,7 +1,10 @@
 #ifndef VEC2
 #define VEC2
 
+#define _USE_MATH_DEFINES
+
 #include <math.h>
+#include <cmath>
 
 class Vec2 {
 
@@ -85,6 +88,7 @@ public:
 	*/
 	float length();
 
+	Vec2 inv() const;
 
 	/*
 	Vergleicht die xy-Komponenten zweier Vektoren auf Gleichheit.
@@ -93,6 +97,8 @@ public:
 	bool operator==(const Vec2& vec) {
 		return vec.x == x && vec.y == y;
 	};
+
+	static Vec2 getRotatedInstance(const float angleDeg);
 
 };
 

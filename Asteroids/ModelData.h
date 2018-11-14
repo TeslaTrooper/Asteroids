@@ -19,6 +19,7 @@ public:
 	static const Dimension ASTEROID_CROP_BOX;
 	static const Dimension SHIP_CROP_BOX;
 	static const Dimension SAUCER_CROP_BOX;
+	static const Vec2 SHIP_CENTER;
 
 	static const float a1Vertices[];
 	static const float a2Vertices[];

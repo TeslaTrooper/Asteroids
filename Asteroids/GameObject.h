@@ -3,6 +3,7 @@
 
 #include "Util.h"
 #include "Vec2.h"
+#include "ModelData.h"
 
 class GameObject {
 
@@ -10,6 +11,7 @@ class GameObject {
 
 	Vec2 position;
 	Vec2 direction;
+	Vec2 movement;
 	
 	float size;
 	float speed;
@@ -31,6 +33,7 @@ public:
 	void setAcceleration(const float value);
 	void setDirection(const Vec2 direction);
 	void setSpeed(const float value);
+	void setMovement(const Vec2 movement);
 	void setVMax(const float value);
 	void setPosition(const Vec2 position);
 	void setAngle(const int angle);
@@ -43,6 +46,7 @@ public:
 	float getAcceleration() const { return acceleration; };
 	float getVMax() const { return vmax; };
 	int getAngle() const { return angle; };
+	Vec2 getMovement() const { return movement; };
 	RenderUnit getRenderUnit() const;
 
 };

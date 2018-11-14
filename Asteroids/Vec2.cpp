@@ -46,4 +46,21 @@ void Vec2::clear() {
 	this->y = 0.0f;
 }
 
+Vec2 Vec2::inv() const {
+	return Vec2(-x, -y);
+}
+
+Vec2 Vec2::getRotatedInstance(const float angleDeg) {
+	const float x = 1;
+	// atan(y/x) = alpha
+	// tan(alpha) = y/x
+	// => x * tan(alpha) = y
+
+	float angleRad = angleDeg * (float)M_PI / 180.0f;
+
+	const float y = x * tan(angleRad);
+
+	return Vec2(-cos(angleRad), -sin(angleRad)).norm();
+}
+
 Vec2::~Vec2() {}

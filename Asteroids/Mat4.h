@@ -45,11 +45,13 @@ public:
 
 	static Mat4 getTransformation(const Vec2 position, const Vec2 size);
 
-	static Mat4 getTransformation(const Vec2 position, const Vec2 size, const float angleDeg);
+	static Mat4 getTransformation(const Vec2 position, const Vec2 size, const float angleDeg, const Vec2 rotationPoint);
 
 	static Mat4 rotateX(const float angleDeg);
 
 	static Mat4 rotateZ(const float angleDeg);
+
+	static Mat4 rotateZ(const float angleDeg, const Vec2 origin);
 
 	/*
 	Erzeugt eine Translationsmatrix.

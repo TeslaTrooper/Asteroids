@@ -3,7 +3,7 @@
 Game::Game(const Dimension windowBounds) {
 	this->windowBounds = windowBounds;
 
-	this->player = entityHandler.create(Model::SAUCER, Vec2(100, 100), 5.f);
+	this->player = entityHandler.create(Model::SHIP, Vec2(100, 100), 1.f);
 	this->player->setVMax(5);
 }
 
@@ -25,6 +25,12 @@ void Game::doGameLogic(const float dt) {
 		}
 		if (obj->getPosition().x < 0) {
 			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
+		}
+		if (obj->getPosition().y >= windowBounds.height) {
+			obj->setPosition(Vec2(obj->getPosition().x, 0.f));
+		}
+		if (obj->getPosition().y < 0) {
+			obj->setPosition(Vec2(obj->getPosition().x, windowBounds.height));
 		}
 	}
 }
@@ -84,7 +90,7 @@ Bindable Game::getBindable(const Model model) const {
 }
 
 void Game::moveShip(const bool moving, const float dt) {
-	player->setAcceleration(moving ? 2.f : 0.f);
+	player->setAcceleration(moving ? 1.f : 0.f);
 }
 
 void Game::rotateLeft(const float dt) {

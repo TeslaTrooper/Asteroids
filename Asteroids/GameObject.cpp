@@ -7,7 +7,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float size)
 	this->speed = 0;
 	this->acceleration = 0;
 	this->vmax = 0;
-	this->angle = 0;
+	this->angle = 90;
 
 	// Default direction points downwards
 	this->direction = Vec2(1,0);
@@ -30,6 +30,7 @@ void GameObject::setAcceleration(const float value) {
 	if (value == 0) {
 		this->acceleration = 0;
 	} else {
+		this->direction = Vec2::getRotatedInstance(angle);
 		this->acceleration = vmax / value;
 	}
 }
@@ -46,6 +47,10 @@ void GameObject::setPosition(const Vec2 position) {
 	this->position = position;
 }
 
+void GameObject::setMovement(const Vec2 movement) {
+	this->movement = movement;
+}
+
 void GameObject::setAngle(const int angle) {
 	if (angle < 0) {
 		this->angle = 360 + angle;
@@ -54,10 +59,14 @@ void GameObject::setAngle(const int angle) {
 	}
 
 	this->angle %= 360;
+	if (acceleration > 0) {
+		this->direction = Vec2::getRotatedInstance(angle);
+		printf("Update dir");
+	}
 }
 
 RenderUnit GameObject::getRenderUnit() const {
-	return { Mat4::getTransformation(position, Vec2(size, size), angle), model };
+	return { Mat4::getTransformation(position, Vec2(size, size), angle, ModelData::SHIP_CENTER), model };
 }
 
 void GameObject::rotate(const int direction, const float dt) {
@@ -68,8 +77,8 @@ void GameObject::rotate(const int direction, const float dt) {
 	int dAngle = (int)(180.f * dt);
 
 	if (direction == POSITIVE_ROTATION) {
-		setAngle(angle + dAngle);
-	} else {
 		setAngle(angle - dAngle);
+	} else {
+		setAngle(angle + dAngle);
 	}
 }

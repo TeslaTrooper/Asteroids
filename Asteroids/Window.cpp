@@ -57,7 +57,7 @@ void Window::checkKeys(const float dt) {
 		printf("Down\n");
 	}
 	if (Controller::isKeyUpPressed()) {
-		printf("Up\n");
+		//printf("Up\n");
 	}
 
 	game->moveShip(Controller::isKeyUpPressed(), dt);
