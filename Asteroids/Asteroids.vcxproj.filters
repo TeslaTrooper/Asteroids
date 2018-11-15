@@ -99,6 +99,9 @@
     <ClCompile Include="EntityHandler.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="BindableProvider.cpp">
+      <Filter>Source Files\core\api</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="EntityHandler.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="BindableProvider.h">
+      <Filter>Header Files\core\api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

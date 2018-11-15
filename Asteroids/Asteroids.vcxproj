@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BindableProvider.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="EntityHandler.cpp" />
     <ClCompile Include="FontBuilder.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BindableProvider.h" />
     <ClInclude Include="BufferConfigurator.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="EntityHandler.h" />

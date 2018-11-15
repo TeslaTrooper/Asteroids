@@ -13,7 +13,7 @@ class GameObject {
 	Vec2 direction;
 	Vec2 movement;
 	
-	float size;
+	float scale;
 	float speed;
 	float acceleration;
 	float vmax;
@@ -26,7 +26,7 @@ public:
 	static const int POSITIVE_ROTATION = 1;
 	static const int NEGATIVE_ROTATION = -1;
 
-	GameObject(const Model model, const Vec2 position, const float size);
+	GameObject(const Model model, const Vec2 position, const float scale);
 	~GameObject() {};
 
 	void useFriction();

@@ -10,6 +10,7 @@
 #include "FontBuilder.h"
 #include "PhysicsEngine.h"
 #include "EntityHandler.h"
+#include "BindableProvider.h"
 
 class Game {
 
@@ -18,6 +19,7 @@ class Game {
 	FontBuilder fontBuilder;
 	PhysicsEngine physicsEngine;
 	EntityHandler entityHandler;
+	BindableProvider bindableProvider;
 
 	vector<RenderUnit> renderUnits;
 
@@ -27,6 +29,7 @@ class Game {
 	void doGameLogic(const float dt);
 	void updateUIElements(const float dt);
 	void prepareRenderUnits();
+	void checkForOutOfBoundsObjects(const vector<GameObject*> objects) const;
 
 public:
 	Game(const Dimension windowBounds);

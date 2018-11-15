@@ -13,8 +13,6 @@ void PhysicsEngine::updatePosition(const vector<GameObject*> objects, const floa
 		Vec2 direction = obj->getDirection();
 		Vec2 movement = obj->getMovement();
 
-		// v = dv * currentSpeed
-
 		// update position: pn = pn-1+vn-1
 		obj->setPosition(position + movement);
 	}
@@ -30,9 +28,8 @@ void PhysicsEngine::updateSpeed(const vector<GameObject*> objects, const float d
 
 		if (acceleration == 0) {
 			// Calculate a "friction-like" acceleration
+			// In this case, 50% of the inverted movement 
 			acc = movement.inv().mul(0.5f);
-			//acceleration = movement.length() / 2;
-			//acceleration = -acceleration;
 		} else {
 			acc = acceleration * obj->getDirection();
 		}
@@ -41,6 +38,7 @@ void PhysicsEngine::updateSpeed(const vector<GameObject*> objects, const float d
 		Vec2 deltaSpeed = acc * dt;
 		Vec2 resultSpeed = movement + deltaSpeed;
 
+		// Cap velocity to vmax
 		if (resultSpeed.length() >= obj->getVMax()) {
 			resultSpeed = resultSpeed.norm() * obj->getVMax();
 		}

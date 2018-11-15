@@ -5,6 +5,12 @@ Game::Game(const Dimension windowBounds) {
 
 	this->player = entityHandler.create(Model::SHIP, Vec2(100, 100), 1.f);
 	this->player->setVMax(5);
+
+	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(300, 300), 1.f);
+	asteroid1->setAngle(0);
+	asteroid1->setVMax(2);
+	asteroid1->setAcceleration(2);
+	asteroid1->setDirection(Vec2(1, 1));
 }
 
 Game::~Game() {
@@ -19,20 +25,8 @@ void Game::update(const float dt) {
 
 void Game::doGameLogic(const float dt) {
 	vector<GameObject*> objects = entityHandler.get();
-	for each (GameObject* obj in objects) {
-		if (obj->getPosition().x >= windowBounds.width) {
-			obj->setPosition(Vec2(0.f, obj->getPosition().y));
-		}
-		if (obj->getPosition().x < 0) {
-			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
-		}
-		if (obj->getPosition().y >= windowBounds.height) {
-			obj->setPosition(Vec2(obj->getPosition().x, 0.f));
-		}
-		if (obj->getPosition().y < 0) {
-			obj->setPosition(Vec2(obj->getPosition().x, windowBounds.height));
-		}
-	}
+	
+	checkForOutOfBoundsObjects(objects);
 }
 
 void Game::updateUIElements(const float dt) {
@@ -67,26 +61,7 @@ vector<RenderUnit> Game::getRenderUnits() const {
 }
 
 Bindable Game::getBindable(const Model model) const {
-	switch (model) {
-		case Model::ASTEROID1:
-		case Model::ASTEROID2:
-		case Model::ASTEROID3:
-		case Model::ASTEROID4:
-		case Model::SAUCER:
-		case Model::SHIP: return modelData.getBindable(model);
-		case Model::CHARA:
-		case Model::CHAR0:
-		case Model::CHAR1:
-		case Model::CHAR2:
-		case Model::CHAR3:
-		case Model::CHAR4:
-		case Model::CHAR5:
-		case Model::CHAR6:
-		case Model::CHAR7:
-		case Model::CHAR8:
-		case Model::CHAR9: return fontdata.getBindable(model);
-		default: return modelData.getBindable(model);
-	}
+	return bindableProvider.getBindable(model);
 }
 
 void Game::moveShip(const bool moving, const float dt) {
@@ -95,10 +70,25 @@ void Game::moveShip(const bool moving, const float dt) {
 
 void Game::rotateLeft(const float dt) {
 	player->rotate(GameObject::POSITIVE_ROTATION, dt);
-	printf("Rotation: %i \n", player->getAngle());
 }
 
 void Game::rotateRight(const float dt) {
 	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
-	printf("Rotation: %i \n", player->getAngle());
+}
+
+void Game::checkForOutOfBoundsObjects(const vector<GameObject*> objects) const {
+	for each (GameObject* obj in objects) {
+		if (obj->getPosition().x >= windowBounds.width) {
+			obj->setPosition(Vec2(0.f, obj->getPosition().y));
+		}
+		if (obj->getPosition().x < 0) {
+			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
+		}
+		if (obj->getPosition().y >= windowBounds.height) {
+			obj->setPosition(Vec2(obj->getPosition().x, 0.f));
+		}
+		if (obj->getPosition().y < 0) {
+			obj->setPosition(Vec2(obj->getPosition().x, windowBounds.height));
+		}
+	}
 }

@@ -1,16 +1,16 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const Model model, const Vec2 position, const float size) {
+GameObject::GameObject(const Model model, const Vec2 position, const float scale) {
 	this->model = model;
 	this->position = position;
-	this->size = size;
+	this->scale = scale;
 	this->speed = 0;
 	this->acceleration = 0;
 	this->vmax = 0;
 	this->angle = 90;
 
-	// Default direction points downwards
-	this->direction = Vec2(1,0);
+	// Default direction points upwards
+	this->direction = Vec2(0, -1);
 }
 
 void GameObject::useFriction() {
@@ -61,12 +61,11 @@ void GameObject::setAngle(const int angle) {
 	this->angle %= 360;
 	if (acceleration > 0) {
 		this->direction = Vec2::getRotatedInstance(angle);
-		printf("Update dir");
 	}
 }
 
 RenderUnit GameObject::getRenderUnit() const {
-	return { Mat4::getTransformation(position, Vec2(size, size), angle, ModelData::SHIP_CENTER), model };
+	return { Mat4::getTransformation(position, Vec2(scale, scale), angle, ModelData::SHIP_CENTER), model };
 }
 
 void GameObject::rotate(const int direction, const float dt) {
