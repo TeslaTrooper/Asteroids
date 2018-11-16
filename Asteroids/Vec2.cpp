@@ -1,53 +1,50 @@
 #include "Vec2.h"
 
-Vec2::Vec2() {
-	x = 0.0f;
-	y = 0.0f;
-}
-
-Vec2::Vec2(float x, float y) {
-	this->x = x;
-	this->y = y;
-}
-
-Vec2::Vec2(int x, int y) {
-	this->x = (float) x;
-	this->y = (float) y;
-}
-
-Vec2 Vec2::add(Vec2 vec) {
+Vec2 Vec2::add(Vec2 vec) const {
 	return Vec2(this->x + vec.x, this->y + vec.y);
 }
 
-Vec2 Vec2::sub(Vec2 vec) {
+Vec2 Vec2::sub(Vec2 vec) const {
 	return Vec2(this->x - vec.x, this->y - vec.y);
 }
 
-Vec2 Vec2::mul(float scalar) {
+Vec2 Vec2::mul(float scalar) const {
 	return Vec2(this->x * scalar, this->y * scalar);
 }
 
-Vec2 Vec2::norm() {
+Vec2 Vec2::norm() const {
+	if (length() == 0) {
+		return Vec2();
+	}
+
 	return Vec2(this->x / length(), this->y / length());
 }
 
-Vec2 Vec2::rotateTo(Vec2 vec, float length) {
+float Vec2::length() const {
+	return (float) sqrt(pow(this->x, 2) + pow(this->y, 2));
+}
+
+Vec2 Vec2::inv() const {
+	return Vec2(-x, -y);
+}
+
+Vec2 Vec2::rotateTo(Vec2 vec, float length) const {
 	Vec2 res = vec.sub(*this).norm().mul(length);
 
 	return Vec2(res.x, res.y);
 }
 
-float Vec2::length() {
-	return (float) sqrt(pow(this->x, 2) + pow(this->y, 2));
-}
-
-void Vec2::clear() {
-	this->x = 0.0f;
-	this->y = 0.0f;
-}
-
-Vec2 Vec2::inv() const {
-	return Vec2(-x, -y);
+Vec2 Vec2::cross(const Vec2 vec) const {
+	// a2 * b3 - a2 * b2
+	// a3 * b1 - a1 * b3
+	// a1 * b2 - a2 * b1
+	// -----------------
+	// a3 = b3 = 0
+	// -----------------
+	// -a2 * b2
+	// a1 * b2 - a2 * b1
+	
+	return Vec2(-y * vec.y, x * vec.y - y * vec.x);
 }
 
 Vec2 Vec2::getRotatedInstance(const float angleDeg) {
@@ -62,5 +59,3 @@ Vec2 Vec2::getRotatedInstance(const float angleDeg) {
 
 	return Vec2(-cos(angleRad), -sin(angleRad)).norm();
 }
-
-Vec2::~Vec2() {}

@@ -1,6 +1,7 @@
 #ifndef UTIL
 #define UTIL
 
+#include <vector>
 #include "Mat4.h"
 
 #define VERTEX_COMP_SIZE 2
@@ -50,5 +51,21 @@ static Vec2 operator*(const float scalar, const Vec2& vec) {
 static Vec2 operator*(const Vec2& vec, const float scalar) {
 	return Vec2(vec.x * scalar, vec.y * scalar);
 };
+
+static float getArea(const vector<Vec2> triangle) {
+	if (triangle.size() != 3) {
+		printf("Unable to calculate area. Vertex size is %i", triangle.size());
+		return -1;
+	}
+
+	Vec2 pivot = triangle.at(0);
+
+	Vec2 edge1 = triangle.at(1).sub(pivot);
+	Vec2 edge2 = triangle.at(2).sub(pivot);
+
+	Vec2 cross = edge1.cross(edge2);
+
+	return cross.length() / 2.f;
+}
 
 #endif UTIL

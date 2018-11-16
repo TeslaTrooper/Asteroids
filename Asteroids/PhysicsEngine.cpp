@@ -23,26 +23,27 @@ void PhysicsEngine::updateSpeed(const vector<GameObject*> objects, const float d
 		// Fetch all data for physx calculations
 		Vec2 movement = obj->getMovement();
 		float acceleration = obj->getAcceleration();
-
-		Vec2 acc;
-
-		if (acceleration == 0) {
-			// Calculate a "friction-like" acceleration
-			// In this case, 50% of the inverted movement 
-			acc = movement.inv().mul(0.5f);
-		} else {
-			acc = acceleration * obj->getDirection();
-		}
-
-		// dv = a * t
-		Vec2 deltaSpeed = acc * dt;
-		Vec2 resultSpeed = movement + deltaSpeed;
-
-		// Cap velocity to vmax
-		if (resultSpeed.length() >= obj->getVMax()) {
-			resultSpeed = resultSpeed.norm() * obj->getVMax();
-		}
 		
-		obj->setMovement(resultSpeed);
+		// Friction is an acceleration pointing in the opposite direction of current movement
+		Vec2 friction = movement.inv().mul(0.5f);
+		Vec2 directionalAcceleration = acceleration * obj->getDirection();
+
+		// Sum up all accelerations
+		Vec2 resultAcceleration = friction + directionalAcceleration;
+		
+		// dv = a * t
+		Vec2 deltaMovement = resultAcceleration * dt;
+		Vec2 tmpMovement = movement + deltaMovement;
+
+		float currentSpeed = tmpMovement.length();
+
+		// Cap value is based on current speed and the maximum speed the object can have
+		// If current speed is greater, the movement vector gets capped to vmax
+		float capValue = currentSpeed >= obj->getVMax() ? obj->getVMax() : currentSpeed;
+
+		// Cap velocity to capValue
+		Vec2 resultMovement = tmpMovement.norm() * capValue;
+		
+		obj->setMovement(resultMovement);
 	}
 }

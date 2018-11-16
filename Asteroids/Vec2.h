@@ -9,33 +9,24 @@
 class Vec2 {
 
 public:
-	/*
-	Ist die x-Komponente des Vektors.
-	*/
+
 	float x;
-
-
-	/*
-	Ist die y-Komponente des Vektors.
-	*/
 	float y;
-
 
 	/*
 	Erzeugt einen neuen Vektor.
 	*/
-	Vec2();
-
+	Vec2() : x(0.f), y(0.f) {};
 
 	/*
 	Erzeugt einen neuen Vektor.
 	@param x ist die x-Komponente.
 	@param y ist die x-Komponente.
 	*/
-	Vec2(float x, float y);
-	Vec2(int x, int y);
+	Vec2(float x, float y) : x((float)x), y((float)y) {};
+	Vec2(int x, int y) : x(x), y(y) {};
 
-	~Vec2();
+	~Vec2() {};
 
 
 	/*
@@ -43,7 +34,7 @@ public:
 	@pararm der Vektor, um den addiert wird.
 	@return gibt die Summe aus beiden Vektoren zurück.
 	*/
-	Vec2 add(Vec2 vec);
+	Vec2 add(const Vec2 vec) const;
 
 
 	/*
@@ -51,7 +42,7 @@ public:
 	@pararm der Vektor, um den subtrahiert wird.
 	@return gibt die Differenz aus beiden Vektoren zurück.
 	*/
-	Vec2 sub(Vec2 vec);
+	Vec2 sub(const Vec2 vec) const;
 
 
 	/*
@@ -59,13 +50,7 @@ public:
 	@pararm der Vektor, um den multipliziert wird.
 	@return gibt das Produkt aus beiden Vektoren zurück.
 	*/
-	Vec2 mul(float scalar);
-
-
-	/*
-	Löscht alle Elemente des Vektors.
-	*/
-	void clear();
+	Vec2 mul(const float scalar) const;
 
 
 	/*
@@ -74,21 +59,23 @@ public:
 	@length gibt die Länge des neuen Vektors an.
 	@return gibt einen Vektor zurück, der auf vec zeigt und die gegebene Länge besitzt.
 	*/
-	Vec2 rotateTo(Vec2 vec, float length);
+	Vec2 rotateTo(const Vec2 vec, const float length) const;
 
 
 	/*
 	@return gibt den normierten Vektor zurück.
 	*/
-	Vec2 norm();
+	Vec2 norm() const;
 
 
 	/*
 	@return gibt die Länge des Vektors zurück.
 	*/
-	float length();
+	float length() const;
 
 	Vec2 inv() const;
+
+	Vec2 cross(const Vec2 vec) const;
 
 	/*
 	Vergleicht die xy-Komponenten zweier Vektoren auf Gleichheit.

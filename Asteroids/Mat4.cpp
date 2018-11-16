@@ -100,12 +100,10 @@ Mat4 Mat4::mul(const Mat4 mat4) const {
 }
 
 Vec2 Mat4::transform(const Vec2 vec) const {
-	Vec2 result;
+	float x = elements.at(0).at(0) * vec.x + elements.at(1).at(0) * vec.y + elements.at(3).at(0);
+	float y = elements.at(0).at(1) * vec.x + elements.at(1).at(1) * vec.y + elements.at(3).at(1);
 
-	result.x = elements.at(0).at(0) * vec.x + elements.at(1).at(0) * vec.y + elements.at(3).at(0);
-	result.y = elements.at(0).at(1) * vec.x + elements.at(1).at(1) * vec.y + elements.at(3).at(1);
-
-	return result;
+	return Vec2(x, y);
 }
 
 const float* Mat4::ptr(const Mat4 mat) {
