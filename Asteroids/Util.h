@@ -52,20 +52,32 @@ static Vec2 operator*(const Vec2& vec, const float scalar) {
 	return Vec2(vec.x * scalar, vec.y * scalar);
 };
 
-static float getArea(const vector<Vec2> triangle) {
-	if (triangle.size() != 3) {
-		printf("Unable to calculate area. Vertex size is %i", triangle.size());
-		return -1;
+namespace customMath {
+	// Source: https://stackoverflow.com/questions/1375882/mathematically-find-max-value-without-conditional-comparison
+	static float min(const float a, const float b) {
+		return ((a + b) - abs(a - b)) / 2;
 	}
 
-	Vec2 pivot = triangle.at(0);
+	static float max(const float a, const float b) {
+		return ((a + b) + abs(a - b)) / 2;
+	}
 
-	Vec2 edge1 = triangle.at(1).sub(pivot);
-	Vec2 edge2 = triangle.at(2).sub(pivot);
+	// Source: http://www.jeffreythompson.org/collision-detection/tri-point.php
+	static float getArea(const vector<Vec2> triangle) {
+		if (triangle.size() != 3) {
+			printf("Unable to calculate area. Vertex size is %i", triangle.size());
+			return -1;
+		}
 
-	Vec2 cross = edge1.cross(edge2);
+		Vec2 pivot = triangle.at(0);
 
-	return cross.length() / 2.f;
+		Vec2 edge1 = triangle.at(1).sub(pivot);
+		Vec2 edge2 = triangle.at(2).sub(pivot);
+
+		Vec2 cross = edge1.cross(edge2);
+
+		return cross.length() / 2.f;
+	}
 }
 
 #endif UTIL

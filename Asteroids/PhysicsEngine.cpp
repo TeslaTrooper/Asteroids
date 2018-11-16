@@ -26,22 +26,25 @@ void PhysicsEngine::updateSpeed(const vector<GameObject*> objects, const float d
 		
 		// Friction is an acceleration pointing in the opposite direction of current movement
 		Vec2 friction = movement.inv().mul(0.5f);
+		// And we have the normal acceleration, which is triggered by player input
 		Vec2 directionalAcceleration = acceleration * obj->getDirection();
-
 		// Sum up all accelerations
 		Vec2 resultAcceleration = friction + directionalAcceleration;
 		
-		// dv = a * t
+		// We want to know delta movement (step) since last frame
+		// => dV = a * t
 		Vec2 deltaMovement = resultAcceleration * dt;
+		// We want to know the overall movement
+		// => V = a * t + V0 = dV + V0
 		Vec2 tmpMovement = movement + deltaMovement;
 
 		float currentSpeed = tmpMovement.length();
-
+		// To prevent the ship from endless acceleration, we have to cap movement to vmax
 		// Cap value is based on current speed and the maximum speed the object can have
-		// If current speed is greater, the movement vector gets capped to vmax
-		float capValue = currentSpeed >= obj->getVMax() ? obj->getVMax() : currentSpeed;
+		// Therefore, the resulting cap value is min(vmax, currentSpeed)
+		float capValue = customMath::min(currentSpeed, obj->getVMax());
 
-		// Cap velocity to capValue
+		// Cap velocity based on capValue
 		Vec2 resultMovement = tmpMovement.norm() * capValue;
 		
 		obj->setMovement(resultMovement);
