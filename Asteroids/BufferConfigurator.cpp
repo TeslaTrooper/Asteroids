@@ -24,5 +24,5 @@ BufferConfigurator::BufferData BufferConfigurator::configure(const Bindable& bin
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	return { vao, ebo, vbo, indexData.count };
+	return { vao, 0, ebo, vbo, indexData.count, 0, 0 };
 }

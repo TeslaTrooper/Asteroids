@@ -23,7 +23,7 @@ class Window {
 	void initViewport();
 	void initProjectionMatrix();
 
-	void checkKeys(const float dt);
+	void checkInput(const float dt);
 
 public:
 	Window();

@@ -32,3 +32,7 @@ Bindable BindableProvider::getBindable(const Model model) const {
 		default: return modelData->getBindable(model);
 	}
 }
+
+IndexData BindableProvider::getTriangulatedModelData(const Model model) const {
+	return modelData->getTriangulatedModelData(model);
+}

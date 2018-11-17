@@ -19,6 +19,18 @@ const float ModelData::a1Vertices[] = {
 	50, 15,
 	33, 0
 };
+const int ModelData::a1Triangles[] = {
+	0, 1, 11,
+	1, 4, 11,
+	1, 2, 3,
+	1, 3, 4,
+	4, 10, 11,
+	4, 9, 10,
+	4, 7, 9,
+	4, 5, 7,
+	5, 6, 7,
+	7, 8, 9
+};
 const int ModelData::a1VertexCount = 12;
 
 const float ModelData::a2Vertices[] = {
@@ -103,12 +115,12 @@ ModelData::ModelData() {
 }
 
 ModelData::~ModelData() {
-	delete[] &a1Vertices;
-	delete[] &a2Vertices;
-	delete[] &a3Vertices;
-	delete[] &a4Vertices;
-	delete[] &shipVertices;
-	delete[] &saucerVertices;
+	delete[] & a1Vertices;
+	delete[] & a2Vertices;
+	delete[] & a3Vertices;
+	delete[] & a4Vertices;
+	delete[] & shipVertices;
+	delete[] & saucerVertices;
 }
 
 Bindable ModelData::getBindable(const Model model) const {
@@ -116,14 +128,18 @@ Bindable ModelData::getBindable(const Model model) const {
 	IndexData indexData = calcIndices(vertexData.count);
 
 	if (model == Model::SHIP) {
-		return{ vertexData, indexData, SHIP_CROP_BOX };
+		return { vertexData, indexData, SHIP_CROP_BOX };
 	}
 
 	if (model == Model::SAUCER) {
-		return{ vertexData, indexData, SAUCER_CROP_BOX };
+		return { vertexData, indexData, SAUCER_CROP_BOX };
 	}
 
 	return { vertexData, indexData, ASTEROID_CROP_BOX };
+}
+
+IndexData ModelData::getTriangulatedModelData(const Model model) const {
+	return { a1Triangles, 30 };
 }
 
 IndexData ModelData::calcIndices(const int vertexCount) const {

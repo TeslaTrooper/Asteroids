@@ -21,6 +21,7 @@ public:
 	static const Dimension SAUCER_CROP_BOX;
 	static const Vec2 SHIP_CENTER;
 
+	// The following float arrays define the vertices of each single model
 	static const float a1Vertices[];
 	static const float a2Vertices[];
 	static const float a3Vertices[];
@@ -28,6 +29,12 @@ public:
 	static const float shipVertices[];
 	static const float saucerVertices[];
 
+	// For collision detection, we triangulate each model and store
+	// the indices of each single triangle
+	static const int a1Triangles[];
+
+	// In order to process the vertex data defined above, we have to know how
+	// many vertices exists per model
 	static const int a1VertexCount;
 	static const int a2VertexCount;
 	static const int a3VertexCount;
@@ -36,6 +43,7 @@ public:
 	static const int saucerVertexCount;
 
 	Bindable getBindable(const Model model) const;
+	IndexData getTriangulatedModelData(const Model model) const;
 };
 
 #endif MODEL_DATA

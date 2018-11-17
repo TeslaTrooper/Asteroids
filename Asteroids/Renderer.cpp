@@ -26,11 +26,15 @@ void Renderer::draw(const RenderUnit unit) const {
 	BufferConfigurator::BufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
 	glDrawElements(data.drawMode, data.indexCount, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(data.vao1);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
 }
@@ -65,8 +69,17 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 	Bindable untransformedBindable = game->getBindable(model);
 	Bindable bindable = transformVertexDataToOpenGLSpace(untransformedBindable);
 
-	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
+	BufferConfigurator::BufferData data = bufferConfigurator.configure(untransformedBindable);
 	data.drawMode = drawMode;
+
+	// This is only for debugging
+	if (drawMode != GL_TRIANGLES) {
+		IndexData triangles = game->getTriangulatedModelData(model);
+		Bindable triangleBindable = { untransformedBindable.vertexData, triangles, ModelData::ASTEROID_CROP_BOX };
+		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
+		data.vao1 = data1.vao;
+		data.indexCount1 = data1.indexCount;
+	}
 
 	modelMap[model] = data;
 }
@@ -78,12 +91,12 @@ Bindable Renderer::transformVertexDataToOpenGLSpace(const Bindable& bindable) co
 
 	float* transformedVertexData = new float[bindable.vertexData.count * VERTEX_COMP_SIZE];
 
-	for (int i = 0; i < (bindable.vertexData.count * VERTEX_COMP_SIZE) - 1; i+=2) {
-		Vec2 vec = Vec2(bindable.vertexData.vertices[i], bindable.vertexData.vertices[i+1]);
+	for (int i = 0; i < (bindable.vertexData.count * VERTEX_COMP_SIZE) - 1; i += 2) {
+		Vec2 vec = Vec2(bindable.vertexData.vertices[i], bindable.vertexData.vertices[i + 1]);
 		Vec2 transformedVec = transformation.transform(vec);
 
 		transformedVertexData[i] = transformedVec.x;
-		transformedVertexData[i+1] = transformedVec.y;
+		transformedVertexData[i + 1] = transformedVec.y;
 	}
 
 	VertexData data = { transformedVertexData, bindable.vertexData.count };

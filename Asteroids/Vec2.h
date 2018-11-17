@@ -23,8 +23,8 @@ public:
 	@param x ist die x-Komponente.
 	@param y ist die x-Komponente.
 	*/
-	Vec2(float x, float y) : x((float)x), y((float)y) {};
-	Vec2(int x, int y) : x(x), y(y) {};
+	Vec2(float x, float y) : x(x), y(y) {};
+	Vec2(int x, int y) : x((float) x), y((float) y) {};
 
 	~Vec2() {};
 

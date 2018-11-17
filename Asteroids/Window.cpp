@@ -36,6 +36,7 @@ void Window::initWindow() {
 	glGetString(GL_VERSION);
 
 	glfwSetKeyCallback(window, Controller::key_callback);
+	glfwSetCursorPosCallback(window, Controller::cursor_position_callback);
 }
 
 void Window::initViewport() {
@@ -48,11 +49,11 @@ void Window::initViewport() {
 }
 
 void Window::initProjectionMatrix() {
-	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width), 
+	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width),
 		static_cast<GLfloat>(windowSize.height), 0.0f, -100.0f, 100.0f);
 }
 
-void Window::checkKeys(const float dt) {
+void Window::checkInput(const float dt) {
 	if (Controller::isKeyDownPressed()) {
 		printf("Down\n");
 	}
@@ -61,7 +62,7 @@ void Window::checkKeys(const float dt) {
 	}
 
 	game->moveShip(Controller::isKeyUpPressed(), dt);
-	
+
 	if (Controller::isKeyRightPressed()) {
 		game->rotateRight(dt);
 	}
@@ -71,6 +72,8 @@ void Window::checkKeys(const float dt) {
 	if (Controller::isKeySpacePressed()) {
 		printf("Space\n");
 	}
+
+	game->setMousePosition(Controller::getMx(), Controller::getMy());
 }
 
 void Window::loop() {
@@ -80,12 +83,12 @@ void Window::loop() {
 	renderer->setProjection(projection);
 
 	while (!glfwWindowShouldClose(window)) {
-		start = (GLfloat)glfwGetTime();
+		start = (GLfloat) glfwGetTime();
 
 		glfwPollEvents();
 
-		if (dt < (GLfloat)(1000.f / FRAME_RATE) / 1000.f && dt > 0) {
-			dt += (GLfloat)glfwGetTime() - start;
+		if (dt < (GLfloat) (1000.f / FRAME_RATE) / 1000.f && dt > 0) {
+			dt += (GLfloat) glfwGetTime() - start;
 			continue;
 		}
 
@@ -94,11 +97,11 @@ void Window::loop() {
 
 		game->update(dt);
 		renderer->render(dt);
-		checkKeys(dt);
+		checkInput(dt);
 
 		glfwSwapBuffers(window);
 
-		dt = (GLfloat)glfwGetTime() - start;
+		dt = (GLfloat) glfwGetTime() - start;
 	}
 
 	glfwTerminate();

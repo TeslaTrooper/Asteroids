@@ -10,10 +10,10 @@ class BufferConfigurator {
 public:
 
 	struct BufferData {
-		unsigned int vao;
+		unsigned int vao, vao1;
 		unsigned int ebo;
 		unsigned int vbo;
-		int indexCount;
+		int indexCount, indexCount1;
 		int drawMode;
 	};
 

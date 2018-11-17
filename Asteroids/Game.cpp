@@ -3,18 +3,17 @@
 Game::Game(const Dimension windowBounds) {
 	this->windowBounds = windowBounds;
 
-	this->player = entityHandler.create(Model::SHIP, Vec2(100, 100), 1.f);
+	this->player = entityHandler.create(Model::ASTEROID1, Vec2(100, 100), 2.f);
 	this->player->setVMax(5);
 
-	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(300, 300), 1.f);
+	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(300, 300), 2.f);
 	asteroid1->setAngle(0);
 	asteroid1->setVMax(2);
 	asteroid1->setAcceleration(2);
 	asteroid1->setDirection(Vec2(1, 1));
 }
 
-Game::~Game() {
-}
+Game::~Game() {}
 
 void Game::update(const float dt) {
 	physicsEngine.update(entityHandler.get(), dt);
@@ -25,14 +24,14 @@ void Game::update(const float dt) {
 
 void Game::doGameLogic(const float dt) {
 	vector<GameObject*> objects = entityHandler.get();
-	
+
 	checkForOutOfBoundsObjects(objects);
 }
 
 void Game::updateUIElements(const float dt) {
 	fontBuilder.clear();
 
-	int fps = (float)(1000 / (dt * 1e3));
+	int fps = (int) (1000 / (dt * 1e3));
 	if (fps < 0) fps = 0;
 
 	//printf("FPS: %i \n", fps);
@@ -64,6 +63,10 @@ Bindable Game::getBindable(const Model model) const {
 	return bindableProvider.getBindable(model);
 }
 
+IndexData Game::getTriangulatedModelData(const Model model) const {
+	return bindableProvider.getTriangulatedModelData(model);
+}
+
 void Game::moveShip(const bool moving, const float dt) {
 	player->setAcceleration(moving ? 1.f : 0.f);
 }
@@ -76,13 +79,18 @@ void Game::rotateRight(const float dt) {
 	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
 }
 
+void Game::setMousePosition(const double mx, const double my) {
+	physicsEngine.mx = mx;
+	physicsEngine.my = my;
+}
+
 void Game::checkForOutOfBoundsObjects(const vector<GameObject*> objects) const {
 	for each (GameObject* obj in objects) {
 		if (obj->getPosition().x >= windowBounds.width) {
 			obj->setPosition(Vec2(0.f, obj->getPosition().y));
 		}
 		if (obj->getPosition().x < 0) {
-			obj->setPosition(Vec2((float)windowBounds.width, obj->getPosition().y));
+			obj->setPosition(Vec2((float) windowBounds.width, obj->getPosition().y));
 		}
 		if (obj->getPosition().y >= windowBounds.height) {
 			obj->setPosition(Vec2(obj->getPosition().x, 0.f));

@@ -5,6 +5,8 @@ bool Controller::KEY_RIGHT = false;
 bool Controller::KEY_LEFT = false;
 bool Controller::KEY_UP = false;
 bool Controller::KEY_DOWN = false;
+double Controller::M_X = 0;
+double Controller::M_Y = 0;
 
 void Controller::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (action == GLFW_PRESS) {
@@ -24,6 +26,11 @@ void Controller::key_callback(GLFWwindow* window, int key, int scancode, int act
 		case GLFW_KEY_RIGHT: KEY_RIGHT = false;
 		}
 	}
+}
+
+void Controller::cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+	M_X = xpos;
+	M_Y = ypos;
 }
 
 bool Controller::getAndClean(bool* key) {
@@ -51,4 +58,12 @@ bool Controller::isKeyLeftPressed() {
 
 bool Controller::isKeyRightPressed() {
 	return KEY_RIGHT;
+}
+
+double Controller::getMx() {
+	return M_X;
+}
+
+double Controller::getMy() {
+	return M_Y;
 }

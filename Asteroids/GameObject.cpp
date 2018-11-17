@@ -8,13 +8,10 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->acceleration = 0;
 	this->vmax = 0;
 	this->angle = 90;
+	this->isIntersecting = true;
 
 	// Default direction points upwards
 	this->direction = Vec2(0, -1);
-}
-
-void GameObject::useFriction() {
-	this->friction = true;
 }
 
 void GameObject::setDirection(const Vec2 direction) {
@@ -51,6 +48,10 @@ void GameObject::setMovement(const Vec2 movement) {
 	this->movement = movement;
 }
 
+void GameObject::setIsIntersecting(const bool value) {
+	this->isIntersecting = value;
+}
+
 void GameObject::setAngle(const int angle) {
 	if (angle < 0) {
 		this->angle = 360 + angle;
@@ -73,7 +74,7 @@ void GameObject::rotate(const int direction, const float dt) {
 	// We want a complete rotation to take 2 seconds
 	// So, we have a rotation velocity of 180 degrees per second
 	// s = v * t | dAngle = 180 * dt
-	int dAngle = (int)(180.f * dt);
+	int dAngle = (int) (180.f * dt);
 
 	if (direction == POSITIVE_ROTATION) {
 		setAngle(angle - dAngle);
