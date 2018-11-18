@@ -36,10 +36,10 @@ const float FontData::char0Vertices[] = {
 	0, h,
 	w, h,
 	w, 0,
-	w-a, a,
+	w - a, a,
 	a, a,
-	a, h-a,
-	w-a, h-a
+	a, h - a,
+	w - a, h - a
 };
 const int FontData::char0VertexCount = 8;
 
@@ -49,7 +49,7 @@ const int FontData::char0Indices[] = {
 const int FontData::char0IndexCount = 24;
 
 const float FontData::char1Vertices[] = {
-	(w/2.0f)-(a/2.0f), 0,
+	(w / 2.0f) - (a / 2.0f), 0,
 	(w / 2.0f) - (a / 2.0f), h,
 	(w / 2.0f) + (a / 2.0f), h,
 	(w / 2.0f) + (a / 2.0f), 0
@@ -64,9 +64,9 @@ const int FontData::char1IndexCount = 6;
 const float FontData::char2Vertices[] = {
 	0, 0,
 	0, b,
-	w-a, b,
-	w-a, h-a,
-	0, h-a,
+	w - a, b,
+	w - a, h - a,
+	0, h - a,
 	0, h,
 	w, h,
 	w, c,
@@ -85,13 +85,13 @@ const int FontData::char2IndexCount = 30;
 const float FontData::char3Vertices[] = {
 	0, 0,
 	0, a,
-	w-a, a,
-	w-a, c,
+	w - a, a,
+	w - a, c,
 	0, c,
 	0, b,
-	w-a, b,
-	w-a, h-a,
-	0, h-a,
+	w - a, b,
+	w - a, h - a,
+	0, h - a,
 	0, h,
 	w, h,
 	w, 0
@@ -108,12 +108,12 @@ const float FontData::char4Vertices[] = {
 	0, h,
 	a, h,
 	a, b,
-	w-a, b,
-	w-a, h,
+	w - a, b,
+	w - a, h,
 	w, h,
 	w, 0,
-	w-a, 0,
-	w-a, c
+	w - a, 0,
+	w - a, c
 };
 const int FontData::char4VertexCount = 10;
 
@@ -131,8 +131,8 @@ const float FontData::char5Vertices[] = {
 	w, h,
 	0, h,
 	0, c,
-	w-a, c,
-	w-a, a,
+	w - a, c,
+	w - a, a,
 	0, a,
 	0, 0
 };
@@ -184,12 +184,12 @@ const float FontData::char8Vertices[] = {
 	w, 0,
 	a, a,
 	a, c,
-	w-a, c,
-	w-a, a,
+	w - a, c,
+	w - a, a,
 	a, b,
-	a, h-a,
-	w-a, h-a,
-	w-a, b
+	a, h - a,
+	w - a, h - a,
+	w - a, b
 };
 const int FontData::char8VertexCount = 12;
 
@@ -201,14 +201,14 @@ const int FontData::char8IndexCount = 42;
 const float FontData::char9Vertices[] = {
 	w, h,
 	w, 0,
-	w-a, 0,
-	w-a, h-b,
-	0, h-b,
+	w - a, 0,
+	w - a, h - b,
+	0, h - b,
 	0, h,
-	w-a, h-a,
-	w-a, h-c,
-	a, h-c,
-	a, h-a
+	w - a, h - a,
+	w - a, h - c,
+	a, h - c,
+	a, h - a
 };
 const int FontData::char9VertexCount = 10;
 
@@ -267,8 +267,5 @@ FontData::~FontData() {
 }
 
 Bindable FontData::getBindable(const Model character) const {
-	Bindable bindable = vertexDataMap.at(character);
-	bindable.cropBox = { w, h };
-
-	return bindable;
+	return vertexDataMap.at(character);;
 }

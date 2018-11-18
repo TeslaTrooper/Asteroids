@@ -8,7 +8,12 @@ using namespace std;
 
 class ModelData {
 
-	map<Model, VertexData> vertexDataMap;
+	struct Data {
+		VertexData vertexData;
+		IndexData collisionTriangles;
+	};
+
+	map<Model, Data> dataMap;
 
 	IndexData calcIndices(const int vertexCount) const;
 
@@ -32,6 +37,11 @@ public:
 	// For collision detection, we triangulate each model and store
 	// the indices of each single triangle
 	static const int a1Triangles[];
+	static const int a2Triangles[];
+	static const int a3Triangles[];
+	static const int a4Triangles[];
+	static const int shipTriangles[];
+	static const int saucerTriangles[];
 
 	// In order to process the vertex data defined above, we have to know how
 	// many vertices exists per model

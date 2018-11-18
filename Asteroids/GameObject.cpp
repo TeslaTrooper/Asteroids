@@ -8,7 +8,9 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->acceleration = 0;
 	this->vmax = 0;
 	this->angle = 90;
-	this->isIntersecting = true;
+	this->isIntersecting = false;
+
+	this->modelClass = getClassFromModel(model);
 
 	// Default direction points upwards
 	this->direction = Vec2(0, -1);

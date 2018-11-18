@@ -47,6 +47,18 @@ const float ModelData::a2Vertices[] = {
 	100, 0,
 	70, 15
 };
+const int ModelData::a2Triangles[] = {
+	0, 1, 11,
+	1, 2, 8,
+	2, 3, 8,
+	1, 8, 11,
+	8, 10, 11,
+	8, 9, 10,
+	3, 7, 8,
+	3, 6, 7,
+	3, 5, 6,
+	3, 4, 5
+};
 const int ModelData::a2VertexCount = 12;
 
 const float ModelData::a3Vertices[] = {
@@ -62,6 +74,17 @@ const float ModelData::a3Vertices[] = {
 	40, 0,
 	45, 30,
 };
+const int ModelData::a3Triangles[] = {
+	0, 1, 10,
+	1, 2, 10,
+	2, 4, 10,
+	2, 3, 4,
+	4, 5, 10,
+	5, 6, 10,
+	6, 7, 10,
+	7, 8, 10,
+	8, 9, 10
+};
 const int ModelData::a3VertexCount = 11;
 
 const float ModelData::a4Vertices[] = {
@@ -76,6 +99,16 @@ const float ModelData::a4Vertices[] = {
 	125, 30,
 	75, 0,
 };
+const int ModelData::a4Triangles[] = {
+	0, 1, 4,
+	1, 2, 4,
+	2, 3, 4,
+	4, 5, 6,
+	4, 6, 7,
+	4, 7, 8,
+	4, 8, 9,
+	0, 4, 9
+};
 const int ModelData::a4VertexCount = 10;
 
 const float ModelData::shipVertices[] = {
@@ -84,6 +117,11 @@ const float ModelData::shipVertices[] = {
 	40, 17,
 	30, 14.9f,
 	30, 2.09f
+};
+const int ModelData::shipTriangles[] = {
+	1, 3, 4,
+	0, 4, 3,
+	2, 3, 4
 };
 const int ModelData::shipVertexCount = 5;
 
@@ -103,15 +141,23 @@ const float ModelData::saucerVertices[] = {
 	0, 7,
 	12.5f, 13.5f
 };
+const int ModelData::saucerTriangles[] = {
+	1, 2, 3,
+	0, 3, 1,
+	0, 5, 3,
+	5, 6, 3,
+	3, 6, 7,
+	3, 7, 8
+};
 const int ModelData::saucerVertexCount = 14;
 
 ModelData::ModelData() {
-	vertexDataMap[Model::ASTEROID1] = { a1Vertices, a1VertexCount };
-	vertexDataMap[Model::ASTEROID2] = { a2Vertices, a2VertexCount };
-	vertexDataMap[Model::ASTEROID3] = { a3Vertices, a3VertexCount };
-	vertexDataMap[Model::ASTEROID4] = { a4Vertices, a4VertexCount };
-	vertexDataMap[Model::SHIP] = { shipVertices, shipVertexCount };
-	vertexDataMap[Model::SAUCER] = { saucerVertices, saucerVertexCount };
+	dataMap[Model::ASTEROID1] = { { a1Vertices, a1VertexCount }, { a1Triangles, 30 } };
+	dataMap[Model::ASTEROID2] = { { a2Vertices, a2VertexCount }, { a2Triangles, 30 } };
+	dataMap[Model::ASTEROID3] = { { a3Vertices, a3VertexCount }, { a3Triangles, 27 } };
+	dataMap[Model::ASTEROID4] = { { a4Vertices, a4VertexCount }, { a4Triangles, 24 } };
+	dataMap[Model::SHIP] = { { shipVertices, shipVertexCount }, { shipTriangles, 9 } };
+	dataMap[Model::SAUCER] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
 }
 
 ModelData::~ModelData() {
@@ -124,22 +170,14 @@ ModelData::~ModelData() {
 }
 
 Bindable ModelData::getBindable(const Model model) const {
-	VertexData vertexData = vertexDataMap.at(model);
+	VertexData vertexData = dataMap.at(model).vertexData;
 	IndexData indexData = calcIndices(vertexData.count);
 
-	if (model == Model::SHIP) {
-		return { vertexData, indexData, SHIP_CROP_BOX };
-	}
-
-	if (model == Model::SAUCER) {
-		return { vertexData, indexData, SAUCER_CROP_BOX };
-	}
-
-	return { vertexData, indexData, ASTEROID_CROP_BOX };
+	return { vertexData, indexData };
 }
 
 IndexData ModelData::getTriangulatedModelData(const Model model) const {
-	return { a1Triangles, 30 };
+	return dataMap.at(model).collisionTriangles;
 }
 
 IndexData ModelData::calcIndices(const int vertexCount) const {

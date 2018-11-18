@@ -6,6 +6,10 @@
 
 #define VERTEX_COMP_SIZE 2
 
+enum ModelClass {
+	CLASS_ASTEROID, CLASS_SHIP, CLASS_SAUCER, CLASS_PROJECTILE
+};
+
 enum Model {
 	ASTEROID1, ASTEROID2, ASTEROID3, ASTEROID4, SHIP, SAUCER,
 	CHARA, CHAR0, CHAR1,
@@ -32,7 +36,6 @@ struct VertexData {
 struct Bindable {
 	VertexData vertexData;
 	IndexData indexData;
-	Dimension cropBox;
 };
 
 struct RenderUnit {
@@ -92,6 +95,18 @@ static vector<Triangle> convertVerticesToTriangles(const vector<Vec2> vertices, 
 	}
 
 	return triangles;
+}
+
+static ModelClass getClassFromModel(const Model model) {
+	switch (model) {
+	case ASTEROID1:
+	case ASTEROID2:
+	case ASTEROID3:
+	case ASTEROID4: return CLASS_ASTEROID; break;
+	case SHIP: return CLASS_SHIP; break;
+	case SAUCER: return CLASS_SAUCER; break;
+	default: return CLASS_ASTEROID; break;
+	}
 }
 
 namespace customMath {

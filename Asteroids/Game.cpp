@@ -3,15 +3,39 @@
 Game::Game(const Dimension windowBounds) {
 	this->windowBounds = windowBounds;
 
-	this->player = entityHandler.create(Model::ASTEROID1, Vec2(100, 350), 1.f);
+	this->player = entityHandler.create(Model::SHIP, Vec2(100, 350), 1.f);
 	this->player->setVMax(5);
 	this->player->setAngle(0);
 
-	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(0, 0), 2.f);
+	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(0, 0), 1.f);
 	asteroid1->setAngle(0);
 	asteroid1->setVMax(2);
 	asteroid1->setAcceleration(2);
 	asteroid1->setDirection(Vec2(1, 1));
+
+	GameObject* asteroid2 = entityHandler.create(Model::ASTEROID2, Vec2(150, 0), 1.f);
+	asteroid2->setAngle(0);
+	asteroid2->setVMax(2);
+	asteroid2->setAcceleration(2);
+	asteroid2->setDirection(Vec2(1, -1));
+
+	GameObject* asteroid3 = entityHandler.create(Model::ASTEROID3, Vec2(300, 0), 1.f);
+	asteroid3->setAngle(0);
+	asteroid3->setVMax(2);
+	asteroid3->setAcceleration(2);
+	asteroid3->setDirection(Vec2(-1, 1));
+
+	GameObject* asteroid4 = entityHandler.create(Model::ASTEROID4, Vec2(300, 300), 1.f);
+	asteroid4->setAngle(0);
+	asteroid4->setVMax(2);
+	asteroid4->setAcceleration(2);
+	asteroid4->setDirection(Vec2(-1, -1));
+
+	GameObject* saucer = entityHandler.create(Model::SAUCER, Vec2(300, 450), 1.f);
+	saucer->setAngle(0);
+	saucer->setVMax(2);
+	saucer->setAcceleration(2);
+	saucer->setDirection(Vec2(1.f, 0.5f));
 }
 
 Game::~Game() {}

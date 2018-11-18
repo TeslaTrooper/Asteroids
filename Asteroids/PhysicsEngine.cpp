@@ -61,7 +61,7 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 
 	for each (GameObject* outerObj in objects) {
 		for each (GameObject* innerObj in objects) {
-			if (outerObj == innerObj) {
+			if (outerObj->getModelClass() == innerObj->getModelClass()) {
 				continue;
 			}
 

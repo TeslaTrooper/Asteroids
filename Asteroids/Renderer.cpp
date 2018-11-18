@@ -104,7 +104,7 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 	// This is only for debugging
 	if (drawMode != GL_TRIANGLES) {
 		IndexData triangles = game->getTriangulatedModelData(model);
-		Bindable triangleBindable = { bindable.vertexData, triangles, ModelData::ASTEROID_CROP_BOX };
+		Bindable triangleBindable = { bindable.vertexData, triangles };
 		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
 		data.vao1 = data1.vao;
 		data.indexCount1 = data1.indexCount;

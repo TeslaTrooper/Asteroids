@@ -8,6 +8,7 @@
 class GameObject {
 
 	Model model;
+	ModelClass modelClass;
 
 	Vec2 position;
 	Vec2 direction;
@@ -48,6 +49,7 @@ public:
 	Vec2 getMovement() const { return movement; };
 	Model getModel() const { return model; };
 	bool hasIntersection() const { return isIntersecting; };
+	ModelClass getModelClass() const { return modelClass; };
 	RenderUnit getRenderUnit() const;
 
 };
