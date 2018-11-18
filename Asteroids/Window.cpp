@@ -8,7 +8,7 @@ Window::Window() {
 	initProjectionMatrix();
 
 	game = new Game(windowSize);
-	renderer = new Renderer(game);
+	renderer = new Renderer(game, windowSize);
 }
 
 Window::~Window() {

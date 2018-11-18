@@ -3,10 +3,11 @@
 Game::Game(const Dimension windowBounds) {
 	this->windowBounds = windowBounds;
 
-	this->player = entityHandler.create(Model::ASTEROID1, Vec2(100, 100), 2.f);
+	this->player = entityHandler.create(Model::ASTEROID1, Vec2(100, 350), 1.f);
 	this->player->setVMax(5);
+	this->player->setAngle(0);
 
-	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(300, 300), 2.f);
+	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(0, 0), 2.f);
 	asteroid1->setAngle(0);
 	asteroid1->setVMax(2);
 	asteroid1->setAcceleration(2);
@@ -72,11 +73,11 @@ void Game::moveShip(const bool moving, const float dt) {
 }
 
 void Game::rotateLeft(const float dt) {
-	player->rotate(GameObject::POSITIVE_ROTATION, dt);
+	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
 }
 
 void Game::rotateRight(const float dt) {
-	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
+	player->rotate(GameObject::POSITIVE_ROTATION, dt);
 }
 
 void Game::setMousePosition(const double mx, const double my) {

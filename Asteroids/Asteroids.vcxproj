@@ -194,6 +194,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="framebufferShader.frag" />
+    <None Include="framebufferShader.vert" />
     <None Include="shader.frag" />
     <None Include="shader.vert" />
   </ItemGroup>

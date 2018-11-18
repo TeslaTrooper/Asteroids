@@ -2,9 +2,9 @@
 
 ShaderProgram::ShaderProgram() {}
 
-GLuint ShaderProgram::createShaderProgram() const {
-	char* vertexShaderSource = readShaderFile("shader.vert");
-	char* fragmentShaderSource = readShaderFile("shader.frag");
+GLuint ShaderProgram::createShaderProgram(const char* vertexShaderFile, const char* fragmentShaderFile) const {
+	char* vertexShaderSource = readShaderFile(vertexShaderFile);
+	char* fragmentShaderSource = readShaderFile(fragmentShaderFile);
 
 	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
 	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);

@@ -1,32 +1,49 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Game* game) {
+Renderer::Renderer(Game* const game, const Dimension winSize) {
 	this->game = game;
+	this->winSize = winSize;
 
-	ShaderProgram shaderProgramm;
-	shaderProgramID = shaderProgramm.createShaderProgram();
+	ShaderProgram standardShaderProgramm;
+	GLuint standardShaderID = standardShaderProgramm.createShaderProgram("shader.vert", "shader.frag");
+	standardShader = new Shader(standardShaderID);
 
-	shader = new Shader(shaderProgramID);
+	ShaderProgram framebufferShaderProgramm;
+	GLuint framebufferShaderID = framebufferShaderProgramm.createShaderProgram("framebufferShader.vert", "framebufferShader.frag");
+	framebufferShader = new Shader(framebufferShaderID);
+
+	framebuffer = bufferConfigurator.createFrameBuffer(winSize);
+	screenQuad = bufferConfigurator.configureScreenQuad();
 
 	loadModelDatas();
 }
 
 void Renderer::render(const float dt) const {
-	shader->use();
+	beginDraw();
 
 	vector<RenderUnit> units = game->getRenderUnits();
 	for each (RenderUnit unit in units) {
 		draw(unit);
 	}
+
+	endDraw();
+}
+
+void Renderer::beginDraw() const {
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer.id);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	standardShader->use();
 }
 
 void Renderer::draw(const RenderUnit unit) const {
-	shader->setUniformMatrix4(TRANSFORM, unit.transformation);
+	standardShader->setUniformMatrix4(TRANSFORM, unit.transformation);
 
 	BufferConfigurator::BufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
@@ -35,13 +52,26 @@ void Renderer::draw(const RenderUnit unit) const {
 	glBindVertexArray(data.vao1);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindVertexArray(0);
 }
 
+void Renderer::endDraw() const {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	framebufferShader->use();
+	glBindVertexArray(screenQuad.vao);
+	glBindTexture(GL_TEXTURE_2D, framebuffer.textureAttachment);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 void Renderer::setProjection(const Mat4 projection) const {
-	shader->use();
-	shader->setUniformMatrix4(PROJECTION, projection);
+	standardShader->use();
+	standardShader->setUniformMatrix4(PROJECTION, projection);
 }
 
 void Renderer::loadModelDatas() {
@@ -66,42 +96,21 @@ void Renderer::loadModelDatas() {
 }
 
 void Renderer::loadModelData(const Model model, const int drawMode) {
-	Bindable untransformedBindable = game->getBindable(model);
-	Bindable bindable = transformVertexDataToOpenGLSpace(untransformedBindable);
+	Bindable bindable = game->getBindable(model);
 
-	BufferConfigurator::BufferData data = bufferConfigurator.configure(untransformedBindable);
+	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
 	data.drawMode = drawMode;
 
 	// This is only for debugging
 	if (drawMode != GL_TRIANGLES) {
 		IndexData triangles = game->getTriangulatedModelData(model);
-		Bindable triangleBindable = { untransformedBindable.vertexData, triangles, ModelData::ASTEROID_CROP_BOX };
+		Bindable triangleBindable = { bindable.vertexData, triangles, ModelData::ASTEROID_CROP_BOX };
 		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
 		data.vao1 = data1.vao;
 		data.indexCount1 = data1.indexCount;
 	}
 
 	modelMap[model] = data;
-}
-
-Bindable Renderer::transformVertexDataToOpenGLSpace(const Bindable& bindable) const {
-	Mat4 rotationX = Mat4::rotateX(180);
-	Mat4 translationY = Mat4::translate(Vec2(0.0f, (float) -bindable.cropBox.height));
-	Mat4 transformation = rotationX.mul(translationY);
-
-	float* transformedVertexData = new float[bindable.vertexData.count * VERTEX_COMP_SIZE];
-
-	for (int i = 0; i < (bindable.vertexData.count * VERTEX_COMP_SIZE) - 1; i += 2) {
-		Vec2 vec = Vec2(bindable.vertexData.vertices[i], bindable.vertexData.vertices[i + 1]);
-		Vec2 transformedVec = transformation.transform(vec);
-
-		transformedVertexData[i] = transformedVec.x;
-		transformedVertexData[i + 1] = transformedVec.y;
-	}
-
-	VertexData data = { transformedVertexData, bindable.vertexData.count };
-
-	return { data, bindable.indexData, bindable.cropBox };
 }
 
 Renderer::~Renderer() {
@@ -113,5 +122,5 @@ Renderer::~Renderer() {
 		glDeleteBuffers(1, &data.vbo);
 	}
 
-	delete shader;
+	delete standardShader;
 }

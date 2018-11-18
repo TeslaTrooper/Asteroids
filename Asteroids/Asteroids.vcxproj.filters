@@ -163,5 +163,11 @@
     <None Include="shader.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="framebufferShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="framebufferShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

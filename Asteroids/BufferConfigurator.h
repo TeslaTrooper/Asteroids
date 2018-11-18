@@ -17,7 +17,14 @@ public:
 		int drawMode;
 	};
 
+	struct FrameBuffer {
+		unsigned int id;
+		unsigned int textureAttachment;
+	};
+
 	BufferData configure(const Bindable& bindable) const;
+	BufferData configureScreenQuad() const;
+	FrameBuffer createFrameBuffer(const Dimension winSize) const;
 
 };
 

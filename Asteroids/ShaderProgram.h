@@ -24,7 +24,7 @@ public:
 	Erzeugt aus den zwei Shadern ein fertiges Shader Program.
 	@return Gibt die von OpenGL erzeugte ID zu diesem Program zurück.
 	*/
-	GLuint createShaderProgram() const;
+	GLuint createShaderProgram(const char* vertexShaderFile, const char* fragmentShaderFile) const;
 
 };
 

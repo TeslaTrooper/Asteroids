@@ -12,20 +12,27 @@
 
 class Renderer {
 
+	Dimension winSize;
+
 	Game* game;
 
-	GLuint shaderProgramID;
-	Shader* shader;
+	Shader* standardShader;
+	Shader* framebufferShader;
+
+	BufferConfigurator::FrameBuffer framebuffer;
+	BufferConfigurator::BufferData screenQuad;
 	BufferConfigurator bufferConfigurator;
 	map<Model, BufferConfigurator::BufferData> modelMap;
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
+
+	void beginDraw() const;
 	void draw(const RenderUnit unit) const;
-	Bindable transformVertexDataToOpenGLSpace(const Bindable& bindable) const;
+	void endDraw() const;
 
 public:
-	Renderer(Game* game);
+	Renderer(Game* const game, const Dimension winSize);
 	~Renderer();
 
 	void render(const float dt) const;
