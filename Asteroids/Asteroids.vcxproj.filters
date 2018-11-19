@@ -102,6 +102,9 @@
     <ClCompile Include="BindableProvider.cpp">
       <Filter>Source Files\core\api</Filter>
     </ClCompile>
+    <ClCompile Include="InternalLogic.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="BindableProvider.h">
       <Filter>Header Files\core\api</Filter>
+    </ClInclude>
+    <ClInclude Include="InternalLogic.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

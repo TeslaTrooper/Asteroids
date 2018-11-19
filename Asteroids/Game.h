@@ -11,6 +11,7 @@
 #include "PhysicsEngine.h"
 #include "EntityHandler.h"
 #include "BindableProvider.h"
+#include "InternalLogic.h"
 
 class Game {
 
@@ -18,18 +19,13 @@ class Game {
 	FontData fontdata;
 	FontBuilder fontBuilder;
 	PhysicsEngine physicsEngine;
-	EntityHandler entityHandler;
 	BindableProvider bindableProvider;
+	InternalLogic internalLogic;
 
 	vector<RenderUnit> renderUnits;
 
-	Dimension windowBounds;
-	GameObject* player;
-
-	void doGameLogic(const float dt);
 	void updateUIElements(const float dt);
 	void prepareRenderUnits();
-	void checkForOutOfBoundsObjects(const vector<GameObject*> objects) const;
 
 public:
 	Game(const Dimension windowBounds);
@@ -52,7 +48,6 @@ public:
 	void moveShip(const bool moving, const float dt);
 	void rotateLeft(const float dt);
 	void rotateRight(const float dt);
-	void setMousePosition(const double mx, const double my);
 
 
 };

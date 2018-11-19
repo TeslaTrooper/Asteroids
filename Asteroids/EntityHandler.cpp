@@ -7,7 +7,7 @@ GameObject* EntityHandler::create(const Model model, const Vec2 position, const 
 	return object;
 }
 
-vector<GameObject*> EntityHandler::get() {
+vector<GameObject*> EntityHandler::get() const {
 	return gameObjects;
 }
 

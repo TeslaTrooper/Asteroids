@@ -123,7 +123,6 @@ bool PhysicsEngine::detectTrianglePointIntersection(const Vec2 vertex, const Tri
 	Vec2 b = triangle.p2;
 	Vec2 c = triangle.p3;
 
-
 	double zaehler1 = a.x * (c.y - a.y) + (vertex.y - a.y) * (c.x - a.x) - vertex.x * (c.y - a.y);
 	double nenner1 = (b.y - a.y) * (c.x - a.x) - (b.x - a.x) * (c.y - a.y);
 	double w1 = zaehler1 / nenner1;

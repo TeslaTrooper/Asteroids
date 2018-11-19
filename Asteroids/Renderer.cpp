@@ -51,7 +51,7 @@ void Renderer::draw(const RenderUnit unit) const {
 
 	glBindVertexArray(data.vao1);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindVertexArray(0);
@@ -81,6 +81,7 @@ void Renderer::loadModelDatas() {
 	loadModelData(Model::ASTEROID4, GL_LINES);
 	loadModelData(Model::SHIP, GL_LINES);
 	loadModelData(Model::SAUCER, GL_LINES);
+	loadModelData(Model::SHIP_MOVING, GL_LINES);
 
 	loadModelData(Model::CHARA, GL_TRIANGLES);
 	loadModelData(Model::CHAR0, GL_TRIANGLES);

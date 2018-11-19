@@ -151,6 +151,19 @@ const int ModelData::saucerTriangles[] = {
 };
 const int ModelData::saucerVertexCount = 14;
 
+const float ModelData::shipMovingVertices[] = {
+	40, 0,
+	0, 8.5f,
+	40, 17,
+	30, 14.9f,
+	30, 2.09f,
+	30, 5,
+	37, 8.5f,
+	30, 12.5f,
+	30, 2.09f,
+};
+const int ModelData::shipMovingVertexCount = 9;
+
 ModelData::ModelData() {
 	dataMap[Model::ASTEROID1] = { { a1Vertices, a1VertexCount }, { a1Triangles, 30 } };
 	dataMap[Model::ASTEROID2] = { { a2Vertices, a2VertexCount }, { a2Triangles, 30 } };
@@ -158,6 +171,7 @@ ModelData::ModelData() {
 	dataMap[Model::ASTEROID4] = { { a4Vertices, a4VertexCount }, { a4Triangles, 24 } };
 	dataMap[Model::SHIP] = { { shipVertices, shipVertexCount }, { shipTriangles, 9 } };
 	dataMap[Model::SAUCER] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
+	dataMap[Model::SHIP_MOVING] = { { shipMovingVertices, shipMovingVertexCount }, { shipTriangles, 9 } };
 }
 
 ModelData::~ModelData() {

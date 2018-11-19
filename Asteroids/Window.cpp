@@ -72,8 +72,6 @@ void Window::checkInput(const float dt) {
 	if (Controller::isKeySpacePressed()) {
 		printf("Space\n");
 	}
-
-	game->setMousePosition(Controller::getMx(), Controller::getMy());
 }
 
 void Window::loop() {

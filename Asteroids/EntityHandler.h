@@ -16,7 +16,7 @@ public:
 
 	GameObject* create(const Model model, const Vec2 position, const float size);
 	void clear();
-	vector<GameObject*> get();
+	vector<GameObject*> get() const;
 };
 
 #endif ENTITY_HANDLER

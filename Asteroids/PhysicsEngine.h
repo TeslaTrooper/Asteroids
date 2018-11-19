@@ -20,8 +20,6 @@ class PhysicsEngine {
 
 public:
 
-	double mx, my;
-
 	PhysicsEngine() {};
 	~PhysicsEngine() {};
 
