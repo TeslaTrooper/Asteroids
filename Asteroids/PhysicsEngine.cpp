@@ -87,7 +87,6 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 			if (hasIntersection) {
 				outerObj->setIsIntersecting(true);
 				innerObj->setIsIntersecting(true);
-				printf("Z");
 			}
 		}
 	}
@@ -120,12 +119,6 @@ bool PhysicsEngine::detectTrianglePointIntersection(const vector<Vec2> vertices,
 // Source: http://www.jeffreythompson.org/collision-detection/tri-point.php
 // Source: https://www.youtube.com/watch?v=HYAgJN3x4GA
 bool PhysicsEngine::detectTrianglePointIntersection(const Vec2 vertex, const Triangle& triangle) const {
-	/*Triangle t1 = { vertex, triangle.p1, triangle.p2 };
-	Triangle t2 = { vertex, triangle.p2, triangle.p3 };
-	Triangle t3 = { vertex, triangle.p3, triangle.p1 };
-
-	return (int) ((t1.getArea() + t2.getArea() + t3.getArea()) * 1000) == (int) (triangle.getArea() * 1000);*/
-
 	Vec2 a = triangle.p1;
 	Vec2 b = triangle.p2;
 	Vec2 c = triangle.p3;
