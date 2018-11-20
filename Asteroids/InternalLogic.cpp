@@ -1,7 +1,7 @@
 #include "InternalLogic.h"
 
 void InternalLogic::createInitialEntities() {
-	this->player = entityHandler.create(Model::SHIP_MOVING, Vec2(100, 350), 1.f);
+	this->player = entityHandler.createPlayer(Vec2(100, 350), 1.f);
 	this->player->setVMax(5);
 
 	GameObject* asteroid1 = entityHandler.create(Model::ASTEROID1, Vec2(0, 0), 1.f);
@@ -38,6 +38,10 @@ void InternalLogic::createInitialEntities() {
 void InternalLogic::update(const float dt) {
 	vector<GameObject*> objects = entityHandler.get();
 
+	for each (GameObject* obj in objects) {
+		obj->update(dt);
+	}
+
 	checkForOutOfBoundsObjects(objects);
 }
 
@@ -68,3 +72,4 @@ vector<RenderUnit> InternalLogic::getRenderUnits() const {
 
 	return units;
 }
+

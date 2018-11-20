@@ -25,9 +25,9 @@ void Window::initOpenGL() {
 }
 
 void Window::initWindow() {
-	window = glfwCreateWindow(700, 500, "Asteroids | OpenGL", nullptr, nullptr);
+	window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL", nullptr, nullptr);
 
-	glfwSetWindowPos(window, 500, 100);
+	glfwSetWindowPos(window, WIN_POS_X, WIN_POS_Y);
 	glfwMakeContextCurrent(window);
 
 	glewExperimental = GL_TRUE;

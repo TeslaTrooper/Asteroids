@@ -4,16 +4,20 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->model = model;
 	this->position = position;
 	this->scale = scale;
-	this->speed = 0;
 	this->acceleration = 0;
 	this->vmax = 0;
-	this->angle = 90;
+	this->angle = 270;
 	this->isIntersecting = false;
+	this->lifetime = 0;
 
 	this->modelClass = getClassFromModel(model);
 
 	// Default direction points upwards
-	this->direction = Vec2(0, -1);
+	this->direction = Vec2(0, 1);
+}
+
+void GameObject::update(const float dt) {
+	this->lifetime += dt;
 }
 
 void GameObject::setDirection(const Vec2 direction) {
@@ -32,10 +36,6 @@ void GameObject::setAcceleration(const float value) {
 		this->direction = Vec2::getRotatedInstance(angle);
 		this->acceleration = vmax / value;
 	}
-}
-
-void GameObject::setSpeed(const float value) {
-	this->speed = value;
 }
 
 void GameObject::setVMax(const float value) {

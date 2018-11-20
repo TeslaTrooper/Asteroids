@@ -14,13 +14,16 @@ class GameObject {
 	Vec2 direction;
 	Vec2 movement;
 
+	float lifetime;
+
 	float scale;
-	float speed;
 	float acceleration;
 	float vmax;
 	int angle;
 
 	bool isIntersecting;
+
+	friend class Ship;
 
 public:
 
@@ -30,9 +33,10 @@ public:
 	GameObject(const Model model, const Vec2 position, const float scale);
 	~GameObject() {};
 
+	virtual void update(const float dt);
+
 	void setAcceleration(const float value);
 	void setDirection(const Vec2 direction);
-	void setSpeed(const float value);
 	void setMovement(const Vec2 movement);
 	void setVMax(const float value);
 	void setPosition(const Vec2 position);
@@ -42,7 +46,6 @@ public:
 
 	Vec2 getPosition() { return position; };
 	Vec2 getDirection() const { return direction; };
-	float getSpeed() const { return speed; };
 	float getAcceleration() const { return acceleration; };
 	float getVMax() const { return vmax; };
 	int getAngle() const { return angle; };
@@ -50,6 +53,7 @@ public:
 	Model getModel() const { return model; };
 	bool hasIntersection() const { return isIntersecting; };
 	ModelClass getModelClass() const { return modelClass; };
+	float getLifetime() const { return lifetime; };
 	RenderUnit getRenderUnit() const;
 
 };

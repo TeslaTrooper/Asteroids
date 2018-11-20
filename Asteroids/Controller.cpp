@@ -11,6 +11,7 @@ double Controller::M_Y = 0;
 void Controller::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (action == GLFW_PRESS) {
 		switch (key) {
+		case GLFW_KEY_ESCAPE: glfwSetWindowShouldClose(window, 1); break;
 		case GLFW_KEY_SPACE: KEY_SPACE = true; break;
 		case GLFW_KEY_UP: KEY_UP = true; break;
 		case GLFW_KEY_DOWN: KEY_DOWN = true; break;

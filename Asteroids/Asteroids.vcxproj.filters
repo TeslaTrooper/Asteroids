@@ -105,6 +105,9 @@
     <ClCompile Include="InternalLogic.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files\core\api</Filter>
     </ClInclude>
     <ClInclude Include="InternalLogic.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
