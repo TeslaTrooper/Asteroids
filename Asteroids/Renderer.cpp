@@ -82,6 +82,7 @@ void Renderer::loadModelDatas() {
 	loadModelData(Model::SHIP, GL_LINES);
 	loadModelData(Model::SAUCER, GL_LINES);
 	loadModelData(Model::SHIP_MOVING, GL_LINES);
+	loadModelData(Model::PROJECTILE, GL_LINES);
 
 	loadModelData(Model::CHARA, GL_TRIANGLES);
 	loadModelData(Model::CHAR0, GL_TRIANGLES);

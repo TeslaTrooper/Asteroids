@@ -70,7 +70,7 @@ void Window::checkInput(const float dt) {
 		game->rotateLeft(dt);
 	}
 	if (Controller::isKeySpacePressed()) {
-		printf("Space\n");
+		game->shipShoot();
 	}
 }
 

@@ -9,7 +9,6 @@
 #include "FontData.h"
 #include "FontBuilder.h"
 #include "PhysicsEngine.h"
-#include "EntityHandler.h"
 #include "BindableProvider.h"
 #include "InternalLogic.h"
 
@@ -48,6 +47,7 @@ public:
 	void moveShip(const bool moving, const float dt);
 	void rotateLeft(const float dt);
 	void rotateRight(const float dt);
+	void shipShoot();
 
 
 };

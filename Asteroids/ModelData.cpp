@@ -172,6 +172,7 @@ ModelData::ModelData() {
 	dataMap[Model::SHIP] = { { shipVertices, shipVertexCount }, { shipTriangles, 9 } };
 	dataMap[Model::SAUCER] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
 	dataMap[Model::SHIP_MOVING] = { { shipMovingVertices, shipMovingVertexCount }, { shipTriangles, 9 } };
+	dataMap[Model::PROJECTILE] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
 }
 
 ModelData::~ModelData() {

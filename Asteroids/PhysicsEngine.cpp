@@ -97,8 +97,6 @@ void PhysicsEngine::resolveCollision(const vector<GameObject*> objects, const fl
 		if (obj->hasIntersection()) {
 			obj->setAcceleration(0);
 			obj->setMovement(Vec2());
-
-			obj->setIsIntersecting(false);
 		}
 	}
 }

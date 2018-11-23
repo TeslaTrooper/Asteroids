@@ -9,6 +9,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->angle = 270;
 	this->isIntersecting = false;
 	this->lifetime = 0;
+	this->alive = true;
 
 	this->modelClass = getClassFromModel(model);
 
@@ -52,6 +53,10 @@ void GameObject::setMovement(const Vec2 movement) {
 
 void GameObject::setIsIntersecting(const bool value) {
 	this->isIntersecting = value;
+}
+
+void GameObject::markForCleanup() {
+	this->alive = false;
 }
 
 void GameObject::setAngle(const int angle) {

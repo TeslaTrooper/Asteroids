@@ -156,7 +156,7 @@
   <ItemGroup>
     <ClCompile Include="BindableProvider.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="EntityHandler.cpp" />
+    <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="FontBuilder.cpp" />
     <ClCompile Include="FontData.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -180,7 +180,7 @@
     <ClInclude Include="BindableProvider.h" />
     <ClInclude Include="BufferConfigurator.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="EntityHandler.h" />
+    <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="FontBuilder.h" />
     <ClInclude Include="FontData.h" />
     <ClInclude Include="Game.h" />

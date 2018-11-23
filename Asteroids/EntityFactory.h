@@ -7,19 +7,26 @@
 #include "Ship.h"
 #include "Util.h"
 
-class EntityHandler {
+class EntityFactory {
 
-	vector<GameObject*> gameObjects;
+	map<ModelClass, vector<GameObject*>> entities;
+
+	vector<GameObject*> linearizeMap() const;
+	void remove(GameObject* object);
 
 public:
-	EntityHandler() {};
-	~EntityHandler() {};
+	EntityFactory();
+	~EntityFactory() {};
+
+	void update();
 
 	GameObject* create(const Model model, const Vec2 position, const float size);
 	GameObject* createPlayer(const Vec2 position, const float size);
 
 	void clear();
 	vector<GameObject*> get() const;
+	GameObject* getPlayer() const;
+	vector<GameObject*> get(const ModelClass modelClass) const;
 };
 
 #endif ENTITY_HANDLER

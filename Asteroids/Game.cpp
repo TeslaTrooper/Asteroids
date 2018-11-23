@@ -63,3 +63,7 @@ void Game::rotateLeft(const float dt) {
 void Game::rotateRight(const float dt) {
 	internalLogic.rotatePlayerRight(dt);
 }
+
+void Game::shipShoot() {
+	internalLogic.shipShoot();
+}

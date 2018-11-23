@@ -22,6 +22,7 @@ class GameObject {
 	int angle;
 
 	bool isIntersecting;
+	bool alive;
 
 	friend class Ship;
 
@@ -43,6 +44,7 @@ public:
 	void setAngle(const int angle);
 	void rotate(const int direction, const float dt);
 	void setIsIntersecting(const bool value);
+	void markForCleanup();
 
 	Vec2 getPosition() { return position; };
 	Vec2 getDirection() const { return direction; };
@@ -54,6 +56,7 @@ public:
 	bool hasIntersection() const { return isIntersecting; };
 	ModelClass getModelClass() const { return modelClass; };
 	float getLifetime() const { return lifetime; };
+	bool isAlive() const { return alive; };
 	RenderUnit getRenderUnit() const;
 
 };

@@ -11,7 +11,7 @@ enum ModelClass {
 };
 
 enum Model {
-	ASTEROID1, ASTEROID2, ASTEROID3, ASTEROID4, SHIP, SAUCER, SHIP_MOVING,
+	ASTEROID1, ASTEROID2, ASTEROID3, ASTEROID4, SHIP, SAUCER, SHIP_MOVING, PROJECTILE,
 	CHARA, CHAR0, CHAR1,
 	CHAR2, CHAR3, CHAR4,
 	CHAR5, CHAR6, CHAR7,
@@ -106,6 +106,7 @@ static ModelClass getClassFromModel(const Model model) {
 	case SHIP:
 	case SHIP_MOVING: return CLASS_SHIP; break;
 	case SAUCER: return CLASS_SAUCER; break;
+	case PROJECTILE: return CLASS_PROJECTILE; break;
 	default: return CLASS_ASTEROID; break;
 	}
 }
