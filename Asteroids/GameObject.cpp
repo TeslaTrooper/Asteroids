@@ -75,7 +75,7 @@ void GameObject::setAngle(const int angle) {
 RenderUnit GameObject::getRenderUnit() const {
 	Dimension modelDim = ModelData::getCropBox(modelClass);
 	Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
-	Mat4 transformation = Mat4::getTransformation(position, Vec2(scale, scale), angle, rotationOrigin);
+	Mat4 transformation = Mat4::getTransformation(position, Vec2(scale, scale), (float) angle, rotationOrigin);
 
 	return { transformation , model };
 }

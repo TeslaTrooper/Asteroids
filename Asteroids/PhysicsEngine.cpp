@@ -3,7 +3,7 @@
 void PhysicsEngine::update(const vector<GameObject*> objects, const float dt) const {
 	updatePosition(objects, dt);
 	detectCollision(objects, dt);
-	resolveCollision(objects, dt);
+	//resolveCollision(objects, dt);
 	updateVelocity(objects, dt);
 }
 
@@ -65,31 +65,65 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 				continue;
 			}
 
-			VertexData outerVertexData = modelData.getBindable(outerObj->getModel()).vertexData;
-			VertexData innerVertexData = modelData.getBindable(innerObj->getModel()).vertexData;
+			if (!detectSimpleCollision(outerObj, innerObj)) {
+				continue;
+			}
 
-			Mat4 outerTransformation = outerObj->getRenderUnit().transformation;
-			Mat4 innerTransformation = innerObj->getRenderUnit().transformation;
-
-			vector<Vec2> outerVertices = getTransformedVertices(outerVertexData, outerTransformation);
-			vector<Vec2> innerVertices = getTransformedVertices(innerVertexData, innerTransformation);
-
-			IndexData innerTriangleIndexData = modelData.getTriangulatedModelData(innerObj->getModel());
-			vector<Triangle> innerTriangles = convertVerticesToTriangles(innerVertices, innerTriangleIndexData);
-
-			// Now, we have to check, if any vertex from outerVertices 
-			// intersects with any triangle from innerTriangles
-
-			bool hasIntersection = detectTrianglePointIntersection(outerVertices, innerTriangles);
+			if (!detectComplexCollision(outerObj, innerObj)) {
+				continue;
+			}
 
 			// Now, we know, if outerObj is colliding with innerObj
-
-			if (hasIntersection) {
-				outerObj->setIsIntersecting(true);
-				innerObj->setIsIntersecting(true);
-			}
+			outerObj->setIsIntersecting(true);
+			innerObj->setIsIntersecting(true);
 		}
 	}
+}
+
+bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObject const * const obj2) const {
+	Vec2 v1 = Vec2(0, 0);
+	Vec2 v3 = Vec2(1, 1);
+
+	Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass());
+	Dimension dimObj2 = ModelData::getCropBox(obj2->getModelClass());
+
+	Vec2 scaling1 = Vec2(obj1->getScale() + dimObj1.width, obj1->getScale() + dimObj1.height);
+	Mat4 transformation1 = Mat4::getTransformation(obj1->getPosition(), scaling1);
+
+	Vec2 scaling2 = Vec2(obj2->getScale() + dimObj2.width, obj2->getScale() + dimObj2.height);
+	Mat4 transformation2 = Mat4::getTransformation(obj2->getPosition(), scaling2);
+
+	Vec2 a1 = transformation1.transform(v1);
+	Vec2 a2 = transformation1.transform(v3);
+
+	Vec2 b1 = transformation2.transform(v1);
+	Vec2 b2 = transformation2.transform(v3);
+
+	if (a1.x < b2.x && a2.x > b1.x &&
+		a1.y < b2.y && a2.y > b1.y) {
+		return true;
+	}
+
+	return false;
+}
+
+bool PhysicsEngine::detectComplexCollision(GameObject const * const obj1, GameObject const * const obj2) const {
+	VertexData outerVertexData = modelData.getBindable(obj1->getModel()).vertexData;
+	VertexData innerVertexData = modelData.getBindable(obj2->getModel()).vertexData;
+
+	Mat4 outerTransformation = obj1->getRenderUnit().transformation;
+	Mat4 innerTransformation = obj2->getRenderUnit().transformation;
+
+	vector<Vec2> outerVertices = getTransformedVertices(outerVertexData, outerTransformation);
+	vector<Vec2> innerVertices = getTransformedVertices(innerVertexData, innerTransformation);
+
+	IndexData innerTriangleIndexData = modelData.getTriangulatedModelData(obj2->getModel());
+	vector<Triangle> innerTriangles = convertVerticesToTriangles(innerVertices, innerTriangleIndexData);
+
+	// Now, we have to check, if any vertex from outerVertices 
+	// intersects with any triangle from innerTriangles
+
+	return detectTrianglePointIntersection(outerVertices, innerTriangles);
 }
 
 void PhysicsEngine::resolveCollision(const vector<GameObject*> objects, const float dt) const {

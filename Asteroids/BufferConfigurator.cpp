@@ -61,7 +61,7 @@ BufferConfigurator::FrameBuffer BufferConfigurator::createFrameBuffer(const Dime
 	unsigned int textureColorAttachment;
 	glGenTextures(1, &textureColorAttachment);
 	glBindTexture(GL_TEXTURE_2D, textureColorAttachment);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, winSize.width, winSize.height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) winSize.width, (GLsizei) winSize.height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorAttachment, 0);

@@ -85,7 +85,7 @@ public:
 		return vec.x == x && vec.y == y;
 	};
 
-	static Vec2 getRotatedInstance(const float angleDeg);
+	static Vec2 getRotatedInstance(const int angleDeg);
 
 };
 

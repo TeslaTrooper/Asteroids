@@ -8,7 +8,6 @@
 #include "ModelData.h"
 #include "FontData.h"
 #include "FontBuilder.h"
-#include "PhysicsEngine.h"
 #include "BindableProvider.h"
 #include "InternalLogic.h"
 
@@ -17,7 +16,6 @@ class Game {
 	ModelData modelData;
 	FontData fontdata;
 	FontBuilder fontBuilder;
-	PhysicsEngine physicsEngine;
 	BindableProvider bindableProvider;
 	InternalLogic internalLogic;
 

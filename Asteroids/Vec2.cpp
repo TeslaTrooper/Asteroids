@@ -43,17 +43,17 @@ Vec2 Vec2::cross(const Vec2 vec) const {
 	// -----------------
 	// -a2 * b2
 	// a1 * b2 - a2 * b1
-	
+
 	return Vec2(-y * vec.y, x * vec.y - y * vec.x);
 }
 
-Vec2 Vec2::getRotatedInstance(const float angleDeg) {
+Vec2 Vec2::getRotatedInstance(const int angleDeg) {
 	const float x = 1;
 	// atan(y/x) = alpha
 	// tan(alpha) = y/x
 	// => x * tan(alpha) = y
 
-	float angleRad = angleDeg * (float)M_PI / 180.0f;
+	float angleRad = (float) (angleDeg * M_PI / 180.0f);
 
 	const float y = x * tan(angleRad);
 

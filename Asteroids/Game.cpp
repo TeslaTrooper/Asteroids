@@ -7,7 +7,6 @@ Game::Game(const Dimension windowBounds) : internalLogic(InternalLogic(windowBou
 Game::~Game() {}
 
 void Game::update(const float dt) {
-	physicsEngine.update(internalLogic.getEntities(), dt);
 	internalLogic.update(dt);
 	updateUIElements(dt);
 	prepareRenderUnits();

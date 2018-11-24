@@ -46,7 +46,7 @@ public:
 	void setIsIntersecting(const bool value);
 	void markForCleanup();
 
-	Vec2 getPosition() { return position; };
+	Vec2 getPosition() const { return position; };
 	Vec2 getDirection() const { return direction; };
 	float getAcceleration() const { return acceleration; };
 	float getVMax() const { return vmax; };
@@ -57,6 +57,7 @@ public:
 	ModelClass getModelClass() const { return modelClass; };
 	float getLifetime() const { return lifetime; };
 	bool isAlive() const { return alive; };
+	float getScale() const { return scale; };
 	RenderUnit getRenderUnit() const;
 
 };

@@ -36,8 +36,11 @@ void InternalLogic::createInitialEntities() {
 }
 
 void InternalLogic::update(const float dt) {
-	entityFactory.update();
 	vector<GameObject*> objects = entityFactory.get();
+
+	physicsEngine.update(objects, dt);
+	resolveColliions(objects);
+	entityFactory.update();
 
 	for each (GameObject* obj in objects) {
 		obj->update(dt);
@@ -95,6 +98,47 @@ void InternalLogic::shipShoot() {
 	projectile->setAcceleration(1);
 	projectile->setMovement(shipDirection.mul(PROJECTILE_SPEED));
 }
+
+void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
+	for each (GameObject* obj in objects) {
+		if (!obj->hasIntersection()) {
+			continue;
+		}
+
+		obj->setAcceleration(0);
+		obj->setMovement(Vec2());
+	}
+}
+
+void InternalLogic::rotatePlayerLeft(const float dt) {
+	GameObject* player = entityFactory.getPlayer();
+
+	if (player == nullptr) {
+		return;
+	}
+
+	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
+};
+
+void InternalLogic::rotatePlayerRight(const float dt) {
+	GameObject* player = entityFactory.getPlayer();
+
+	if (player == nullptr) {
+		return;
+	}
+
+	player->rotate(GameObject::POSITIVE_ROTATION, dt);
+};
+
+void InternalLogic::moveShip(const bool moving, const float dt) {
+	GameObject* player = entityFactory.getPlayer();
+
+	if (player == nullptr) {
+		return;
+	}
+
+	player->setAcceleration(moving ? 1.f : 0.f);
+};
 
 vector<RenderUnit> InternalLogic::getRenderUnits() const {
 	vector<RenderUnit> units;
