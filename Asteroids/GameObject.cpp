@@ -73,7 +73,11 @@ void GameObject::setAngle(const int angle) {
 }
 
 RenderUnit GameObject::getRenderUnit() const {
-	return { Mat4::getTransformation(position, Vec2(scale, scale), angle, ModelData::SHIP_CENTER), model };
+	Dimension modelDim = ModelData::getCropBox(modelClass);
+	Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
+	Mat4 transformation = Mat4::getTransformation(position, Vec2(scale, scale), angle, rotationOrigin);
+
+	return { transformation , model };
 }
 
 void GameObject::rotate(const int direction, const float dt) {

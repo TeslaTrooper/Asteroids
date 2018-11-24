@@ -164,6 +164,18 @@ const float ModelData::shipMovingVertices[] = {
 };
 const int ModelData::shipMovingVertexCount = 9;
 
+const float ModelData::particleVertices[] = {
+	0, 0,
+	1, 0,
+	1, 1,
+	0, 1
+};
+const int ModelData::particleTriangles[] = {
+	0, 2, 1,
+	0, 3, 2
+};
+const int ModelData::particleVertexCount = 4;
+
 ModelData::ModelData() {
 	dataMap[Model::ASTEROID1] = { { a1Vertices, a1VertexCount }, { a1Triangles, 30 } };
 	dataMap[Model::ASTEROID2] = { { a2Vertices, a2VertexCount }, { a2Triangles, 30 } };
@@ -172,7 +184,7 @@ ModelData::ModelData() {
 	dataMap[Model::SHIP] = { { shipVertices, shipVertexCount }, { shipTriangles, 9 } };
 	dataMap[Model::SAUCER] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
 	dataMap[Model::SHIP_MOVING] = { { shipMovingVertices, shipMovingVertexCount }, { shipTriangles, 9 } };
-	dataMap[Model::PROJECTILE] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
+	dataMap[Model::PROJECTILE] = { { particleVertices, particleVertexCount}, { particleTriangles, 6 } };
 }
 
 ModelData::~ModelData() {
@@ -204,4 +216,13 @@ IndexData ModelData::calcIndices(const int vertexCount) const {
 	}
 
 	return { indices, vertexCount * 2 };
+}
+
+Dimension ModelData::getCropBox(const ModelClass modelClass) {
+	switch (modelClass) {
+		case ModelClass::CLASS_ASTEROID: return ASTEROID_CROP_BOX;
+		case ModelClass::CLASS_SHIP: return SHIP_CROP_BOX;
+		case ModelClass::CLASS_SAUCER: return SAUCER_CROP_BOX;
+		default: return Dimension();
+	}
 }

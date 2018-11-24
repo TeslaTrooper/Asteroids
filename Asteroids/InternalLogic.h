@@ -5,6 +5,8 @@
 
 #define MAX_PROJECTILE 4
 #define PROJECTILE_MAX_LIFETIME 3
+#define GAP_PROJECTILE_SHIP 10
+#define PROJECTILE_SPEED 10
 
 class InternalLogic {
 

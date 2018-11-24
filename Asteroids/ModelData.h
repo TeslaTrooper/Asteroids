@@ -34,6 +34,7 @@ public:
 	static const float shipVertices[];
 	static const float saucerVertices[];
 	static const float shipMovingVertices[];
+	static const float particleVertices[];
 
 	// For collision detection, we triangulate each model and store
 	// the indices of each single triangle
@@ -43,6 +44,7 @@ public:
 	static const int a4Triangles[];
 	static const int shipTriangles[];
 	static const int saucerTriangles[];
+	static const int particleTriangles[];
 
 	// In order to process the vertex data defined above, we have to know how
 	// many vertices exists per model
@@ -53,9 +55,13 @@ public:
 	static const int shipVertexCount;
 	static const int saucerVertexCount;
 	static const int shipMovingVertexCount;
+	static const int particleVertexCount;
+
 
 	Bindable getBindable(const Model model) const;
 	IndexData getTriangulatedModelData(const Model model) const;
+
+	static Dimension getCropBox(const ModelClass modelClass);
 };
 
 #endif MODEL_DATA

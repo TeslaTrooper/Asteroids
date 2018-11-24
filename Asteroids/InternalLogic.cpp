@@ -1,7 +1,7 @@
 #include "InternalLogic.h"
 
 void InternalLogic::createInitialEntities() {
-	GameObject* player = entityFactory.createPlayer(Vec2(100, 350), 1.f);
+	GameObject* player = entityFactory.createPlayer(Vec2(100, 350), 1);
 	player->setVMax(5);
 
 	GameObject* asteroid1 = entityFactory.create(Model::ASTEROID1, Vec2(0, 0), 1.f);
@@ -56,6 +56,7 @@ void InternalLogic::observeProjectiles(GameObject* obj) {
 	if (obj->getLifetime() >= PROJECTILE_MAX_LIFETIME) {
 		obj->markForCleanup();
 	}
+
 	if (obj->hasIntersection()) {
 		obj->markForCleanup();
 	}
@@ -82,15 +83,17 @@ void InternalLogic::shipShoot() {
 	}
 
 	GameObject* player = entityFactory.getPlayer();
-	Vec2 shipHead = Vec2(ModelData::shipVertices[1], ModelData::shipVertices[2]);
+	Vec2 shipHead = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 transformedHead = player->getRenderUnit().transformation.transform(shipHead);
+	Vec2 shipDirection = Vec2::getRotatedInstance(player->getAngle());
+	Vec2 position = transformedHead + GAP_PROJECTILE_SHIP * shipDirection;
 
-	GameObject* projectile = entityFactory.create(Model::PROJECTILE, transformedHead, 0.5f);
+	GameObject* projectile = entityFactory.create(Model::PROJECTILE, position, 1);
 	projectile->setAngle(player->getAngle());
-	projectile->setDirection(Vec2::getRotatedInstance(player->getAngle()));
-	projectile->setVMax(5);
-	projectile->setAcceleration(2);
-	projectile->setMovement(Vec2::getRotatedInstance(player->getAngle()).mul(5));
+	projectile->setDirection(shipDirection);
+	projectile->setVMax(PROJECTILE_SPEED);
+	projectile->setAcceleration(1);
+	projectile->setMovement(shipDirection.mul(PROJECTILE_SPEED));
 }
 
 vector<RenderUnit> InternalLogic::getRenderUnits() const {

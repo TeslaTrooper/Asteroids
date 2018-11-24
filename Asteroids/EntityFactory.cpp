@@ -36,7 +36,14 @@ vector<GameObject*> EntityFactory::get() const {
 }
 
 GameObject* EntityFactory::getPlayer() const {
-	return entities.at(ModelClass::CLASS_SHIP).at(0);
+	vector<GameObject*> playerVector = entities.at(ModelClass::CLASS_SHIP);
+
+	if (playerVector.size() == 0) {
+		printf("No player created!");
+		return nullptr;
+	}
+
+	return playerVector.at(0);
 }
 
 vector<GameObject*> EntityFactory::get(const ModelClass modelClass) const {
