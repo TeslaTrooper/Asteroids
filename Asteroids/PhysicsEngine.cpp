@@ -87,10 +87,10 @@ bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObj
 	Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass());
 	Dimension dimObj2 = ModelData::getCropBox(obj2->getModelClass());
 
-	Vec2 scaling1 = Vec2(obj1->getScale() + dimObj1.width, obj1->getScale() + dimObj1.height);
+	Vec2 scaling1 = Vec2(obj1->getScale() * dimObj1.width, obj1->getScale() * dimObj1.height);
 	Mat4 transformation1 = Mat4::getTransformation(obj1->getPosition(), scaling1);
 
-	Vec2 scaling2 = Vec2(obj2->getScale() + dimObj2.width, obj2->getScale() + dimObj2.height);
+	Vec2 scaling2 = Vec2(obj2->getScale() * dimObj2.width, obj2->getScale() * dimObj2.height);
 	Mat4 transformation2 = Mat4::getTransformation(obj2->getPosition(), scaling2);
 
 	Vec2 a1 = transformation1.transform(v1);
@@ -124,15 +124,6 @@ bool PhysicsEngine::detectComplexCollision(GameObject const * const obj1, GameOb
 	// intersects with any triangle from innerTriangles
 
 	return detectTrianglePointIntersection(outerVertices, innerTriangles);
-}
-
-void PhysicsEngine::resolveCollision(const vector<GameObject*> objects, const float dt) const {
-	for each (GameObject* obj in objects) {
-		if (obj->hasIntersection()) {
-			obj->setAcceleration(0);
-			obj->setMovement(Vec2());
-		}
-	}
 }
 
 bool PhysicsEngine::detectTrianglePointIntersection(const vector<Vec2> vertices, const vector<Triangle> triangles) const {
