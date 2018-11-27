@@ -99,16 +99,21 @@ static vector<Triangle> convertVerticesToTriangles(const vector<Vec2> vertices, 
 
 static ModelClass getClassFromModel(const Model model) {
 	switch (model) {
-	case ASTEROID1:
-	case ASTEROID2:
-	case ASTEROID3:
-	case ASTEROID4: return CLASS_ASTEROID; break;
-	case SHIP:
-	case SHIP_MOVING: return CLASS_SHIP; break;
-	case SAUCER: return CLASS_SAUCER; break;
-	case PROJECTILE: return CLASS_PROJECTILE; break;
-	default: return CLASS_ASTEROID; break;
+		case ASTEROID1:
+		case ASTEROID2:
+		case ASTEROID3:
+		case ASTEROID4: return CLASS_ASTEROID; break;
+		case SHIP:
+		case SHIP_MOVING: return CLASS_SHIP; break;
+		case SAUCER: return CLASS_SAUCER; break;
+		case PROJECTILE: return CLASS_PROJECTILE; break;
+		default: return CLASS_ASTEROID; break;
 	}
+}
+
+// Returns a random number between min and max. Note: min and max included.
+static int random(const int min, const int max) {
+	return rand() % (max - min + 1) + min;
 }
 
 namespace customMath {

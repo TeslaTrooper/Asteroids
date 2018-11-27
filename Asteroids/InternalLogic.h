@@ -8,6 +8,10 @@
 #define PROJECTILE_MAX_LIFETIME 3
 #define GAP_PROJECTILE_SHIP 10
 #define PROJECTILE_SPEED 10
+#define ROTATION_ZONE 45
+#define MIN_VELOCITY 20
+#define MAX_VELOCITY 50
+#define ASTEROID_PIECE_COUNT 10
 
 class InternalLogic {
 
@@ -17,6 +21,9 @@ class InternalLogic {
 
 	void checkForOutOfBoundsObjects(GameObject* obj) const;
 	void resolveColliions(const vector<GameObject*> objects);
+	void breakAsteroidIntoPieces(GameObject const * const object);
+	void createAsteroidPiece(GameObject const * const object);
+	Vec2 calcMovementOfChildAsteroid(const Vec2 parentMovement) const;
 
 public:
 	InternalLogic(const Dimension windowSize) : windowSize(windowSize) {};

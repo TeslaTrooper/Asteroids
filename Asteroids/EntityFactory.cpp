@@ -31,6 +31,19 @@ GameObject* EntityFactory::createPlayer(const Vec2 position, const float size) {
 	return object;
 }
 
+GameObject* EntityFactory::createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement) {
+	GameObject* object = new GameObject(model, position, size);
+	object->setAngle(0);
+	object->setVMax(movement.length());
+	object->setAcceleration(1);
+	object->setDirection(movement.norm());
+	object->setMovement(movement);
+
+	entities[object->getModelClass()].push_back(object);
+
+	return object;
+}
+
 vector<GameObject*> EntityFactory::get() const {
 	return linearizeMap();
 }
