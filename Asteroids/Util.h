@@ -5,6 +5,8 @@
 #include "Mat4.h"
 
 #define VERTEX_COMP_SIZE 2
+#define WIN_WIDTH 900
+#define WIN_HEIGHT 600
 
 enum ModelClass {
 	CLASS_ASTEROID, CLASS_SHIP, CLASS_SAUCER, CLASS_PROJECTILE
@@ -54,6 +56,11 @@ struct Triangle {
 
 		return cross.length() / 2.f;
 	}
+};
+
+struct CollisionInfo {
+	Model model1;
+	Model model2;
 };
 
 static Vec2 operator+(const Vec2& vec1, const Vec2& vec2) {

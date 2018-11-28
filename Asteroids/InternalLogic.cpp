@@ -1,8 +1,7 @@
 #include "InternalLogic.h"
 
 void InternalLogic::createInitialEntities() {
-	GameObject* player = entityFactory.createPlayer(Vec2(100, 350), SIZE_LARGE);
-	player->setVMax(5);
+	createPlayer();
 
 	entityFactory.createStatic(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
 
@@ -36,7 +35,9 @@ void InternalLogic::update(const float dt) {
 
 	physicsEngine.update(objects, dt);
 	resolveColliions(objects);
+	updateScore(objects);
 	entityFactory.update();
+	checkForMissingPlayer();
 
 	for each (GameObject* obj in objects) {
 		obj->update(dt);
@@ -68,8 +69,8 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 	// => Precision value needed to keep more digits
 	const int precision = 100000;
 
-	float w = windowSize.width * precision;
-	float h = windowSize.height * precision;
+	float w = WIN_WIDTH * precision;
+	float h = WIN_HEIGHT * precision;
 	float cx = obj->getPosition().x * precision;
 	float cy = obj->getPosition().y * precision;
 
@@ -101,7 +102,7 @@ void InternalLogic::shipShoot() {
 
 void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
 	for each (GameObject* obj in objects) {
-		if (!obj->hasIntersection() || obj->getModelClass() == ModelClass::CLASS_SHIP) {
+		if (!obj->hasIntersection()) {
 			continue;
 		}
 
@@ -109,7 +110,6 @@ void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
 			breakAsteroidIntoPieces(obj);
 		}
 
-		updateScore();
 		obj->markForCleanup();
 	}
 }
@@ -153,7 +153,7 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 }
 
 // TODO
-void InternalLogic::updateScore() {
+void InternalLogic::updateScore(const vector<GameObject*> objects) {
 	// When does the current score need to be updated?
 	// - Intersection Asteroid <-> Projectile (player)
 	// - Intersection Asteroid <-> Ship
@@ -165,6 +165,45 @@ void InternalLogic::updateScore() {
 	// So we have to store at collision time, which objects caused that collision
 
 	// Maybe there is another way, to recognize that - without any complex collision-info-storage-stuff
+
+	for each (GameObject* obj in objects) {
+		if (!obj->hasIntersection()) {
+			continue;
+		}
+
+		GameObject* intersector = obj->getIntersectingObject();
+		ModelClass classOfObj = obj->getModelClass();
+		ModelClass classOfIntersector = intersector->getModelClass();
+
+		if (classOfObj == ModelClass::CLASS_SHIP) {
+			if (classOfIntersector == ModelClass::CLASS_SAUCER) {
+				score += intersector->getScale() == SIZE_MEDIUM ? 200 : 1000;
+			}
+
+			if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
+				if (intersector->getScale() == SIZE_LARGE) {
+					score += 20;
+				}
+				if (intersector->getScale() == SIZE_MEDIUM) {
+					score += 50;
+				}
+				if (intersector->getScale() == SIZE_SMALL) {
+					score += 100;
+				}
+			}
+		}
+	}
+}
+
+void InternalLogic::createPlayer() {
+	GameObject* player = entityFactory.createPlayerInCenter(SIZE_LARGE);
+	lifes--;
+}
+
+void InternalLogic::checkForMissingPlayer() {
+	if (entityFactory.getPlayer() == nullptr) {
+		createPlayer();
+	}
 }
 
 void InternalLogic::rotatePlayerLeft(const float dt) {

@@ -26,9 +26,18 @@ GameObject* EntityFactory::create(const Model model, const Vec2 position, const 
 
 GameObject* EntityFactory::createPlayer(const Vec2 position, const float size) {
 	GameObject* object = new Ship(position, size);
+	object->setVMax(5);
+
 	entities[object->getModelClass()].push_back(object);
 
 	return object;
+}
+
+GameObject* EntityFactory::createPlayerInCenter(const float size) {
+	int x = (WIN_WIDTH / 2) - ((ModelData::SHIP_CROP_BOX.width * size) / 2);
+	int y = (WIN_HEIGHT / 2) - ((ModelData::SHIP_CROP_BOX.height * size) / 2);
+
+	return createPlayer(Vec2(x, y), size);
 }
 
 GameObject* EntityFactory::createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement) {

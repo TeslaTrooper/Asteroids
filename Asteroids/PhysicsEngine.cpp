@@ -73,8 +73,8 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 			}
 
 			// Now, we know, if outerObj is colliding with innerObj
-			outerObj->setIsIntersecting(true);
-			innerObj->setIsIntersecting(true);
+			outerObj->setIntersectingObject(innerObj);
+			innerObj->setIntersectingObject(outerObj);
 		}
 	}
 }

@@ -11,11 +11,12 @@
 #define ROTATION_ZONE 45
 #define MIN_VELOCITY 20
 #define MAX_VELOCITY 50
-#define ASTEROID_PIECE_COUNT 10
+#define ASTEROID_PIECE_COUNT 2
 
 class InternalLogic {
 
-	Dimension windowSize;
+	int score, lifes;
+
 	EntityFactory entityFactory;
 	PhysicsEngine physicsEngine;
 
@@ -24,10 +25,12 @@ class InternalLogic {
 	void breakAsteroidIntoPieces(GameObject const * const object);
 	void createAsteroidPiece(GameObject const * const object);
 	Vec2 calcMovementOfChildAsteroid(const Vec2 parentMovement) const;
-	void updateScore();
+	void updateScore(const vector<GameObject*> objects);
+	void createPlayer();
+	void checkForMissingPlayer();
 
 public:
-	InternalLogic(const Dimension windowSize) : windowSize(windowSize) {};
+	InternalLogic() : score(0), lifes(4) {};
 	~InternalLogic() {};
 
 	void update(const float dt);
@@ -39,6 +42,8 @@ public:
 	void moveShip(const bool moving, const float dt);
 	void shipShoot();
 
+	int getScore() const { return score; };
+	int getLifes() const { return lifes; };
 	vector<GameObject*> getEntities() { return entityFactory.get(); };
 	vector<RenderUnit> getRenderUnits() const;
 

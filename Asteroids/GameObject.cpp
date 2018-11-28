@@ -7,7 +7,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->acceleration = 0;
 	this->vmax = 0;
 	this->angle = 270;
-	this->isIntersecting = false;
+	this->intersectingObject = nullptr;
 	this->lifetime = 0;
 	this->alive = true;
 
@@ -51,8 +51,8 @@ void GameObject::setMovement(const Vec2 movement) {
 	this->movement = movement;
 }
 
-void GameObject::setIsIntersecting(const bool value) {
-	this->isIntersecting = value;
+void GameObject::setIntersectingObject(GameObject* object) {
+	this->intersectingObject = object;
 }
 
 void GameObject::markForCleanup() {

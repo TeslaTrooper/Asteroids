@@ -1,8 +1,7 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Game* const game, const Dimension winSize) {
+Renderer::Renderer(Game* const game) {
 	this->game = game;
-	this->winSize = winSize;
 
 	ShaderProgram standardShaderProgramm;
 	GLuint standardShaderID = standardShaderProgramm.createShaderProgram("shader.vert", "shader.frag");
@@ -12,7 +11,7 @@ Renderer::Renderer(Game* const game, const Dimension winSize) {
 	GLuint framebufferShaderID = framebufferShaderProgramm.createShaderProgram("framebufferShader.vert", "framebufferShader.frag");
 	framebufferShader = new Shader(framebufferShaderID);
 
-	framebuffer = bufferConfigurator.createFrameBuffer(winSize);
+	framebuffer = bufferConfigurator.createFrameBuffer({ WIN_WIDTH, WIN_HEIGHT });
 	screenQuad = bufferConfigurator.configureScreenQuad();
 
 	loadModelDatas();

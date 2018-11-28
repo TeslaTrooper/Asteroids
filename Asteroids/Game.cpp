@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(const Dimension windowBounds) : internalLogic(InternalLogic(windowBounds)) {
+Game::Game() {
 	internalLogic.createInitialEntities();
 }
 
@@ -20,8 +20,11 @@ void Game::updateUIElements(const float dt) {
 
 	//printf("FPS: %i \n", fps);
 
-	std::string s = ::to_string(fps);
-	fontBuilder.buildString(s.c_str(), 5, Vec2(5, 5));
+	std::string fpsLabel = ::to_string(fps);
+	fontBuilder.buildString(fpsLabel.c_str(), 5, Vec2(5, 5));
+
+	std::string scoreLabel = to_string(internalLogic.getScore());
+	fontBuilder.buildString(scoreLabel.c_str(), 5, Vec2((float) 5, WIN_HEIGHT - ((FontData::h * 5) + 5)));
 }
 
 void Game::prepareRenderUnits() {
@@ -36,6 +39,18 @@ void Game::prepareRenderUnits() {
 
 	for each (RenderUnit entity in entities) {
 		renderUnits.push_back(entity);
+	}
+
+	for (int i = 0; i < internalLogic.getLifes(); i++) {
+		int x = 5 + (i * ModelData::SHIP_CROP_BOX.width);
+		int y = WIN_HEIGHT - 60;
+
+		Dimension modelDim = ModelData::getCropBox(ModelClass::CLASS_SHIP);
+		Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
+		Mat4 transformation = Mat4::getTransformation(Vec2(x, y), Vec2(SIZE_SMALL, SIZE_SMALL), 270, rotationOrigin);
+
+
+		renderUnits.push_back({ transformation, Model::SHIP });
 	}
 }
 

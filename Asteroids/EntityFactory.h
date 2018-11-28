@@ -26,6 +26,7 @@ public:
 
 	GameObject* create(const Model model, const Vec2 position, const float size);
 	GameObject* createPlayer(const Vec2 position, const float size);
+	GameObject* createPlayerInCenter(const float size);
 	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement);
 
 	void clear();

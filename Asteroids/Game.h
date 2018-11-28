@@ -25,7 +25,7 @@ class Game {
 	void prepareRenderUnits();
 
 public:
-	Game(const Dimension windowBounds);
+	Game();
 	~Game();
 
 	void update(const float dt);

@@ -7,8 +7,8 @@ Window::Window() {
 	initViewport();
 	initProjectionMatrix();
 
-	game = new Game(windowSize);
-	renderer = new Renderer(game, windowSize);
+	game = new Game();
+	renderer = new Renderer(game);
 }
 
 Window::~Window() {
@@ -43,14 +43,12 @@ void Window::initViewport() {
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 
-	windowSize = { (float) width, (float) height };
-
 	glViewport(0, 0, width, height);
 }
 
 void Window::initProjectionMatrix() {
-	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(windowSize.width),
-		static_cast<GLfloat>(windowSize.height), 0.0f, -100.0f, 100.0f);
+	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(WIN_WIDTH),
+		static_cast<GLfloat>(WIN_HEIGHT), 0.0f, -100.0f, 100.0f);
 }
 
 void Window::checkInput(const float dt) {

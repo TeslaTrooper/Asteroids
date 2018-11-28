@@ -12,8 +12,6 @@
 
 class Renderer {
 
-	Dimension winSize;
-
 	Game* game;
 
 	Shader* standardShader;
@@ -32,7 +30,7 @@ class Renderer {
 	void endDraw() const;
 
 public:
-	Renderer(Game* const game, const Dimension winSize);
+	Renderer(Game* const game);
 	~Renderer();
 
 	void render(const float dt) const;
