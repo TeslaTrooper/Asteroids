@@ -24,13 +24,14 @@ class InternalLogic {
 	void breakAsteroidIntoPieces(GameObject const * const object);
 	void createAsteroidPiece(GameObject const * const object);
 	Vec2 calcMovementOfChildAsteroid(const Vec2 parentMovement) const;
+	void updateScore();
 
 public:
 	InternalLogic(const Dimension windowSize) : windowSize(windowSize) {};
 	~InternalLogic() {};
 
 	void update(const float dt);
-	void observeProjectiles(GameObject* obj);
+	void markForCleanupIfRequired(GameObject* obj);
 
 	void createInitialEntities();
 	void rotatePlayerLeft(const float dt);

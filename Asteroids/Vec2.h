@@ -77,6 +77,8 @@ public:
 
 	Vec2 cross(const Vec2 vec) const;
 
+	Vec2 absolut() const;
+
 	/*
 	Vergleicht die xy-Komponenten zweier Vektoren auf Gleichheit.
 	@return gibt true zurück, wenn die Komponenten gleich sind.

@@ -47,6 +47,10 @@ Vec2 Vec2::cross(const Vec2 vec) const {
 	return Vec2(-y * vec.y, x * vec.y - y * vec.x);
 }
 
+Vec2 Vec2::absolut() const {
+	return Vec2(abs(x), abs(y));
+}
+
 Vec2 Vec2::getRotatedInstance(const int angleDeg) {
 	const float x = 1;
 	// atan(y/x) = alpha

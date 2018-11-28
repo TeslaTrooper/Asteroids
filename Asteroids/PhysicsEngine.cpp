@@ -3,7 +3,6 @@
 void PhysicsEngine::update(const vector<GameObject*> objects, const float dt) const {
 	updatePosition(objects, dt);
 	detectCollision(objects, dt);
-	//resolveCollision(objects, dt);
 	updateVelocity(objects, dt);
 }
 

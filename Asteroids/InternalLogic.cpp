@@ -43,7 +43,7 @@ void InternalLogic::update(const float dt) {
 	}
 
 	for each (GameObject* projectile in entityFactory.get(ModelClass::CLASS_PROJECTILE)) {
-		observeProjectiles(projectile);
+		markForCleanupIfRequired(projectile);
 	}
 
 	for each (GameObject* obj in objects) {
@@ -51,7 +51,7 @@ void InternalLogic::update(const float dt) {
 	}
 }
 
-void InternalLogic::observeProjectiles(GameObject* obj) {
+void InternalLogic::markForCleanupIfRequired(GameObject* obj) {
 	if (obj->getLifetime() >= PROJECTILE_MAX_LIFETIME) {
 		obj->markForCleanup();
 	}
@@ -62,22 +62,25 @@ void InternalLogic::observeProjectiles(GameObject* obj) {
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
-	if (obj->getPosition().x >= windowSize.width) {
-		obj->setPosition(Vec2(0.f, obj->getPosition().y));
-	}
-	if (obj->getPosition().x < 0) {
-		obj->setPosition(Vec2((float) windowSize.width, obj->getPosition().y));
-	}
-	if (obj->getPosition().y >= windowSize.height) {
-		obj->setPosition(Vec2(obj->getPosition().x, 0.f));
-	}
-	if (obj->getPosition().y < 0) {
-		obj->setPosition(Vec2(obj->getPosition().x, windowSize.height));
-	}
+	// Modulo operator only works with intergers
+	// Cast from float to int required -> information loss
+	// Causes small "jumps" in repositioning
+	// => Precision value needed to keep more digits
+	const int precision = 100000;
+
+	float w = windowSize.width * precision;
+	float h = windowSize.height * precision;
+	float cx = obj->getPosition().x * precision;
+	float cy = obj->getPosition().y * precision;
+
+	int x = (int) (w + cx) % (int) w;
+	int y = (int) (h + cy) % (int) h;
+
+	obj->setPosition(Vec2((float) x / (float) precision, (float) y / (float) precision));
 }
 
 void InternalLogic::shipShoot() {
-	// Prevent player from shooting more than MAX_PROJECTILE entites
+	// Prevent player from shooting more than MAX_PROJECTILE entities
 	if (entityFactory.get(ModelClass::CLASS_PROJECTILE).size() >= MAX_PROJECTILE) {
 		return;
 	}
@@ -106,8 +109,7 @@ void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
 			breakAsteroidIntoPieces(obj);
 		}
 
-		obj->setAcceleration(0);
-		obj->setMovement(Vec2());
+		updateScore();
 		obj->markForCleanup();
 	}
 }
@@ -148,6 +150,21 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 	float velocity = randomVelocity / 10.f;
 
 	return rotatedMovement.norm().mul(velocity);
+}
+
+// TODO
+void InternalLogic::updateScore() {
+	// When does the current score need to be updated?
+	// - Intersection Asteroid <-> Projectile (player)
+	// - Intersection Asteroid <-> Ship
+	// - Intersection Saucer <-> Projectile (player)
+	// - Intersection Saucer <-> Ship
+
+	// We need to know, which objects had a collision
+	// Currently, we only know, if a single entity had a collision, or not.
+	// So we have to store at collision time, which objects caused that collision
+
+	// Maybe there is another way, to recognize that - without any complex collision-info-storage-stuff
 }
 
 void InternalLogic::rotatePlayerLeft(const float dt) {
