@@ -1,6 +1,8 @@
 #ifndef UTIL
 #define UTIL
 
+//#define DEBUG
+
 #include <vector>
 #include "Mat4.h"
 

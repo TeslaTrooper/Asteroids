@@ -5,24 +5,6 @@ void InternalLogic::createInitialEntities() {
 
 	entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
 	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(2.f, -1.f));
-
-	/*GameObject* asteroid2 = entityFactory.create(Model::ASTEROID2, Vec2(150, 0), SIZE_SMALL);
-	asteroid2->setAngle(0);
-	asteroid2->setVMax(2);
-	asteroid2->setAcceleration(2);
-	asteroid2->setDirection(Vec2(1, -1));
-
-	GameObject* asteroid3 = entityFactory.create(Model::ASTEROID3, Vec2(300, 0), SIZE_MEDIUM);
-	asteroid3->setAngle(0);
-	asteroid3->setVMax(2);
-	asteroid3->setAcceleration(2);
-	asteroid3->setDirection(Vec2(-1, 1));
-
-	GameObject* asteroid4 = entityFactory.create(Model::ASTEROID4, Vec2(300, 300), SIZE_MEDIUM);
-	asteroid4->setAngle(0);
-	asteroid4->setVMax(2);
-	asteroid4->setAcceleration(2);
-	asteroid4->setDirection(Vec2(-1, -1));*/
 }
 
 void InternalLogic::update(const float dt) {
@@ -65,6 +47,8 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 
 	// It works, but it would be better, if we can get rid of these if-conditions
 	// and replace it with some calculations
+
+	// Update correspondig value, only if necessary
 	if (cPos.x > WIN_WIDTH || cPos.x < 0)
 		obj->setPosition(Vec2((float) x, cPos.y));
 

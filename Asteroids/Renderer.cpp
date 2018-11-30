@@ -48,10 +48,12 @@ void Renderer::draw(const RenderUnit unit) const {
 
 	glDrawElements(data.drawMode, data.indexCount, GL_UNSIGNED_INT, 0);
 
+#ifdef DEBUG
 	glBindVertexArray(data.vao1);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
 
 	glBindVertexArray(0);
 }
@@ -102,7 +104,7 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
 	data.drawMode = drawMode;
 
-	// This is only for debugging
+#ifdef DEBUG
 	if (drawMode != GL_TRIANGLES) {
 		IndexData triangles = game->getTriangulatedModelData(model);
 		Bindable triangleBindable = { bindable.vertexData, triangles };
@@ -110,6 +112,7 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 		data.vao1 = data1.vao;
 		data.indexCount1 = data1.indexCount;
 	}
+#endif
 
 	modelMap[model] = data;
 }

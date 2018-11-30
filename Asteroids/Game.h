@@ -40,7 +40,9 @@ public:
 			a Bindable reference containing the model information.
 	*/
 	Bindable getBindable(const Model model) const;
+#ifdef DEBUG
 	IndexData getTriangulatedModelData(const Model model) const;
+#endif
 
 	void moveShip(const bool moving, const float dt);
 	void rotateLeft(const float dt);
