@@ -33,10 +33,6 @@ void InternalLogic::markForCleanupIfRequired(GameObject* obj) {
 	if (obj->getLifetime() >= PROJECTILE_MAX_LIFETIME) {
 		obj->markForCleanup();
 	}
-
-	if (obj->hasIntersection()) {
-		obj->markForCleanup();
-	}
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
@@ -222,6 +218,9 @@ vector<RenderUnit> InternalLogic::getRenderUnits() const {
 	vector<GameObject*> entities = entityFactory.get();
 
 	for each (GameObject* entity in entities) {
+		if (!entity->isVisible())
+			continue;
+
 		units.push_back(entity->getRenderUnit());
 	}
 

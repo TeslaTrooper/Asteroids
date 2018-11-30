@@ -23,7 +23,7 @@ class GameObject {
 
 	int angle;
 
-	bool alive, playerProjectile;
+	bool alive, playerProjectile, visible, invincible;
 
 	friend class Ship;
 
@@ -62,6 +62,8 @@ public:
 	float getScale() const { return scale; };
 	bool hasIntersection() const { return intersectingObject != nullptr; };
 	bool isPlayerProjectile() const { return playerProjectile; };
+	bool isVisible() const { return visible; };
+	bool isInvincible() const { return invincible; };
 	RenderUnit getRenderUnit() const;
 
 };

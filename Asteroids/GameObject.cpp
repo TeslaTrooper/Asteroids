@@ -11,6 +11,8 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->lifetime = 0;
 	this->alive = true;
 	this->playerProjectile = true;
+	this->visible = true;
+	this->invincible = false;
 
 	this->modelClass = getClassFromModel(model);
 

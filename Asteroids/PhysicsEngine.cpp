@@ -59,18 +59,21 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 	// Transformation matrix for transforming each single vertex to its actual position on screen
 
 	for each (GameObject* outerObj in objects) {
+		if (outerObj->isInvincible())
+			continue;
+
 		for each (GameObject* innerObj in objects) {
-			if (outerObj->getModelClass() == innerObj->getModelClass()) {
+			if (outerObj->getModelClass() == innerObj->getModelClass())
 				continue;
-			}
 
-			if (!detectSimpleCollision(outerObj, innerObj)) {
+			if (innerObj->isInvincible())
 				continue;
-			}
 
-			if (!detectComplexCollision(outerObj, innerObj)) {
+			if (!detectSimpleCollision(outerObj, innerObj))
 				continue;
-			}
+
+			if (!detectComplexCollision(outerObj, innerObj))
+				continue;
 
 			// Now, we know, if outerObj is colliding with innerObj
 			outerObj->setIntersectingObject(innerObj);
