@@ -79,6 +79,8 @@ public:
 
 	Vec2 absolut() const;
 
+	float getAngleToXAxis() const;
+
 	/*
 	Vergleicht die xy-Komponenten zweier Vektoren auf Gleichheit.
 	@return gibt true zurück, wenn die Komponenten gleich sind.

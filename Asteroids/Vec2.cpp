@@ -63,3 +63,7 @@ Vec2 Vec2::getRotatedInstance(const int angleDeg) {
 
 	return Vec2(-cos(angleRad), -sin(angleRad)).norm();
 }
+
+float Vec2::getAngleToXAxis() const {
+	return (atan(y / x) * 180.f) / M_PI;
+}

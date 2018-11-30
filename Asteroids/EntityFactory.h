@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 #include "Ship.h"
+#include "Saucer.h"
 #include "Util.h"
 
 #define SIZE_LARGE 1.5f
@@ -20,6 +21,8 @@ class EntityFactory {
 
 	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement, const bool isPlayerProjectile);
 	GameObject* create(const Model model, const Vec2 position, const float size);
+
+	void configureAsStatic(GameObject* object, const Vec2 movement, const bool isPlayerProjectile);
 
 public:
 	EntityFactory();

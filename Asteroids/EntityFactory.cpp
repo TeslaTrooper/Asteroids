@@ -38,7 +38,12 @@ GameObject* EntityFactory::createPlayerProjectile(const Vec2 position, const flo
 }
 
 GameObject* EntityFactory::createSaucer(const Vec2 position, const float size, const Vec2 movement) {
-	return createStatic(Model::SAUCER, position, size, movement, false);
+	GameObject* object = new Saucer(position, size);
+	configureAsStatic(object, movement, false);
+
+	entities[object->getModelClass()].push_back(object);
+
+	return object;
 }
 
 GameObject* EntityFactory::createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement) {
@@ -67,16 +72,20 @@ vector<GameObject*> EntityFactory::get(const ModelClass modelClass) const {
 GameObject* EntityFactory::createStatic(const Model model, const Vec2 position,
 	const float size, const Vec2 movement, const bool isPlayerProjectile) {
 	GameObject* object = new GameObject(model, position, size);
+	configureAsStatic(object, movement, isPlayerProjectile);
+
+	entities[object->getModelClass()].push_back(object);
+
+	return object;
+}
+
+void EntityFactory::configureAsStatic(GameObject* object, const Vec2 movement, const bool isPlayerProjectile) {
 	object->setAngle(0);
 	object->setVMax(movement.length());
 	object->setAcceleration(1);
 	object->setDirection(movement.norm());
 	object->setMovement(movement);
 	object->setIsPlayerProjectile(isPlayerProjectile);
-
-	entities[object->getModelClass()].push_back(object);
-
-	return object;
 }
 
 GameObject* EntityFactory::create(const Model model, const Vec2 position, const float size) {

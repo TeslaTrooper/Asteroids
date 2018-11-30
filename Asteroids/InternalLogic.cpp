@@ -3,8 +3,8 @@
 void InternalLogic::createInitialEntities() {
 	createPlayer();
 
-	entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
-	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(2.f, -1.f));
+	//entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
+	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(1.f, 0.f));
 }
 
 void InternalLogic::update(const float dt) {

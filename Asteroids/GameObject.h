@@ -26,6 +26,7 @@ class GameObject {
 	bool alive, playerProjectile, visible, invincible;
 
 	friend class Ship;
+	friend class Saucer;
 
 public:
 

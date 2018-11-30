@@ -108,6 +108,9 @@
     <ClCompile Include="EntityFactory.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="Saucer.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="EntityFactory.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Saucer.h">
+      <Filter>Header Files\core\api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
