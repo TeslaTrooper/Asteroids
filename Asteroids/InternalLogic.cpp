@@ -58,22 +58,20 @@ void InternalLogic::markForCleanupIfRequired(GameObject* obj) {
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
-	// Modulo operator only works with intergers
-	// Cast from float to int required -> information loss
-	// Causes small "jumps" in repositioning
-	// => Precision value needed to keep more digits
-	const int precision = 100000;
+	Vec2 cPos = obj->getPosition();
 
-	float w = WIN_WIDTH * precision;
-	float h = WIN_HEIGHT * precision;
-	float cx = obj->getPosition().x * precision;
-	float cy = obj->getPosition().y * precision;
+	int x = (int) (WIN_WIDTH + cPos.x) % (int) WIN_WIDTH;
+	int y = (int) (WIN_HEIGHT + cPos.y) % (int) WIN_HEIGHT;
 
-	int x = (int) (w + cx) % (int) w;
-	int y = (int) (h + cy) % (int) h;
+	// It works, but it would be better, if we can get rid of these if-conditions
+	// and replace it with some calculations
+	if (cPos.x > WIN_WIDTH || cPos.x < 0)
+		obj->setPosition(Vec2((float) x, cPos.y));
 
-	// TODO It would be better, if there is no position adjustment each frame
-	obj->setPosition(Vec2((float) x / (float) precision, (float) y / (float) precision));
+	cPos = obj->getPosition();
+
+	if (cPos.y > WIN_HEIGHT || cPos.y < 0)
+		obj->setPosition(Vec2(cPos.x, (float) y));
 }
 
 void InternalLogic::shipShoot() {
