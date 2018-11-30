@@ -10,6 +10,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->intersectingObject = nullptr;
 	this->lifetime = 0;
 	this->alive = true;
+	this->playerProjectile = true;
 
 	this->modelClass = getClassFromModel(model);
 
@@ -53,6 +54,10 @@ void GameObject::setMovement(const Vec2 movement) {
 
 void GameObject::setIntersectingObject(GameObject* object) {
 	this->intersectingObject = object;
+}
+
+void GameObject::setIsPlayerProjectile(const bool value) {
+	this->playerProjectile = value;
 }
 
 void GameObject::markForCleanup() {

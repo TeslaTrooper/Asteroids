@@ -3,7 +3,8 @@
 void InternalLogic::createInitialEntities() {
 	createPlayer();
 
-	entityFactory.createStatic(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
+	entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
+	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(2.f, -1.f));
 
 	/*GameObject* asteroid2 = entityFactory.create(Model::ASTEROID2, Vec2(150, 0), SIZE_SMALL);
 	asteroid2->setAngle(0);
@@ -21,13 +22,7 @@ void InternalLogic::createInitialEntities() {
 	asteroid4->setAngle(0);
 	asteroid4->setVMax(2);
 	asteroid4->setAcceleration(2);
-	asteroid4->setDirection(Vec2(-1, -1));
-
-	GameObject* saucer = entityFactory.create(Model::SAUCER, Vec2(300, 450), SIZE_MEDIUM);
-	saucer->setAngle(0);
-	saucer->setVMax(2);
-	saucer->setAcceleration(2);
-	saucer->setDirection(Vec2(1.f, 0.5f));*/
+	asteroid4->setDirection(Vec2(-1, -1));*/
 }
 
 void InternalLogic::update(const float dt) {
@@ -77,6 +72,7 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 	int x = (int) (w + cx) % (int) w;
 	int y = (int) (h + cy) % (int) h;
 
+	// TODO It would be better, if there is no position adjustment each frame
 	obj->setPosition(Vec2((float) x / (float) precision, (float) y / (float) precision));
 }
 
@@ -97,7 +93,7 @@ void InternalLogic::shipShoot() {
 	Vec2 movement = shipDirection.mul(PROJECTILE_SPEED);
 
 	// Create projectile
-	entityFactory.createStatic(Model::PROJECTILE, position, 1, movement);
+	entityFactory.createPlayerProjectile(position, SIZE_MEDIUM, movement);
 }
 
 void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
@@ -132,7 +128,7 @@ void InternalLogic::createAsteroidPiece(GameObject const * const object) {
 	Model randomAsteroidModel = (Model) random(0, 3);
 	float childScale = object->getScale() - 0.5f;
 
-	entityFactory.createStatic(randomAsteroidModel, position, childScale, childMovement);
+	entityFactory.createAsteroid(randomAsteroidModel, position, childScale, childMovement);
 }
 
 Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const {
@@ -175,7 +171,10 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 		ModelClass classOfObj = obj->getModelClass();
 		ModelClass classOfIntersector = intersector->getModelClass();
 
-		if (classOfObj == ModelClass::CLASS_SHIP) {
+		bool isShip = classOfObj == ModelClass::CLASS_SHIP;
+		bool isPlayerProjectile = classOfObj == ModelClass::CLASS_PROJECTILE && obj->isPlayerProjectile();
+
+		if (isShip || isPlayerProjectile) {
 			if (classOfIntersector == ModelClass::CLASS_SAUCER) {
 				score += intersector->getScale() == SIZE_MEDIUM ? 200 : 1000;
 			}

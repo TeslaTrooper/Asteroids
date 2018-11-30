@@ -18,18 +18,22 @@ class EntityFactory {
 	vector<GameObject*> linearizeMap() const;
 	void remove(GameObject* object);
 
+	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement, const bool isPlayerProjectile);
+	GameObject* create(const Model model, const Vec2 position, const float size);
+
 public:
 	EntityFactory();
 	~EntityFactory() {};
 
 	void update();
+	void clear();
 
-	GameObject* create(const Model model, const Vec2 position, const float size);
 	GameObject* createPlayer(const Vec2 position, const float size);
 	GameObject* createPlayerInCenter(const float size);
-	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement);
+	GameObject* createPlayerProjectile(const Vec2 position, const float size, const Vec2 movement);
+	GameObject* createSaucer(const Vec2 position, const float size, const Vec2 movement);
+	GameObject* createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement);
 
-	void clear();
 	vector<GameObject*> get() const;
 	GameObject* getPlayer() const;
 	vector<GameObject*> get(const ModelClass modelClass) const;

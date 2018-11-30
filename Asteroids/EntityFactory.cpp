@@ -17,13 +17,6 @@ void EntityFactory::update() {
 	}
 }
 
-GameObject* EntityFactory::create(const Model model, const Vec2 position, const float size) {
-	GameObject* object = new GameObject(model, position, size);
-	entities[object->getModelClass()].push_back(object);
-
-	return object;
-}
-
 GameObject* EntityFactory::createPlayer(const Vec2 position, const float size) {
 	GameObject* object = new Ship(position, size);
 	object->setVMax(5);
@@ -40,17 +33,16 @@ GameObject* EntityFactory::createPlayerInCenter(const float size) {
 	return createPlayer(Vec2(x, y), size);
 }
 
-GameObject* EntityFactory::createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement) {
-	GameObject* object = new GameObject(model, position, size);
-	object->setAngle(0);
-	object->setVMax(movement.length());
-	object->setAcceleration(1);
-	object->setDirection(movement.norm());
-	object->setMovement(movement);
+GameObject* EntityFactory::createPlayerProjectile(const Vec2 position, const float size, const Vec2 movement) {
+	return createStatic(Model::PROJECTILE, position, size, movement, true);
+}
 
-	entities[object->getModelClass()].push_back(object);
+GameObject* EntityFactory::createSaucer(const Vec2 position, const float size, const Vec2 movement) {
+	return createStatic(Model::SAUCER, position, size, movement, false);
+}
 
-	return object;
+GameObject* EntityFactory::createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement) {
+	return createStatic(model, position, size, movement, false);
 }
 
 vector<GameObject*> EntityFactory::get() const {
@@ -70,6 +62,28 @@ GameObject* EntityFactory::getPlayer() const {
 
 vector<GameObject*> EntityFactory::get(const ModelClass modelClass) const {
 	return entities.at(modelClass);
+}
+
+GameObject* EntityFactory::createStatic(const Model model, const Vec2 position,
+	const float size, const Vec2 movement, const bool isPlayerProjectile) {
+	GameObject* object = new GameObject(model, position, size);
+	object->setAngle(0);
+	object->setVMax(movement.length());
+	object->setAcceleration(1);
+	object->setDirection(movement.norm());
+	object->setMovement(movement);
+	object->setIsPlayerProjectile(isPlayerProjectile);
+
+	entities[object->getModelClass()].push_back(object);
+
+	return object;
+}
+
+GameObject* EntityFactory::create(const Model model, const Vec2 position, const float size) {
+	GameObject* object = new GameObject(model, position, size);
+	entities[object->getModelClass()].push_back(object);
+
+	return object;
 }
 
 void EntityFactory::clear() {
