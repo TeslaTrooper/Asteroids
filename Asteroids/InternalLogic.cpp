@@ -4,7 +4,7 @@ void InternalLogic::createInitialEntities() {
 	createPlayer();
 
 	//entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
-	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(1.f, 0.f));
+	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(0.f, 0.f));
 }
 
 void InternalLogic::update(const float dt) {
@@ -26,6 +26,10 @@ void InternalLogic::update(const float dt) {
 
 	for each (GameObject* obj in objects) {
 		checkForOutOfBoundsObjects(obj);
+	}
+
+	for each (Saucer* saucer in entityFactory.get(ModelClass::CLASS_SAUCER)) {
+		checkSaucerBehaviour(saucer);
 	}
 }
 
@@ -181,6 +185,33 @@ void InternalLogic::checkForMissingPlayer() {
 	if (entityFactory.getPlayer() == nullptr) {
 		createPlayer();
 	}
+}
+
+void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
+	if (!saucer->canShoot()) {
+		return;
+	}
+
+	// Calculate center of player ship mx, my
+	GameObject* player = entityFactory.getPlayer();
+
+	Vec2 p1 = Vec2(ModelData::shipVertices[0], ModelData::shipVertices[1]);
+	Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
+	Vec2 p3 = Vec2(ModelData::shipVertices[4], ModelData::shipVertices[5]);
+
+	Mat4 transformation = player->getRenderUnit().transformation;
+
+	p1 = transformation.transform(p1);
+	p2 = transformation.transform(p2);
+	p3 = transformation.transform(p3);
+
+	float mx = (p1.x + p2.x + p3.x) / 3;
+	float my = (p1.y + p2.y + p3.y) / 3;
+
+	ProjectileParams params = saucer->getProjectileParams(Vec2(mx, my));
+
+	// Create projectile
+	entityFactory.createSaucerProjectile(params.position, SIZE_MEDIUM, params.movement);
 }
 
 void InternalLogic::rotatePlayerLeft(const float dt) {

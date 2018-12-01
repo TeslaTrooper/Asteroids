@@ -171,7 +171,7 @@
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="Saucer.h">
-      <Filter>Header Files\core\api</Filter>
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

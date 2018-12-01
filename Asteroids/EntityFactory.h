@@ -8,10 +8,6 @@
 #include "Saucer.h"
 #include "Util.h"
 
-#define SIZE_LARGE 1.5f
-#define SIZE_MEDIUM 1.f
-#define SIZE_SMALL 0.5f
-
 class EntityFactory {
 
 	map<ModelClass, vector<GameObject*>> entities;
@@ -34,6 +30,7 @@ public:
 	GameObject* createPlayer(const Vec2 position, const float size);
 	GameObject* createPlayerInCenter(const float size);
 	GameObject* createPlayerProjectile(const Vec2 position, const float size, const Vec2 movement);
+	GameObject* createSaucerProjectile(const Vec2 position, const float size, const Vec2 movement);
 	GameObject* createSaucer(const Vec2 position, const float size, const Vec2 movement);
 	GameObject* createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement);
 

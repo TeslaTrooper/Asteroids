@@ -4,15 +4,6 @@
 #include "EntityFactory.h"
 #include "PhysicsEngine.h"
 
-#define MAX_PROJECTILE 100
-#define PROJECTILE_MAX_LIFETIME 3
-#define GAP_PROJECTILE_SHIP 10
-#define PROJECTILE_SPEED 10
-#define ROTATION_ZONE 45
-#define MIN_VELOCITY 20
-#define MAX_VELOCITY 50
-#define ASTEROID_PIECE_COUNT 2
-
 class InternalLogic {
 
 	int score, lifes;
@@ -28,6 +19,7 @@ class InternalLogic {
 	void updateScore(const vector<GameObject*> objects);
 	void createPlayer();
 	void checkForMissingPlayer();
+	void checkSaucerBehaviour(Saucer* saucer);
 
 public:
 	InternalLogic() : score(0), lifes(4) {};

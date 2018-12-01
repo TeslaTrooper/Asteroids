@@ -37,6 +37,10 @@ GameObject* EntityFactory::createPlayerProjectile(const Vec2 position, const flo
 	return createStatic(Model::PROJECTILE, position, size, movement, true);
 }
 
+GameObject* EntityFactory::createSaucerProjectile(const Vec2 position, const float size, const Vec2 movement) {
+	return createStatic(Model::PROJECTILE, position, size, movement, false);
+}
+
 GameObject* EntityFactory::createSaucer(const Vec2 position, const float size, const Vec2 movement) {
 	GameObject* object = new Saucer(position, size);
 	configureAsStatic(object, movement, false);
