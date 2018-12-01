@@ -83,23 +83,52 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 }
 
 bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObject const * const obj2) const {
-	Vec2 v1 = Vec2(0, 0);
-	Vec2 v3 = Vec2(1, 1);
+	// Fetch 3 points from ship
+	// Calc min and max for x and y
+	// -> now we have w and h of crop box
 
-	Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass());
+	// To translate crop box to correct location, we have to 
+	// - calc center of 3 points from ship
+	// - calc center of crop box
+	// - translate center of crop box to origin
+	// - translate crop box to center of ship
+	Vec2 a1, a2;
+
+	if (obj1->getModelClass() == ModelClass::CLASS_SHIP) {
+		Vec2 p1 = Vec2(ModelData::shipVertices[0], ModelData::shipVertices[1]);
+		Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
+		Vec2 p3 = Vec2(ModelData::shipVertices[4], ModelData::shipVertices[5]);
+
+		Mat4 transformation = obj1->getRenderUnit().transformation;
+
+		p1 = transformation.transform(p1);
+		p2 = transformation.transform(p2);
+		p3 = transformation.transform(p3);
+
+		double wMin = customMath::min(customMath::min(p1.x, p2.x), p3.x);
+		double wMax = customMath::max(customMath::max(p1.x, p2.x), p3.x);
+		double hMin = customMath::min(customMath::min(p1.y, p2.y), p3.y);
+		double hMax = customMath::max(customMath::max(p1.y, p2.y), p3.y);
+
+		a1 = Vec2((float) wMin, (float) hMin);
+		a2 = Vec2((float) hMin, (float) hMax);
+	} else {
+		Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass());
+
+		Vec2 scaling1 = Vec2(obj1->getScale() * dimObj1.width, obj1->getScale() * dimObj1.height);
+		Mat4 transformation1 = Mat4::getTransformation(obj1->getPosition(), scaling1);
+
+		a1 = transformation1.transform(Vec2(0, 0));
+		a2 = transformation1.transform(Vec2(1, 1));
+	}
+
 	Dimension dimObj2 = ModelData::getCropBox(obj2->getModelClass());
-
-	Vec2 scaling1 = Vec2(obj1->getScale() * dimObj1.width, obj1->getScale() * dimObj1.height);
-	Mat4 transformation1 = Mat4::getTransformation(obj1->getPosition(), scaling1);
 
 	Vec2 scaling2 = Vec2(obj2->getScale() * dimObj2.width, obj2->getScale() * dimObj2.height);
 	Mat4 transformation2 = Mat4::getTransformation(obj2->getPosition(), scaling2);
 
-	Vec2 a1 = transformation1.transform(v1);
-	Vec2 a2 = transformation1.transform(v3);
-
-	Vec2 b1 = transformation2.transform(v1);
-	Vec2 b2 = transformation2.transform(v3);
+	Vec2 b1 = transformation2.transform(Vec2(0, 0));
+	Vec2 b2 = transformation2.transform(Vec2(1, 1));
 
 	if (a1.x < b2.x && a2.x > b1.x &&
 		a1.y < b2.y && a2.y > b1.y) {
