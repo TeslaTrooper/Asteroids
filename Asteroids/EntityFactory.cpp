@@ -94,6 +94,18 @@ vector<GameObject*> EntityFactory::get(const ModelClass modelClass) const {
 	return entities.at(modelClass);
 }
 
+int EntityFactory::getPlayerProjectileCount() const {
+	int result = 0;
+
+	vector<GameObject*> projectiles = entities.at(ModelClass::CLASS_PROJECTILE);
+	for each(GameObject* obj in projectiles) {
+		if (obj->isPlayerProjectile())
+			result++;
+	}
+
+	return result;
+}
+
 GameObject* EntityFactory::createParticle(const Vec2 position, const Model model, const float size) {
 	// First, let's define a random rotation around entire circle
 	Vec2 direction = Vec2::getRotatedInstance(random(0, 359));

@@ -36,6 +36,7 @@ public:
 	GameObject* createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement);
 	void createSimpleParticleEffect(const Vec2 position);
 	void createShipParticleEffect(const Vec2 position);
+	int getPlayerProjectileCount() const;
 
 	vector<GameObject*> get() const;
 	GameObject* getPlayer() const;

@@ -3,7 +3,7 @@
 void InternalLogic::createInitialEntities() {
 	createPlayer();
 
-	//entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
+	entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
 	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(0.f, 0.f));
 }
 
@@ -50,7 +50,7 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 
 void InternalLogic::shipShoot() {
 	// Prevent player from shooting more than MAX_PROJECTILE entities
-	if (entityFactory.get(ModelClass::CLASS_PROJECTILE).size() >= MAX_PROJECTILE) {
+	if (entityFactory.getPlayerProjectileCount() >= MAX_PROJECTILE) {
 		return;
 	}
 
@@ -62,7 +62,7 @@ void InternalLogic::shipShoot() {
 	Vec2 position = transformedHead + GAP_PROJECTILE_SHIP * shipDirection;
 
 	// Calculate movement vector
-	Vec2 movement = shipDirection.mul(PROJECTILE_SPEED);
+	Vec2 movement = shipDirection.mul(PROJECTILE_SPEED + player->getMovement().length());
 
 	// Create projectile
 	entityFactory.createPlayerProjectile(position, SIZE_MEDIUM, movement);
