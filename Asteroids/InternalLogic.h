@@ -26,7 +26,6 @@ public:
 	~InternalLogic() {};
 
 	void update(const float dt);
-	void markForCleanupIfRequired(GameObject* obj);
 
 	void createInitialEntities();
 	void rotatePlayerLeft(const float dt);

@@ -20,22 +20,12 @@ void InternalLogic::update(const float dt) {
 		obj->update(dt);
 	}
 
-	for each (GameObject* projectile in entityFactory.get(ModelClass::CLASS_PROJECTILE)) {
-		markForCleanupIfRequired(projectile);
-	}
-
 	for each (GameObject* obj in objects) {
 		checkForOutOfBoundsObjects(obj);
 	}
 
 	for each (Saucer* saucer in entityFactory.get(ModelClass::CLASS_SAUCER)) {
 		checkSaucerBehaviour(saucer);
-	}
-}
-
-void InternalLogic::markForCleanupIfRequired(GameObject* obj) {
-	if (obj->getLifetime() >= PROJECTILE_MAX_LIFETIME) {
-		obj->markForCleanup();
 	}
 }
 
@@ -88,6 +78,12 @@ void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
 			breakAsteroidIntoPieces(obj);
 		}
 
+		if (obj->getModelClass() == ModelClass::CLASS_SHIP) {
+			entityFactory.createShipParticleEffect(obj->getCollisionInfo().collisionLocation);
+		} else {
+			entityFactory.createSimpleParticleEffect(obj->getCollisionInfo().collisionLocation);
+		}
+
 		obj->markForCleanup();
 	}
 }
@@ -118,7 +114,7 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 	// and some small change in velocity (slower or faster is possible)
 
 	// First, let's define a random rotation in a predefined zone
-	Mat4 rotation = Mat4::rotateZ(random(-ROTATION_ZONE, ROTATION_ZONE));
+	Mat4 rotation = Mat4::rotateZ((float) random(-ROTATION_ZONE, ROTATION_ZONE));
 	// Apply it to parent movement
 	Vec2 rotatedMovement = rotation.transform(parentMovement);
 
@@ -149,26 +145,26 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 			continue;
 		}
 
-		GameObject* intersector = obj->getIntersectingObject();
+		CollisionInfo intersector = obj->getCollisionInfo();
 		ModelClass classOfObj = obj->getModelClass();
-		ModelClass classOfIntersector = intersector->getModelClass();
+		ModelClass classOfIntersector = intersector.classOfObj;
 
 		bool isShip = classOfObj == ModelClass::CLASS_SHIP;
 		bool isPlayerProjectile = classOfObj == ModelClass::CLASS_PROJECTILE && obj->isPlayerProjectile();
 
 		if (isShip || isPlayerProjectile) {
 			if (classOfIntersector == ModelClass::CLASS_SAUCER) {
-				score += intersector->getScale() == SIZE_MEDIUM ? 200 : 1000;
+				score += intersector.objSize == SIZE_MEDIUM ? 200 : 1000;
 			}
 
 			if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
-				if (intersector->getScale() == SIZE_LARGE) {
+				if (intersector.objSize == SIZE_LARGE) {
 					score += 20;
 				}
-				if (intersector->getScale() == SIZE_MEDIUM) {
+				if (intersector.objSize == SIZE_MEDIUM) {
 					score += 50;
 				}
-				if (intersector->getScale() == SIZE_SMALL) {
+				if (intersector.objSize == SIZE_SMALL) {
 					score += 100;
 				}
 			}

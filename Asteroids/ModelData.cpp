@@ -4,6 +4,7 @@ const Dimension ModelData::ASTEROID_CROP_BOX = { 150, 100 };
 const Dimension ModelData::SHIP_CROP_BOX = { 40, 17 };
 const Dimension ModelData::SAUCER_CROP_BOX = { 45, 20 };
 const Vec2 ModelData::SHIP_CENTER = { 20.f, 8.5f };
+const Dimension ModelData::LINE_SEGMENT_CROP_BOX = { 30.f, 1.f };
 
 const float ModelData::a1Vertices[] = {
 	0, 25,
@@ -176,6 +177,12 @@ const int ModelData::particleTriangles[] = {
 };
 const int ModelData::particleVertexCount = 4;
 
+const float ModelData::lineSegmentVertices[] = {
+	0, 0,
+	30, 0,
+};
+const int ModelData::lineSegmentVertexCount = 2;
+
 ModelData::ModelData() {
 	dataMap[Model::ASTEROID1] = { { a1Vertices, a1VertexCount }, { a1Triangles, 30 } };
 	dataMap[Model::ASTEROID2] = { { a2Vertices, a2VertexCount }, { a2Triangles, 30 } };
@@ -184,7 +191,8 @@ ModelData::ModelData() {
 	dataMap[Model::SHIP] = { { shipVertices, shipVertexCount }, { shipTriangles, 9 } };
 	dataMap[Model::SAUCER] = { { saucerVertices, saucerVertexCount }, { saucerTriangles, 18 } };
 	dataMap[Model::SHIP_MOVING] = { { shipMovingVertices, shipMovingVertexCount }, { shipTriangles, 9 } };
-	dataMap[Model::PROJECTILE] = { { particleVertices, particleVertexCount}, { particleTriangles, 6 } };
+	dataMap[Model::PROJECTILE] = { { particleVertices, particleVertexCount }, { particleTriangles, 6 } };
+	dataMap[Model::LINE_SEGMENT] = { { lineSegmentVertices, lineSegmentVertexCount }, { {}, 0 } };
 }
 
 ModelData::~ModelData() {
@@ -223,6 +231,7 @@ Dimension ModelData::getCropBox(const ModelClass modelClass) {
 		case ModelClass::CLASS_ASTEROID: return ASTEROID_CROP_BOX;
 		case ModelClass::CLASS_SHIP: return SHIP_CROP_BOX;
 		case ModelClass::CLASS_SAUCER: return SAUCER_CROP_BOX;
+		case ModelClass::CLASS_LINE_SEGMENT: return LINE_SEGMENT_CROP_BOX;
 		default: return Dimension();
 	}
 }

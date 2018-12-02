@@ -5,6 +5,8 @@
 #include "Vec2.h"
 #include "ModelData.h"
 
+#define UNDEFINED_LIFETIME -1
+
 class GameObject {
 
 	Model model;
@@ -14,9 +16,9 @@ class GameObject {
 	Vec2 direction;
 	Vec2 movement;
 
-	GameObject* intersectingObject;
+	CollisionInfo* collisionInfo;
 
-	float lifetime;
+	float lifetime, maxLifetime;
 	float scale;
 	float acceleration;
 	float vmax;
@@ -45,8 +47,10 @@ public:
 	void setPosition(const Vec2 position);
 	void setAngle(const int angle);
 	void rotate(const int direction, const float dt);
-	void setIntersectingObject(GameObject* object);
+	void setCollisionInfo(const CollisionInfo info);
 	void setIsPlayerProjectile(const bool value);
+	void setInvincible(const bool value);
+	void setMaxLifetime(const float value);
 	void markForCleanup();
 
 	Vec2 getPosition() const { return position; };
@@ -56,12 +60,12 @@ public:
 	int getAngle() const { return angle; };
 	Vec2 getMovement() const { return movement; };
 	Model getModel() const { return model; };
-	GameObject* getIntersectingObject() const { return intersectingObject; };
+	CollisionInfo getCollisionInfo() const { return *collisionInfo; };
 	ModelClass getModelClass() const { return modelClass; };
 	float getLifetime() const { return lifetime; };
 	bool isAlive() const { return alive; };
 	float getScale() const { return scale; };
-	bool hasIntersection() const { return intersectingObject != nullptr; };
+	bool hasIntersection() const { return collisionInfo != nullptr; };
 	bool isPlayerProjectile() const { return playerProjectile; };
 	bool isVisible() const { return visible; };
 	bool isInvincible() const { return invincible; };

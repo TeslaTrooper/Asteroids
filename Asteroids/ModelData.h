@@ -24,6 +24,7 @@ public:
 	static const Dimension ASTEROID_CROP_BOX;
 	static const Dimension SHIP_CROP_BOX;
 	static const Dimension SAUCER_CROP_BOX;
+	static const Dimension LINE_SEGMENT_CROP_BOX;
 	static const Vec2 SHIP_CENTER;
 
 	// The following float arrays define the vertices of each single model
@@ -35,6 +36,7 @@ public:
 	static const float saucerVertices[];
 	static const float shipMovingVertices[];
 	static const float particleVertices[];
+	static const float lineSegmentVertices[];
 
 	// For collision detection, we triangulate each model and store
 	// the indices of each single triangle
@@ -56,7 +58,7 @@ public:
 	static const int saucerVertexCount;
 	static const int shipMovingVertexCount;
 	static const int particleVertexCount;
-
+	static const int lineSegmentVertexCount;
 
 	Bindable getBindable(const Model model) const;
 	IndexData getTriangulatedModelData(const Model model) const;

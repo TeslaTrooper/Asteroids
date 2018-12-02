@@ -72,12 +72,13 @@ void PhysicsEngine::detectCollision(const vector<GameObject*> objects, const flo
 			if (!detectSimpleCollision(outerObj, innerObj))
 				continue;
 
-			if (!detectComplexCollision(outerObj, innerObj))
+			Vec2* collisionLocation = detectComplexCollision(outerObj, innerObj);
+			if (collisionLocation == nullptr)
 				continue;
 
 			// Now, we know, if outerObj is colliding with innerObj
-			outerObj->setIntersectingObject(innerObj);
-			innerObj->setIntersectingObject(outerObj);
+			outerObj->setCollisionInfo({ innerObj->getModelClass(), innerObj->getScale(), *collisionLocation });
+			innerObj->setCollisionInfo({ outerObj->getModelClass(), outerObj->getScale(), *collisionLocation });
 		}
 	}
 }
@@ -138,7 +139,7 @@ bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObj
 	return false;
 }
 
-bool PhysicsEngine::detectComplexCollision(GameObject const * const obj1, GameObject const * const obj2) const {
+Vec2* PhysicsEngine::detectComplexCollision(GameObject const * const obj1, GameObject const * const obj2) const {
 	VertexData outerVertexData = modelData.getBindable(obj1->getModel()).vertexData;
 	VertexData innerVertexData = modelData.getBindable(obj2->getModel()).vertexData;
 
@@ -152,22 +153,22 @@ bool PhysicsEngine::detectComplexCollision(GameObject const * const obj1, GameOb
 	vector<Triangle> innerTriangles = convertVerticesToTriangles(innerVertices, innerTriangleIndexData);
 
 	// Now, we have to check, if any vertex from outerVertices 
-	// intersects with any triangle from innerTriangles
+	// intersects with any triangle from innerTriangles#
 
 	return detectTrianglePointIntersection(outerVertices, innerTriangles);
 }
 
-bool PhysicsEngine::detectTrianglePointIntersection(const vector<Vec2> vertices, const vector<Triangle> triangles) const {
+Vec2* PhysicsEngine::detectTrianglePointIntersection(const vector<Vec2> vertices, const vector<Triangle> triangles) const {
 	for each (Vec2 vertex in vertices) {
 		for each (Triangle triangle in triangles) {
 			bool hasIntersection = detectTrianglePointIntersection(vertex, triangle);
 
 			if (hasIntersection)
-				return true;
+				return new Vec2(vertex.x, vertex.y);
 		}
 	}
 
-	return false;
+	return nullptr;
 }
 
 // Source: http://www.jeffreythompson.org/collision-detection/tri-point.php

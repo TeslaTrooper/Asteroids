@@ -16,7 +16,7 @@ void Saucer::updateMovement() {
 		lastDirectionChangeTimeStamp = lifetime;
 
 		float angleChange = getDirection().getAngleToXAxis() + lastRotationDirection * ANGLE_CHANGE;
-		Vec2 rotatedMovement = Vec2::getRotatedInstance(angleChange);
+		Vec2 rotatedMovement = Vec2::getRotatedInstance((int) angleChange);
 
 		setDirection(rotatedMovement);
 		setMovement(rotatedMovement.mul(getMovement().length()));

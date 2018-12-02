@@ -42,7 +42,7 @@ void Game::prepareRenderUnits() {
 	}
 
 	for (int i = 0; i < internalLogic.getLifes(); i++) {
-		int x = 5 + (i * ModelData::SHIP_CROP_BOX.width);
+		int x = (int) (5 + (i * ModelData::SHIP_CROP_BOX.width));
 		int y = WIN_HEIGHT - 60;
 
 		Dimension modelDim = ModelData::getCropBox(ModelClass::CLASS_SHIP);

@@ -15,8 +15,8 @@ class PhysicsEngine {
 	void detectCollision(const vector<GameObject*> objects, const float dt) const;
 
 	bool detectSimpleCollision(GameObject const * const obj1, GameObject const * const obj2) const;
-	bool detectComplexCollision(GameObject const * const obj1, GameObject const * const obj2) const;
-	bool detectTrianglePointIntersection(const vector<Vec2> vertices, const vector<Triangle> triangles) const;
+	Vec2* detectComplexCollision(GameObject const * const obj1, GameObject const * const obj2) const;
+	Vec2* detectTrianglePointIntersection(const vector<Vec2> vertices, const vector<Triangle> triangles) const;
 	bool detectTrianglePointIntersection(const Vec2 vertex, const Triangle& triangle) const;
 
 public:

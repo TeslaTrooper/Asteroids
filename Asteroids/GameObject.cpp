@@ -7,12 +7,13 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->acceleration = 0;
 	this->vmax = 0;
 	this->angle = 270;
-	this->intersectingObject = nullptr;
 	this->lifetime = 0;
+	this->maxLifetime = UNDEFINED_LIFETIME;
 	this->alive = true;
 	this->playerProjectile = true;
 	this->visible = true;
 	this->invincible = false;
+	this->collisionInfo = nullptr;
 
 	this->modelClass = getClassFromModel(model);
 
@@ -22,6 +23,10 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 
 void GameObject::update(const float dt) {
 	this->lifetime += dt;
+
+	if (maxLifetime != UNDEFINED_LIFETIME && lifetime > maxLifetime) {
+		markForCleanup();
+	}
 }
 
 void GameObject::setDirection(const Vec2 direction) {
@@ -54,8 +59,22 @@ void GameObject::setMovement(const Vec2 movement) {
 	this->movement = movement;
 }
 
-void GameObject::setIntersectingObject(GameObject* object) {
-	this->intersectingObject = object;
+void GameObject::setInvincible(const bool value) {
+	this->invincible = value;
+}
+
+void GameObject::setMaxLifetime(const float value) {
+	this->maxLifetime = value;
+}
+
+void GameObject::setCollisionInfo(const CollisionInfo info) {
+	if (this->collisionInfo == nullptr) {
+		collisionInfo = new CollisionInfo();
+	}
+
+	this->collisionInfo->classOfObj = info.classOfObj;
+	this->collisionInfo->objSize = info.objSize;
+	this->collisionInfo->collisionLocation = info.collisionLocation;
 }
 
 void GameObject::setIsPlayerProjectile(const bool value) {

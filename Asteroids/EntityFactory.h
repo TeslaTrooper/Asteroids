@@ -17,6 +17,7 @@ class EntityFactory {
 
 	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement, const bool isPlayerProjectile);
 	GameObject* create(const Model model, const Vec2 position, const float size);
+	GameObject* createParticle(const Vec2 position, const Model model, const float size);
 
 	void configureAsStatic(GameObject* object, const Vec2 movement, const bool isPlayerProjectile);
 
@@ -33,6 +34,8 @@ public:
 	GameObject* createSaucerProjectile(const Vec2 position, const float size, const Vec2 movement);
 	GameObject* createSaucer(const Vec2 position, const float size, const Vec2 movement);
 	GameObject* createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement);
+	void createSimpleParticleEffect(const Vec2 position);
+	void createShipParticleEffect(const Vec2 position);
 
 	vector<GameObject*> get() const;
 	GameObject* getPlayer() const;

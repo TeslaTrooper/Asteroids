@@ -84,6 +84,7 @@ void Renderer::loadModelDatas() {
 	loadModelData(Model::SAUCER, GL_LINES);
 	loadModelData(Model::SHIP_MOVING, GL_LINES);
 	loadModelData(Model::PROJECTILE, GL_LINES);
+	loadModelData(Model::LINE_SEGMENT, GL_LINES);
 
 	loadModelData(Model::CHARA, GL_TRIANGLES);
 	loadModelData(Model::CHAR0, GL_TRIANGLES);
@@ -111,7 +112,7 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
 		data.vao1 = data1.vao;
 		data.indexCount1 = data1.indexCount;
-	}
+}
 #endif
 
 	modelMap[model] = data;

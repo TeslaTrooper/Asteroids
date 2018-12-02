@@ -23,12 +23,17 @@
 #define MAX_VELOCITY 50
 #define ASTEROID_PIECE_COUNT 2
 
+#define PARTICLE_COUNT 2
+#define PARTICLE_MAX_LIFETIME 1
+#define PARTICLE_MIN_VELOCITY 1
+#define PARTICLE_MAX_VELOCITY 2
+
 enum ModelClass {
-	CLASS_ASTEROID, CLASS_SHIP, CLASS_SAUCER, CLASS_PROJECTILE
+	CLASS_ASTEROID, CLASS_SHIP, CLASS_SAUCER, CLASS_PROJECTILE, CLASS_LINE_SEGMENT
 };
 
 enum Model {
-	ASTEROID1, ASTEROID2, ASTEROID3, ASTEROID4, SHIP, SAUCER, SHIP_MOVING, PROJECTILE,
+	ASTEROID1, ASTEROID2, ASTEROID3, ASTEROID4, SHIP, SAUCER, SHIP_MOVING, PROJECTILE, LINE_SEGMENT,
 	CHARA, CHAR0, CHAR1,
 	CHAR2, CHAR3, CHAR4,
 	CHAR5, CHAR6, CHAR7,
@@ -74,8 +79,9 @@ struct Triangle {
 };
 
 struct CollisionInfo {
-	Model model1;
-	Model model2;
+	ModelClass classOfObj;
+	float objSize;
+	Vec2 collisionLocation;
 };
 
 static Vec2 operator+(const Vec2& vec1, const Vec2& vec2) {
@@ -83,6 +89,10 @@ static Vec2 operator+(const Vec2& vec1, const Vec2& vec2) {
 };
 
 static Vec2 operator*(const float scalar, const Vec2& vec) {
+	return Vec2(vec.x * scalar, vec.y * scalar);
+};
+
+static Vec2 operator*(const int scalar, const Vec2& vec) {
 	return Vec2(vec.x * scalar, vec.y * scalar);
 };
 
@@ -129,6 +139,7 @@ static ModelClass getClassFromModel(const Model model) {
 		case SHIP_MOVING: return CLASS_SHIP; break;
 		case SAUCER: return CLASS_SAUCER; break;
 		case PROJECTILE: return CLASS_PROJECTILE; break;
+		case LINE_SEGMENT: return CLASS_LINE_SEGMENT; break;
 		default: return CLASS_ASTEROID; break;
 	}
 }

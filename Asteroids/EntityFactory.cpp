@@ -27,18 +27,24 @@ GameObject* EntityFactory::createPlayer(const Vec2 position, const float size) {
 }
 
 GameObject* EntityFactory::createPlayerInCenter(const float size) {
-	int x = (WIN_WIDTH / 2) - ((ModelData::SHIP_CROP_BOX.width * size) / 2);
-	int y = (WIN_HEIGHT / 2) - ((ModelData::SHIP_CROP_BOX.height * size) / 2);
+	int x = (int) ((WIN_WIDTH / 2) - ((ModelData::SHIP_CROP_BOX.width * size) / 2));
+	int y = (int) ((WIN_HEIGHT / 2) - ((ModelData::SHIP_CROP_BOX.height * size) / 2));
 
 	return createPlayer(Vec2(x, y), size);
 }
 
 GameObject* EntityFactory::createPlayerProjectile(const Vec2 position, const float size, const Vec2 movement) {
-	return createStatic(Model::PROJECTILE, position, size, movement, true);
+	GameObject* obj = createStatic(Model::PROJECTILE, position, size, movement, true);
+	obj->setMaxLifetime(PROJECTILE_MAX_LIFETIME);
+
+	return obj;
 }
 
 GameObject* EntityFactory::createSaucerProjectile(const Vec2 position, const float size, const Vec2 movement) {
-	return createStatic(Model::PROJECTILE, position, size, movement, false);
+	GameObject* obj = createStatic(Model::PROJECTILE, position, size, movement, false);
+	obj->setMaxLifetime(PROJECTILE_MAX_LIFETIME);
+
+	return obj;
 }
 
 GameObject* EntityFactory::createSaucer(const Vec2 position, const float size, const Vec2 movement) {
@@ -52,6 +58,21 @@ GameObject* EntityFactory::createSaucer(const Vec2 position, const float size, c
 
 GameObject* EntityFactory::createAsteroid(const Model model, const Vec2 position, const float size, const Vec2 movement) {
 	return createStatic(model, position, size, movement, false);
+}
+
+void EntityFactory::createSimpleParticleEffect(const Vec2 position) {
+	for (int i = 0; i < PARTICLE_COUNT; i++) {
+		createParticle(position, Model::PROJECTILE, SIZE_MEDIUM);
+	}
+}
+
+void EntityFactory::createShipParticleEffect(const Vec2 position) {
+	createSimpleParticleEffect(position);
+
+	for (int i = 0; i < PARTICLE_COUNT * 2; i++) {
+		GameObject* particle = createParticle(position, Model::LINE_SEGMENT, SIZE_MEDIUM);
+		particle->setAngle(random(0, 359));
+	}
 }
 
 vector<GameObject*> EntityFactory::get() const {
@@ -71,6 +92,21 @@ GameObject* EntityFactory::getPlayer() const {
 
 vector<GameObject*> EntityFactory::get(const ModelClass modelClass) const {
 	return entities.at(modelClass);
+}
+
+GameObject* EntityFactory::createParticle(const Vec2 position, const Model model, const float size) {
+	// First, let's define a random rotation around entire circle
+	Vec2 direction = Vec2::getRotatedInstance(random(0, 359));
+	Vec2 movement = random(PARTICLE_MIN_VELOCITY, PARTICLE_MAX_VELOCITY) * direction;
+
+	GameObject* particle = createStatic(model, position, size, movement, false);
+	particle->setInvincible(true);
+
+	// Calc random lifetime between 0.5 and 1.5 seconds
+	int randomLifetime = random(PARTICLE_MAX_LIFETIME * 5, PARTICLE_MAX_LIFETIME * 15);
+	particle->setMaxLifetime(randomLifetime / 10.f);
+
+	return particle;
 }
 
 GameObject* EntityFactory::createStatic(const Model model, const Vec2 position,
