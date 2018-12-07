@@ -34,6 +34,7 @@ public:
 	void rotatePlayerRight(const float dt);
 	void moveShip(const bool moving, const float dt);
 	void shipShoot();
+	void hyperspace();
 
 	int getScore() const { return score; };
 	int getLifes() const { return lifes; };

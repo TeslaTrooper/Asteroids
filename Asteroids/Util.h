@@ -155,6 +155,13 @@ static int random(const int min, const int max) {
 	return rand() % (max - min + 1) + min;
 }
 
+static Vec2 getRandomPosition() {
+	int x = random(0, WIN_WIDTH);
+	int y = random(0, WIN_HEIGHT);
+
+	return Vec2(x, y);
+}
+
 namespace customMath {
 	// Source: https://stackoverflow.com/questions/1375882/mathematically-find-max-value-without-conditional-comparison
 	static float min(const float a, const float b) {

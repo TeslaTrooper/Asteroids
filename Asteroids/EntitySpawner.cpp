@@ -46,13 +46,6 @@ int EntitySpawner::getEntityCountToCreate() {
 	return totalEntityCount - currentEntityCount;
 }
 
-Vec2 EntitySpawner::getRandomPosition() {
-	int x = random(0, WIN_WIDTH);
-	int y = random(0, WIN_HEIGHT);
-
-	return Vec2(x, y);
-}
-
 float EntitySpawner::getRandomSize() {
 	int r = random(0, 2);
 

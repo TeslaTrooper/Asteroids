@@ -83,3 +83,7 @@ void Game::rotateRight(const float dt) {
 void Game::shipShoot() {
 	internalLogic.shipShoot();
 }
+
+void Game::hyperspace() {
+	internalLogic.hyperspace();
+}

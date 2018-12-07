@@ -14,7 +14,6 @@ class EntitySpawner {
 	int getEntityCountToCreate();
 	float getRandomSize();
 	Vec2 getRandomMovement();
-	Vec2 getRandomPosition();
 
 	void checkForAsteroidCreation();
 	void checkForSaucerCreation();

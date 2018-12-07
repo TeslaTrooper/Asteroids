@@ -48,7 +48,7 @@ public:
 	void rotateLeft(const float dt);
 	void rotateRight(const float dt);
 	void shipShoot();
-
+	void hyperspace();
 
 };
 

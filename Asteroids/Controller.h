@@ -7,7 +7,7 @@
 
 class Controller {
 
-	static bool KEY_SPACE;
+	static bool KEY_SPACE, KEY_SHIFT;
 	static bool KEY_UP, KEY_LEFT, KEY_RIGHT, KEY_DOWN;
 
 	static bool getAndClean(bool* key);
@@ -23,6 +23,7 @@ public:
 	static bool isKeyDownPressed();
 	static bool isKeyLeftPressed();
 	static bool isKeyRightPressed();
+	static bool isKeyShiftPressed();
 	static double getMx();
 	static double getMy();
 };

@@ -70,6 +70,9 @@ void Window::checkInput(const float dt) {
 	if (Controller::isKeySpacePressed()) {
 		game->shipShoot();
 	}
+	if (Controller::isKeyShiftPressed()) {
+		game->hyperspace();
+	}
 }
 
 void Window::loop() {

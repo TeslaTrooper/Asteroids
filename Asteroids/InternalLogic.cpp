@@ -250,6 +250,13 @@ void InternalLogic::moveShip(const bool moving, const float dt) {
 	player->setAcceleration(moving ? 1.f : 0.f);
 };
 
+void InternalLogic::hyperspace() {
+	GameObject* player = entityFactory->getPlayer();
+
+	player->setPosition(getRandomPosition());
+	player->setMovement(Vec2());
+}
+
 vector<RenderUnit> InternalLogic::getRenderUnits() const {
 	vector<RenderUnit> units;
 	vector<GameObject*> entities = entityFactory->get();
