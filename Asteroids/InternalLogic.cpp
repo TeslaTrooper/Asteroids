@@ -1,19 +1,21 @@
 #include "InternalLogic.h"
 
+InternalLogic::InternalLogic(EntityFactory* const entityFactory) : score(0), lifes(4), entityFactory(entityFactory), entitySpawner(entityFactory) {}
+
 void InternalLogic::createInitialEntities() {
 	createPlayer();
 
-	entityFactory.createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
-	entityFactory.createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(0.f, 0.f));
+	//entityFactory->createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
+	//entityFactory->createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(0.f, 0.f));
 }
 
 void InternalLogic::update(const float dt) {
-	vector<GameObject*> objects = entityFactory.get();
+	vector<GameObject*> objects = entityFactory->get();
 
 	physicsEngine.update(objects, dt);
 	resolveColliions(objects);
 	updateScore(objects);
-	entityFactory.update();
+	entityFactory->update();
 	checkForMissingPlayer();
 
 	for each (GameObject* obj in objects) {
@@ -24,37 +26,45 @@ void InternalLogic::update(const float dt) {
 		checkForOutOfBoundsObjects(obj);
 	}
 
-	for each (Saucer* saucer in entityFactory.get(ModelClass::CLASS_SAUCER)) {
+	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER)) {
 		checkSaucerBehaviour(saucer);
 	}
+
+	entitySpawner.update(dt);
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 	Vec2 cPos = obj->getPosition();
+	// Take width as crop box for repositioning
+	float a = ModelData::getCropBox(obj->getModelClass()).width * obj->getScale();
 
-	int x = (int) (WIN_WIDTH + cPos.x) % (int) WIN_WIDTH;
-	int y = (int) (WIN_HEIGHT + cPos.y) % (int) WIN_HEIGHT;
+	int x = (int) ((int) (WIN_WIDTH + cPos.x) % (int) WIN_WIDTH);
+	int y = (int) ((int) (WIN_HEIGHT + cPos.y) % (int) WIN_HEIGHT);
 
 	// It works, but it would be better, if we can get rid of these if-conditions
 	// and replace it with some calculations
 
 	// Update correspondig value, only if necessary
-	if (cPos.x > WIN_WIDTH || cPos.x < 0)
-		obj->setPosition(Vec2((float) x, cPos.y));
+	if (cPos.x > WIN_WIDTH)
+		obj->setPosition(Vec2((float) (x - a), cPos.y));
+	if (cPos.x < -a)
+		obj->setPosition(Vec2((float) (x + a), cPos.y));
 
 	cPos = obj->getPosition();
 
-	if (cPos.y > WIN_HEIGHT || cPos.y < 0)
-		obj->setPosition(Vec2(cPos.x, (float) y));
+	if (cPos.y > WIN_HEIGHT)
+		obj->setPosition(Vec2(cPos.x, (float) (y - a)));
+	if (cPos.y < -a)
+		obj->setPosition(Vec2(cPos.x, (float) (y + a)));
 }
 
 void InternalLogic::shipShoot() {
 	// Prevent player from shooting more than MAX_PROJECTILE entities
-	if (entityFactory.getPlayerProjectileCount() >= MAX_PROJECTILE) {
+	if (entityFactory->getPlayerProjectileCount() >= MAX_PROJECTILE) {
 		return;
 	}
 
-	GameObject* player = entityFactory.getPlayer();
+	GameObject* player = entityFactory->getPlayer();
 	// Determine position of player head for new projectile
 	Vec2 shipHead = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 transformedHead = player->getRenderUnit().transformation.transform(shipHead);
@@ -65,7 +75,7 @@ void InternalLogic::shipShoot() {
 	Vec2 movement = shipDirection.mul(PROJECTILE_SPEED + player->getMovement().length());
 
 	// Create projectile
-	entityFactory.createPlayerProjectile(position, SIZE_MEDIUM, movement);
+	entityFactory->createPlayerProjectile(position, SIZE_MEDIUM, movement);
 }
 
 void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
@@ -79,9 +89,9 @@ void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
 		}
 
 		if (obj->getModelClass() == ModelClass::CLASS_SHIP) {
-			entityFactory.createShipParticleEffect(obj->getCollisionInfo().collisionLocation);
+			entityFactory->createShipParticleEffect(obj->getCollisionInfo().collisionLocation);
 		} else {
-			entityFactory.createSimpleParticleEffect(obj->getCollisionInfo().collisionLocation);
+			entityFactory->createSimpleParticleEffect(obj->getCollisionInfo().collisionLocation);
 		}
 
 		obj->markForCleanup();
@@ -106,7 +116,7 @@ void InternalLogic::createAsteroidPiece(GameObject const * const object) {
 	Model randomAsteroidModel = (Model) random(0, 3);
 	float childScale = object->getScale() - 0.5f;
 
-	entityFactory.createAsteroid(randomAsteroidModel, position, childScale, childMovement);
+	entityFactory->createAsteroid(randomAsteroidModel, position, childScale, childMovement);
 }
 
 Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const {
@@ -120,7 +130,7 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 
 	// Next step is to change velocity
 	// To keep it simple, the new velocity is just a random number
-	int randomVelocity = random(MIN_VELOCITY, MAX_VELOCITY);
+	int randomVelocity = random(ASTEROID_MIN_VELOCITY, ASTEROID_MAX_VELOCITY);
 	float velocity = randomVelocity / 10.f;
 
 	return rotatedMovement.norm().mul(velocity);
@@ -173,12 +183,12 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 }
 
 void InternalLogic::createPlayer() {
-	GameObject* player = entityFactory.createPlayerInCenter(SIZE_LARGE);
+	GameObject* player = entityFactory->createPlayerInCenter(SIZE_LARGE);
 	lifes--;
 }
 
 void InternalLogic::checkForMissingPlayer() {
-	if (entityFactory.getPlayer() == nullptr) {
+	if (entityFactory->getPlayer() == nullptr) {
 		createPlayer();
 	}
 }
@@ -189,7 +199,7 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 	}
 
 	// Calculate center of player ship mx, my
-	GameObject* player = entityFactory.getPlayer();
+	GameObject* player = entityFactory->getPlayer();
 
 	Vec2 p1 = Vec2(ModelData::shipVertices[0], ModelData::shipVertices[1]);
 	Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
@@ -207,11 +217,11 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 	ProjectileParams params = saucer->getProjectileParams(Vec2(mx, my));
 
 	// Create projectile
-	entityFactory.createSaucerProjectile(params.position, SIZE_MEDIUM, params.movement);
+	entityFactory->createSaucerProjectile(params.position, SIZE_MEDIUM, params.movement);
 }
 
 void InternalLogic::rotatePlayerLeft(const float dt) {
-	GameObject* player = entityFactory.getPlayer();
+	GameObject* player = entityFactory->getPlayer();
 
 	if (player == nullptr) {
 		return;
@@ -221,7 +231,7 @@ void InternalLogic::rotatePlayerLeft(const float dt) {
 };
 
 void InternalLogic::rotatePlayerRight(const float dt) {
-	GameObject* player = entityFactory.getPlayer();
+	GameObject* player = entityFactory->getPlayer();
 
 	if (player == nullptr) {
 		return;
@@ -231,7 +241,7 @@ void InternalLogic::rotatePlayerRight(const float dt) {
 };
 
 void InternalLogic::moveShip(const bool moving, const float dt) {
-	GameObject* player = entityFactory.getPlayer();
+	GameObject* player = entityFactory->getPlayer();
 
 	if (player == nullptr) {
 		return;
@@ -242,7 +252,7 @@ void InternalLogic::moveShip(const bool moving, const float dt) {
 
 vector<RenderUnit> InternalLogic::getRenderUnits() const {
 	vector<RenderUnit> units;
-	vector<GameObject*> entities = entityFactory.get();
+	vector<GameObject*> entities = entityFactory->get();
 
 	for each (GameObject* entity in entities) {
 		if (!entity->isVisible())

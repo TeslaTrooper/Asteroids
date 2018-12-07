@@ -12,7 +12,7 @@ class EntityFactory {
 
 	map<ModelClass, vector<GameObject*>> entities;
 
-	vector<GameObject*> linearizeMap() const;
+	vector<GameObject*> linearizeMap(const ModelClass filter) const;
 	void remove(GameObject* object);
 
 	GameObject* createStatic(const Model model, const Vec2 position, const float size, const Vec2 movement, const bool isPlayerProjectile);
@@ -37,6 +37,7 @@ public:
 	void createSimpleParticleEffect(const Vec2 position);
 	void createShipParticleEffect(const Vec2 position);
 	int getPlayerProjectileCount() const;
+	int getEntityCount() const;
 
 	vector<GameObject*> get() const;
 	GameObject* getPlayer() const;

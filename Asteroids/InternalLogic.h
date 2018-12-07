@@ -3,12 +3,14 @@
 
 #include "EntityFactory.h"
 #include "PhysicsEngine.h"
+#include "EntitySpawner.h"
 
 class InternalLogic {
 
 	int score, lifes;
 
-	EntityFactory entityFactory;
+	EntityFactory* const entityFactory;
+	EntitySpawner entitySpawner;
 	PhysicsEngine physicsEngine;
 
 	void checkForOutOfBoundsObjects(GameObject* obj) const;
@@ -22,7 +24,7 @@ class InternalLogic {
 	void checkSaucerBehaviour(Saucer* saucer);
 
 public:
-	InternalLogic() : score(0), lifes(4) {};
+	InternalLogic(EntityFactory* const entityFactory);
 	~InternalLogic() {};
 
 	void update(const float dt);
@@ -35,7 +37,7 @@ public:
 
 	int getScore() const { return score; };
 	int getLifes() const { return lifes; };
-	vector<GameObject*> getEntities() { return entityFactory.get(); };
+	vector<GameObject*> getEntities() { return entityFactory->get(); };
 	vector<RenderUnit> getRenderUnits() const;
 
 

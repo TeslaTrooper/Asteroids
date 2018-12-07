@@ -8,7 +8,7 @@ EntityFactory::EntityFactory() {
 }
 
 void EntityFactory::update() {
-	vector<GameObject*> objects = linearizeMap();
+	vector<GameObject*> objects = linearizeMap(ModelClass::CLASS_UNDEFINED);
 
 	for each (GameObject* obj in objects) {
 		if (!obj->isAlive()) {
@@ -76,7 +76,7 @@ void EntityFactory::createShipParticleEffect(const Vec2 position) {
 }
 
 vector<GameObject*> EntityFactory::get() const {
-	return linearizeMap();
+	return linearizeMap(ModelClass::CLASS_UNDEFINED);
 }
 
 GameObject* EntityFactory::getPlayer() const {
@@ -148,15 +148,17 @@ GameObject* EntityFactory::create(const Model model, const Vec2 position, const 
 }
 
 void EntityFactory::clear() {
-	linearizeMap().clear();
+	linearizeMap(ModelClass::CLASS_UNDEFINED).clear();
 }
 
-vector<GameObject*> EntityFactory::linearizeMap() const {
+vector<GameObject*> EntityFactory::linearizeMap(const ModelClass filter) const {
 	vector<GameObject*> result;
 
 	for (const pair<ModelClass, vector<GameObject*>>& pair : entities) {
 		for each (GameObject* obj in pair.second) {
-			result.push_back(obj);
+			if (filter == ModelClass::CLASS_UNDEFINED || obj->getModelClass() != filter) {
+				result.push_back(obj);
+			}
 		}
 	}
 
@@ -169,4 +171,8 @@ void EntityFactory::remove(GameObject* object) {
 	auto it = std::find(vec->begin(), vec->end(), object);
 	if (it != vec->end())
 		vec->erase(it);
+}
+
+int EntityFactory::getEntityCount() const {
+	return linearizeMap(ModelClass::CLASS_PROJECTILE).size();
 }

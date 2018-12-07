@@ -111,6 +111,9 @@
     <ClCompile Include="Saucer.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="EntitySpawner.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="Saucer.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitySpawner.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game() {
+Game::Game() : internalLogic(InternalLogic(new EntityFactory())) {
 	internalLogic.createInitialEntities();
 }
 
