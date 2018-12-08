@@ -106,6 +106,10 @@ static Vec2 operator*(const Vec2& vec, const float scalar) {
 	return Vec2(vec.x * scalar, vec.y * scalar);
 };
 
+static Dimension operator*(const Dimension dim, const float scale) {
+	return { dim.width * scale, dim.height * scale };
+}
+
 static vector<Vec2> getTransformedVertices(const VertexData& vertexData, const Mat4& transformtion) {
 	vector<Vec2> transformedVertices;
 

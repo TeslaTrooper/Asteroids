@@ -24,25 +24,25 @@ class InternalLogic {
 	void checkSaucerBehaviour(Saucer* saucer);
 
 public:
-	InternalLogic(EntityFactory* const entityFactory);
+	InternalLogic(EntityFactory* const entityFactory) : score(0), lifes(4),
+		entityFactory(entityFactory), entitySpawner(entityFactory) {};
 	~InternalLogic() {};
 
+	// Main logic loop
 	void update(const float dt);
 
-	void createInitialEntities();
+	// Player steerings
 	void rotatePlayerLeft(const float dt);
 	void rotatePlayerRight(const float dt);
 	void moveShip(const bool moving, const float dt);
 	void shipShoot();
 	void hyperspace();
 
+	// Methods for UI
 	int getScore() const { return score; };
 	int getLifes() const { return lifes; };
 	vector<GameObject*> getEntities() { return entityFactory->get(); };
 	vector<RenderUnit> getRenderUnits() const;
-
-
-
 };
 
 #endif INTERNAL_LOGIC

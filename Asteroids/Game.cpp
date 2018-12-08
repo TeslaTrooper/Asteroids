@@ -45,7 +45,7 @@ void Game::prepareRenderUnits() {
 		int x = (int) (5 + (i * ModelData::SHIP_CROP_BOX.width));
 		int y = WIN_HEIGHT - 60;
 
-		Dimension modelDim = ModelData::getCropBox(ModelClass::CLASS_SHIP);
+		Dimension modelDim = ModelData::getCropBox(ModelClass::CLASS_SHIP, 1);
 		Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
 		Mat4 transformation = Mat4::getTransformation(Vec2(x, y), Vec2(SIZE_SMALL, SIZE_SMALL), 270, rotationOrigin);
 

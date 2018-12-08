@@ -226,12 +226,12 @@ IndexData ModelData::calcIndices(const int vertexCount) const {
 	return { indices, vertexCount * 2 };
 }
 
-Dimension ModelData::getCropBox(const ModelClass modelClass) {
+Dimension ModelData::getCropBox(const ModelClass modelClass, const float scale) {
 	switch (modelClass) {
-		case ModelClass::CLASS_ASTEROID: return ASTEROID_CROP_BOX;
-		case ModelClass::CLASS_SHIP: return SHIP_CROP_BOX;
-		case ModelClass::CLASS_SAUCER: return SAUCER_CROP_BOX;
-		case ModelClass::CLASS_LINE_SEGMENT: return LINE_SEGMENT_CROP_BOX;
+		case ModelClass::CLASS_ASTEROID: return ASTEROID_CROP_BOX * scale;
+		case ModelClass::CLASS_SHIP: return SHIP_CROP_BOX * scale;
+		case ModelClass::CLASS_SAUCER: return SAUCER_CROP_BOX * scale;
+		case ModelClass::CLASS_LINE_SEGMENT: return LINE_SEGMENT_CROP_BOX * scale;
 		default: return Dimension();
 	}
 }

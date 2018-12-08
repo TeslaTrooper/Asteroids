@@ -114,7 +114,7 @@ bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObj
 		a1 = Vec2((float) wMin, (float) hMin);
 		a2 = Vec2((float) hMin, (float) hMax);
 	} else {
-		Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass());
+		Dimension dimObj1 = ModelData::getCropBox(obj1->getModelClass(), 1);
 
 		Vec2 scaling1 = Vec2(obj1->getScale() * dimObj1.width, obj1->getScale() * dimObj1.height);
 		Mat4 transformation1 = Mat4::getTransformation(obj1->getPosition(), scaling1);
@@ -123,7 +123,7 @@ bool PhysicsEngine::detectSimpleCollision(GameObject const * const obj1, GameObj
 		a2 = transformation1.transform(Vec2(1, 1));
 	}
 
-	Dimension dimObj2 = ModelData::getCropBox(obj2->getModelClass());
+	Dimension dimObj2 = ModelData::getCropBox(obj2->getModelClass(), 1);
 
 	Vec2 scaling2 = Vec2(obj2->getScale() * dimObj2.width, obj2->getScale() * dimObj2.height);
 	Mat4 transformation2 = Mat4::getTransformation(obj2->getPosition(), scaling2);

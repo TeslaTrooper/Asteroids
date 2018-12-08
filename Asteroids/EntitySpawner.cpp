@@ -2,13 +2,20 @@
 
 EntitySpawner::EntitySpawner(EntityFactory* const entityFactory) : entityFactory(entityFactory) {
 	this->elapsedTime = 0;
+	this->lastUpdate = 0;
 	this->lastBigSaucerTimeStamp = 0;
 	this->lastSmallSaucerTimeStamp = 0;
 	this->totalEntityCount = INITAL_ENTITY_COUNT;
+
+	checkForAsteroidCreation();
 };
 
 void EntitySpawner::update(const float dt) {
 	elapsedTime += dt;
+
+	if ((elapsedTime - lastUpdate) < UPDATE_INTERVAL) {
+		return;
+	}
 
 	checkForAsteroidCreation();
 	checkForSaucerCreation();
@@ -18,7 +25,7 @@ void EntitySpawner::checkForAsteroidCreation() {
 	int count = getEntityCountToCreate();
 	for (int i = 0; i < count; i++) {
 		Model randomAsteroidModel = (Model) random(0, 3);
-		Vec2 position = getRandomPosition();
+		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_ASTEROID, SIZE_LARGE));
 		float size = getRandomSize();
 		Vec2 movement = getRandomMovement();
 
@@ -63,4 +70,17 @@ Vec2 EntitySpawner::getRandomMovement() {
 	float velocity = randomVelocity / 10.f;
 
 	return direction.mul(velocity);
+}
+
+Vec2 EntitySpawner::getPosition(const Dimension cropBox) {
+	// Determine random position
+	// Default position for y is top
+	int x = random(-cropBox.width, WIN_WIDTH);
+	int y = -cropBox.height;
+
+	// Check, whether the entity gets positioned top or bottom
+	if (random(0, 1) == 0)
+		y = WIN_HEIGHT;
+
+	return Vec2(x, y);
 }

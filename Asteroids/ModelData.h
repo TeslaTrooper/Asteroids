@@ -63,7 +63,7 @@ public:
 	Bindable getBindable(const Model model) const;
 	IndexData getTriangulatedModelData(const Model model) const;
 
-	static Dimension getCropBox(const ModelClass modelClass);
+	static Dimension getCropBox(const ModelClass modelClass, const float scale);
 };
 
 #endif MODEL_DATA

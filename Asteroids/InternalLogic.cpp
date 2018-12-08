@@ -1,14 +1,5 @@
 #include "InternalLogic.h"
 
-InternalLogic::InternalLogic(EntityFactory* const entityFactory) : score(0), lifes(4), entityFactory(entityFactory), entitySpawner(entityFactory) {}
-
-void InternalLogic::createInitialEntities() {
-	createPlayer();
-
-	//entityFactory->createAsteroid(Model::ASTEROID1, Vec2(), SIZE_LARGE, Vec2(2, 1));
-	//entityFactory->createSaucer(Vec2(300, 450), SIZE_MEDIUM, Vec2(0.f, 0.f));
-}
-
 void InternalLogic::update(const float dt) {
 	vector<GameObject*> objects = entityFactory->get();
 
@@ -36,7 +27,7 @@ void InternalLogic::update(const float dt) {
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 	Vec2 cPos = obj->getPosition();
 	// Take width as crop box for repositioning
-	float a = ModelData::getCropBox(obj->getModelClass()).width * obj->getScale();
+	float a = ModelData::getCropBox(obj->getModelClass(), obj->getScale()).width;
 
 	int x = (int) ((int) (WIN_WIDTH + cPos.x) % (int) WIN_WIDTH);
 	int y = (int) ((int) (WIN_HEIGHT + cPos.y) % (int) WIN_HEIGHT);
@@ -183,7 +174,7 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 }
 
 void InternalLogic::createPlayer() {
-	GameObject* player = entityFactory->createPlayerInCenter(SIZE_LARGE);
+	entityFactory->createPlayerInCenter(SIZE_LARGE);
 	lifes--;
 }
 
@@ -253,7 +244,10 @@ void InternalLogic::moveShip(const bool moving, const float dt) {
 void InternalLogic::hyperspace() {
 	GameObject* player = entityFactory->getPlayer();
 
-	player->setPosition(getRandomPosition());
+	Dimension dim = ModelData::getCropBox(ModelClass::CLASS_SHIP, player->getScale());
+	Vec2 cropBox = Vec2(dim.width, dim.height);
+
+	player->setPosition(getRandomPosition().sub(cropBox).absolut());
 	player->setMovement(Vec2());
 }
 
