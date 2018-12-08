@@ -17,6 +17,8 @@ void EntitySpawner::update(const float dt) {
 		return;
 	}
 
+	lastUpdate = elapsedTime;
+
 	checkForAsteroidCreation();
 	checkForSaucerCreation();
 }

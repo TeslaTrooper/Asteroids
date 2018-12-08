@@ -25,8 +25,8 @@ class Game {
 	void prepareRenderUnits();
 
 public:
-	Game();
-	~Game();
+	Game() : internalLogic(InternalLogic(new EntityFactory())) {}
+	~Game() {};
 
 	void update(const float dt);
 	vector<RenderUnit> getRenderUnits() const;

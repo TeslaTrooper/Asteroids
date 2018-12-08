@@ -43,6 +43,12 @@
     <Filter Include="Source Files\core\api\math">
       <UniqueIdentifier>{971a8434-90c8-4e71-8b48-73a0a42c2bc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\entities">
+      <UniqueIdentifier>{f80eb480-268f-498c-b4d5-5c420a4d5530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\entites">
+      <UniqueIdentifier>{4d56fe3c-8502-413a-ba9e-483bafa45798}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,9 +96,6 @@
     <ClCompile Include="FontBuilder.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsEngine.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -102,17 +105,20 @@
     <ClCompile Include="InternalLogic.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="EntityFactory.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="Saucer.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="EntitySpawner.cpp">
       <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\core\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="Saucer.cpp">
+      <Filter>Source Files\core\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\core\entites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +161,6 @@
     <ClInclude Include="FontBuilder.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsEngine.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -167,17 +170,20 @@
     <ClInclude Include="InternalLogic.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
     <ClInclude Include="EntityFactory.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Saucer.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="EntitySpawner.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\core\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\core\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Saucer.h">
+      <Filter>Header Files\core\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

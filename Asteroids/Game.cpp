@@ -1,11 +1,5 @@
 #include "Game.h"
 
-Game::Game() : internalLogic(InternalLogic(new EntityFactory())) {
-	internalLogic.createInitialEntities();
-}
-
-Game::~Game() {}
-
 void Game::update(const float dt) {
 	internalLogic.update(dt);
 	updateUIElements(dt);
