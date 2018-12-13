@@ -7,7 +7,7 @@ void InternalLogic::update(const float dt) {
 	resolveColliions(objects);
 	updateScore(objects);
 	entityFactory->update();
-	checkForMissingPlayer();
+	checkForMissingPlayer(dt);
 
 	for each (GameObject* obj in objects) {
 		obj->update(dt);
@@ -22,6 +22,7 @@ void InternalLogic::update(const float dt) {
 	}
 
 	entitySpawner.update(dt);
+	shipController.update(dt);
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
@@ -55,7 +56,10 @@ void InternalLogic::shipShoot() {
 		return;
 	}
 
-	GameObject* player = entityFactory->getPlayer();
+	Ship* player = (Ship*) entityFactory->getPlayer();
+	if (player == nullptr || player->isInHyperspace())
+		return;
+
 	// Determine position of player head for new projectile
 	Vec2 shipHead = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 transformedHead = player->getRenderUnit().transformation.transform(shipHead);
@@ -173,15 +177,24 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 	}
 }
 
+void InternalLogic::checkForMissingPlayer(const float dt) {
+	if (entityFactory->getPlayer() == nullptr)
+		playerIsMissing = true;
+
+	if (playerIsMissing)
+		shipCreationCtr -= dt;
+
+	if (shipCreationCtr <= 0) {
+		playerIsMissing = false;
+		shipCreationCtr = PLAYER_CREATION_DELAY;
+
+		createPlayer();
+	}
+}
+
 void InternalLogic::createPlayer() {
 	entityFactory->createPlayerInCenter(SIZE_LARGE);
 	lifes--;
-}
-
-void InternalLogic::checkForMissingPlayer() {
-	if (entityFactory->getPlayer() == nullptr) {
-		createPlayer();
-	}
 }
 
 void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
@@ -191,6 +204,9 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 
 	// Calculate center of player ship mx, my
 	GameObject* player = entityFactory->getPlayer();
+	if (player == nullptr)
+		return;
+
 
 	Vec2 p1 = Vec2(ModelData::shipVertices[0], ModelData::shipVertices[1]);
 	Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
@@ -212,43 +228,19 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 }
 
 void InternalLogic::rotatePlayerLeft(const float dt) {
-	GameObject* player = entityFactory->getPlayer();
-
-	if (player == nullptr) {
-		return;
-	}
-
-	player->rotate(GameObject::NEGATIVE_ROTATION, dt);
-};
+	shipController.rotatePlayerLeft(dt);
+}
 
 void InternalLogic::rotatePlayerRight(const float dt) {
-	GameObject* player = entityFactory->getPlayer();
-
-	if (player == nullptr) {
-		return;
-	}
-
-	player->rotate(GameObject::POSITIVE_ROTATION, dt);
-};
+	shipController.rotatePlayerRight(dt);
+}
 
 void InternalLogic::moveShip(const bool moving, const float dt) {
-	GameObject* player = entityFactory->getPlayer();
-
-	if (player == nullptr) {
-		return;
-	}
-
-	player->setAcceleration(moving ? 1.f : 0.f);
-};
+	shipController.moveShip(moving, dt);
+}
 
 void InternalLogic::hyperspace() {
-	GameObject* player = entityFactory->getPlayer();
-
-	Dimension dim = ModelData::getCropBox(ModelClass::CLASS_SHIP, player->getScale());
-	Vec2 cropBox = Vec2(dim.width, dim.height);
-
-	player->setPosition(getRandomPosition().sub(cropBox).absolut());
-	player->setMovement(Vec2());
+	shipController.hyperspace();
 }
 
 vector<RenderUnit> InternalLogic::getRenderUnits() const {

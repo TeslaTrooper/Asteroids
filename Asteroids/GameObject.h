@@ -51,6 +51,7 @@ public:
 	void setIsPlayerProjectile(const bool value);
 	void setInvincible(const bool value);
 	void setMaxLifetime(const float value);
+	void setVisible(const bool value);
 	void markForCleanup();
 
 	Vec2 getPosition() const { return position; };

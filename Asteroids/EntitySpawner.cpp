@@ -39,13 +39,15 @@ void EntitySpawner::checkForSaucerCreation() {
 	if ((elapsedTime - lastBigSaucerTimeStamp) >= BIG_SAUCER_INTERVAL) {
 		lastBigSaucerTimeStamp = elapsedTime;
 
-		entityFactory->createSaucer(getRandomPosition(), SIZE_LARGE, getRandomMovement());
+		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_SAUCER, SIZE_LARGE));
+		entityFactory->createSaucer(position, SIZE_LARGE, getRandomMovement());
 	}
 
 	if ((elapsedTime - lastSmallSaucerTimeStamp) >= SMALL_SAUCER_INTERVAL) {
 		lastSmallSaucerTimeStamp = elapsedTime;
 
-		entityFactory->createSaucer(getRandomPosition(), SIZE_MEDIUM, getRandomMovement());
+		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_SAUCER, SIZE_MEDIUM));
+		entityFactory->createSaucer(position, SIZE_MEDIUM, getRandomMovement());
 	}
 }
 
@@ -77,8 +79,8 @@ Vec2 EntitySpawner::getRandomMovement() {
 Vec2 EntitySpawner::getPosition(const Dimension cropBox) {
 	// Determine random position
 	// Default position for y is top
-	int x = random(-cropBox.width, WIN_WIDTH);
-	int y = -cropBox.height;
+	float x = (float) random((int) -cropBox.width, WIN_WIDTH);
+	float y = -cropBox.height;
 
 	// Check, whether the entity gets positioned top or bottom
 	if (random(0, 1) == 0)

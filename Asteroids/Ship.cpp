@@ -2,12 +2,17 @@
 
 Ship::Ship(const Vec2 position, const float scale) : GameObject(Model::SHIP, position, scale) {
 	this->invincible = true;
+	this->invincibleAnimationDone = false;
+	this->inHyperspace = false;
 
 	lastMovingAnimationTimeStamp = 0;
 	lastInvincibleAnimationTimeStamp = 0;
 }
 
 void Ship::update(const float dt) {
+	if (inHyperspace)
+		return;
+
 	GameObject::update(dt);
 
 	updateMoveAnimation();
@@ -34,10 +39,15 @@ void Ship::updateMoveAnimation() {
 }
 
 void Ship::updateInvincibleAnimation() {
+	if (invincibleAnimationDone)
+		return;
+
 	// Ship is invincible in first few seconds
 	if (lifetime > INVINCIBLE_DURATION) {
 		invincible = false;
 		visible = true;
+		invincibleAnimationDone = true;
+
 		return;
 	}
 
@@ -46,4 +56,26 @@ void Ship::updateInvincibleAnimation() {
 
 		visible = !visible;
 	}
+}
+
+void Ship::enterHyperspace() {
+	if (inHyperspace)
+		return;
+
+	Dimension dim = ModelData::getCropBox(ModelClass::CLASS_SHIP, getScale());
+	Vec2 cropBox = Vec2(dim.width, dim.height);
+
+	setPosition(getRandomPosition().sub(cropBox).absolut());
+	setMovement(Vec2());
+	setInvincible(true);
+	setVisible(false);
+
+	inHyperspace = true;
+}
+
+void Ship::leaveHyperspace() {
+	setInvincible(false);
+	setVisible(true);
+
+	inHyperspace = false;
 }

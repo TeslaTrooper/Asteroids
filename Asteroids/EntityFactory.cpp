@@ -5,6 +5,7 @@ EntityFactory::EntityFactory() {
 	entities[ModelClass::CLASS_PROJECTILE] = vector<GameObject*>();
 	entities[ModelClass::CLASS_SAUCER] = vector<GameObject*>();
 	entities[ModelClass::CLASS_SHIP] = vector<GameObject*>();
+	entities[ModelClass::CLASS_LINE_SEGMENT] = vector<GameObject*>();
 }
 
 void EntityFactory::update() {
@@ -83,7 +84,6 @@ GameObject* EntityFactory::getPlayer() const {
 	vector<GameObject*> playerVector = entities.at(ModelClass::CLASS_SHIP);
 
 	if (playerVector.size() == 0) {
-		printf("No player created!");
 		return nullptr;
 	}
 
@@ -174,5 +174,5 @@ void EntityFactory::remove(GameObject* object) {
 }
 
 int EntityFactory::getEntityCount() const {
-	return linearizeMap(ModelClass::CLASS_PROJECTILE).size();
+	return (int) entities.at(ModelClass::CLASS_ASTEROID).size();
 }

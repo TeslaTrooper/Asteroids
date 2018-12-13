@@ -120,6 +120,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\core\entites</Filter>
     </ClCompile>
+    <ClCompile Include="ShipController.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Saucer.h">
       <Filter>Header Files\core\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipController.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

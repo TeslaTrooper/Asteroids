@@ -12,6 +12,8 @@ class Ship : public GameObject {
 	float lastMovingAnimationTimeStamp;
 	float lastInvincibleAnimationTimeStamp;
 
+	bool invincibleAnimationDone, inHyperspace;
+
 	void updateMoveAnimation();
 	void updateInvincibleAnimation();
 
@@ -20,6 +22,11 @@ public:
 	~Ship() { GameObject::~GameObject(); };
 
 	void update(const float dt) override;
+
+	void enterHyperspace();
+	void leaveHyperspace();
+
+	bool isInHyperspace() const { return this->inHyperspace; };
 };
 
 #endif SHIP_CLASS

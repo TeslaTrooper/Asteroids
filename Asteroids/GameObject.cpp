@@ -67,6 +67,10 @@ void GameObject::setMaxLifetime(const float value) {
 	this->maxLifetime = value;
 }
 
+void GameObject::setVisible(const bool value) {
+	this->visible = value;
+}
+
 void GameObject::setCollisionInfo(const CollisionInfo info) {
 	if (this->collisionInfo == nullptr) {
 		collisionInfo = new CollisionInfo();
