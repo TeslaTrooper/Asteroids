@@ -8,9 +8,17 @@
 
 #define PLAYER_CREATION_DELAY 2
 
+#define SCORE_MEDIUM_SAUCER 200
+#define SCORE_SMALL_SAUCER 1000
+#define SCORE_LARGE_ASTEROID 20
+#define SCORE_MEDIUM_ASTEROID 50
+#define SCORE_SMALL_ASTEROID 100
+
+#define LIFE_PER_SCORE 10000
+
 class InternalLogic {
 
-	int score, lifes;
+	int score, lifePerScore, lastScoreStage, lifes;
 	float shipCreationCtr;
 	bool playerIsMissing;
 
@@ -25,12 +33,15 @@ class InternalLogic {
 	void createAsteroidPiece(GameObject const * const object);
 	Vec2 calcMovementOfChildAsteroid(const Vec2 parentMovement) const;
 	void updateScore(const vector<GameObject*> objects);
+	float determineGainedScore(const float objSize, const ModelClass classOfIntersector);
+	void updateRemainingLifes();
 	void createPlayer();
 	void checkForMissingPlayer(const float dt);
 	void checkSaucerBehaviour(Saucer* saucer);
 
 public:
-	InternalLogic(EntityFactory* const entityFactory) : score(0), lifes(4), playerIsMissing(false), shipCreationCtr(PLAYER_CREATION_DELAY),
+	InternalLogic(EntityFactory* const entityFactory) : score(0), lifePerScore(LIFE_PER_SCORE),
+		lifes(4), playerIsMissing(false), shipCreationCtr(PLAYER_CREATION_DELAY),
 		entityFactory(entityFactory), entitySpawner(entityFactory), shipController(ShipController(entityFactory)) {
 		entityFactory->createSaucer(Vec2(100, 100), SIZE_SMALL, Vec2(1, 0));
 	};

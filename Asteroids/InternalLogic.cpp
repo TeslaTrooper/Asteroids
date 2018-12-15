@@ -157,23 +157,43 @@ void InternalLogic::updateScore(const vector<GameObject*> objects) {
 		bool isShip = classOfObj == ModelClass::CLASS_SHIP;
 		bool isPlayerProjectile = classOfObj == ModelClass::CLASS_PROJECTILE && obj->isPlayerProjectile();
 
+		// Make sure, we have a valid collision, which affects current score
+		// This is only the case, if either the ship, or the ship projectile has intersection
 		if (isShip || isPlayerProjectile) {
-			if (classOfIntersector == ModelClass::CLASS_SAUCER) {
-				score += intersector.objSize == SIZE_MEDIUM ? 200 : 1000;
-			}
+			score += determineGainedScore(intersector.objSize, classOfIntersector);
 
-			if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
-				if (intersector.objSize == SIZE_LARGE) {
-					score += 20;
-				}
-				if (intersector.objSize == SIZE_MEDIUM) {
-					score += 50;
-				}
-				if (intersector.objSize == SIZE_SMALL) {
-					score += 100;
-				}
-			}
+			updateRemainingLifes();
 		}
+	}
+}
+
+float InternalLogic::determineGainedScore(const float objSize, const ModelClass classOfIntersector) {
+	float gainedScore = 0;
+
+	if (classOfIntersector == ModelClass::CLASS_SAUCER) {
+		gainedScore = objSize == SIZE_MEDIUM ? SCORE_MEDIUM_SAUCER : SCORE_SMALL_SAUCER;
+	}
+
+	if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
+		if (objSize == SIZE_LARGE) {
+			gainedScore = SCORE_LARGE_ASTEROID;
+		}
+		if (objSize == SIZE_MEDIUM) {
+			gainedScore = SCORE_MEDIUM_ASTEROID;
+		}
+		if (objSize == SIZE_SMALL) {
+			gainedScore = SCORE_SMALL_ASTEROID;
+		}
+	}
+
+	return gainedScore;
+}
+
+void InternalLogic::updateRemainingLifes() {
+	// Every LIFE_PER_SCORE points, player gains one extra life
+	if (score >= lifePerScore) {
+		lifes++;
+		lifePerScore += LIFE_PER_SCORE;
 	}
 }
 
