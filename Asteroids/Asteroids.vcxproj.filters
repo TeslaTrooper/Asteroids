@@ -28,9 +28,6 @@
     <Filter Include="Header Files\core\api">
       <UniqueIdentifier>{adb74072-59d4-4e88-90bc-3669cd8c7f96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\api\math">
-      <UniqueIdentifier>{2fb6bd4d-769f-4261-8f10-9133c3ac5ae1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\view\shader">
       <UniqueIdentifier>{658391c0-240a-45eb-af52-9b906dd673c0}</UniqueIdentifier>
     </Filter>
@@ -39,9 +36,6 @@
     </Filter>
     <Filter Include="Source Files\core\api">
       <UniqueIdentifier>{9d764652-e9b7-4e24-b71c-4f44752233f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core\api\math">
-      <UniqueIdentifier>{971a8434-90c8-4e71-8b48-73a0a42c2bc0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\core\entities">
       <UniqueIdentifier>{f80eb480-268f-498c-b4d5-5c420a4d5530}</UniqueIdentifier>
@@ -68,15 +62,6 @@
     </ClCompile>
     <ClCompile Include="Util.h">
       <Filter>Header Files\core\api</Filter>
-    </ClCompile>
-    <ClCompile Include="Mat4.cpp">
-      <Filter>Source Files\core\api\math</Filter>
-    </ClCompile>
-    <ClCompile Include="Mat3.cpp">
-      <Filter>Source Files\core\api\math</Filter>
-    </ClCompile>
-    <ClCompile Include="Vec2.cpp">
-      <Filter>Source Files\core\api\math</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\view\shader</Filter>
@@ -136,15 +121,6 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Mat3.h">
-      <Filter>Header Files\core\api\math</Filter>
-    </ClInclude>
-    <ClInclude Include="Mat4.h">
-      <Filter>Header Files\core\api\math</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec2.h">
-      <Filter>Header Files\core\api\math</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files\view\shader</Filter>
