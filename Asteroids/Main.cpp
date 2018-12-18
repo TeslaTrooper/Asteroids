@@ -2,7 +2,7 @@
 
 int main(void) {
 	Window window = Window();
-	window.loop();
+	window.run();
 
 	return 0;
 }

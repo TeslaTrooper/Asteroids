@@ -1,54 +1,16 @@
 #include "Window.h"
-#include<stdio.h>
 
-Window::Window() {
-	initOpenGL();
-	initWindow();
-	initViewport();
-	initProjectionMatrix();
+Window::Window() : BaseOpenGLWindow(WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL") {
+	registerKeyCallback(Controller::key_callback);
 
 	game = new Game();
 	renderer = new Renderer(game);
+	renderer->setProjection(getProjectionMatrix());
 }
 
 Window::~Window() {
-	glfwDestroyWindow(window);
+	BaseOpenGLWindow::~BaseOpenGLWindow();
 	delete renderer;
-}
-
-void Window::initOpenGL() {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_VERSION);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-}
-
-void Window::initWindow() {
-	window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL", nullptr, nullptr);
-
-	glfwSetWindowPos(window, WIN_POS_X, WIN_POS_Y);
-	glfwMakeContextCurrent(window);
-
-	glewExperimental = GL_TRUE;
-	glewInit();
-
-	glGetString(GL_VERSION);
-
-	glfwSetKeyCallback(window, Controller::key_callback);
-	glfwSetCursorPosCallback(window, Controller::cursor_position_callback);
-}
-
-void Window::initViewport() {
-	int width, height;
-	glfwGetFramebufferSize(window, &width, &height);
-
-	glViewport(0, 0, width, height);
-}
-
-void Window::initProjectionMatrix() {
-	projection = Mat4::ortho(0.0f, static_cast<GLfloat>(WIN_WIDTH),
-		static_cast<GLfloat>(WIN_HEIGHT), 0.0f, -100.0f, 100.0f);
 }
 
 void Window::checkInput(const float dt) {
@@ -75,33 +37,8 @@ void Window::checkInput(const float dt) {
 	}
 }
 
-void Window::loop() {
-	GLfloat start = 0;
-	GLfloat dt = 0;
-
-	renderer->setProjection(projection);
-
-	while (!glfwWindowShouldClose(window)) {
-		start = (GLfloat) glfwGetTime();
-
-		glfwPollEvents();
-
-		if (dt < (GLfloat) (1000.f / FRAME_RATE) / 1000.f && dt > 0) {
-			dt += (GLfloat) glfwGetTime() - start;
-			continue;
-		}
-
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		game->update(dt);
-		renderer->render(dt);
-		checkInput(dt);
-
-		glfwSwapBuffers(window);
-
-		dt = (GLfloat) glfwGetTime() - start;
-	}
-
-	glfwTerminate();
+void Window::loop(float dt) {
+	game->update(dt);
+	renderer->render(dt);
+	checkInput(dt);
 }
