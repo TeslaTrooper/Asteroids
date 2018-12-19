@@ -28,12 +28,6 @@
     <Filter Include="Header Files\core\api">
       <UniqueIdentifier>{adb74072-59d4-4e88-90bc-3669cd8c7f96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\view\shader">
-      <UniqueIdentifier>{658391c0-240a-45eb-af52-9b906dd673c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\view\shader">
-      <UniqueIdentifier>{901cc689-e903-43cd-a252-ea8ad3c65551}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\core\api">
       <UniqueIdentifier>{9d764652-e9b7-4e24-b71c-4f44752233f1}</UniqueIdentifier>
     </Filter>
@@ -62,12 +56,6 @@
     </ClCompile>
     <ClCompile Include="Util.h">
       <Filter>Header Files\core\api</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\view\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderProgram.cpp">
-      <Filter>Source Files\view\shader</Filter>
     </ClCompile>
     <ClCompile Include="ModelData.cpp">
       <Filter>Source Files\core\api</Filter>
@@ -121,12 +109,6 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files\view\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderProgram.h">
-      <Filter>Header Files\view\shader</Filter>
     </ClInclude>
     <ClInclude Include="ModelData.h">
       <Filter>Header Files\core\api</Filter>

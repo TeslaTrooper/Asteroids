@@ -10,6 +10,9 @@
 #include "ModelData.h"
 #include "BufferConfigurator.h"
 
+#define PROJECTION "projection"
+#define TRANSFORM "transform"
+
 class Renderer {
 
 	Game* game;

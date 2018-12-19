@@ -176,8 +176,6 @@
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Saucer.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="BufferConfigurator.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipController.cpp" />
@@ -199,8 +197,6 @@
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Saucer.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipController.h" />
     <ClInclude Include="Window.h" />
