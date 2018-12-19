@@ -17,50 +17,41 @@ Renderer::Renderer(Game* const game) {
 }
 
 void Renderer::render(const float dt) const {
-	beginDraw();
+	BaseOpenGLRenderer::beginDraw(framebuffer.id);
 
 	vector<RenderUnit> units = game->getRenderUnits();
 	for each (RenderUnit unit in units) {
-		draw(unit);
+		prepareShaders(unit);
+
+		CustomBufferData data = modelMap.at(unit.model);
+		BaseOpenGLRenderer::draw({ data.vao, data.drawMode, data.indexCount });
+
+#ifdef DEBUG
+		drawInDebugMode(data);
+#endif
 	}
 
 	endDraw();
 }
 
-void Renderer::beginDraw() const {
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer.id);
-
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
+void Renderer::prepareShaders(const RenderUnit unit) const {
 	standardShader->use();
+	standardShader->setUniformMatrix4(TRANSFORM, unit.transformation);
 }
 
-void Renderer::draw(const RenderUnit unit) const {
-	standardShader->setUniformMatrix4(TRANSFORM, unit.transformation);
-
-	CustomBufferData data = modelMap.at(unit.model);
-
-	glBindVertexArray(data.vao);
-	glEnable(GL_LINE_SMOOTH);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-
-	glDrawElements(data.drawMode, data.indexCount, GL_UNSIGNED_INT, 0);
-
-#ifdef DEBUG
+void Renderer::drawInDebugMode(const CustomBufferData& data) const {
 	glBindVertexArray(data.vao1);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif
-
-	glBindVertexArray(0);
 }
 
 void Renderer::endDraw() const {
+	BaseOpenGLRenderer::endDraw();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	framebufferShader->use();

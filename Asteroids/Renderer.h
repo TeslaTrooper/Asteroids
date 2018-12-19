@@ -9,11 +9,16 @@
 #include "Util.h"
 #include "ModelData.h"
 #include "BufferConfigurator.h"
+#include "BaseOpenGLRenderer.h"
 
 #define PROJECTION "projection"
 #define TRANSFORM "transform"
 
-class Renderer {
+class RenderData {
+
+};
+
+class Renderer : public BaseOpenGLRenderer {
 
 	Game* game;
 
@@ -27,17 +32,15 @@ class Renderer {
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
-
-	void beginDraw() const;
-	void draw(const RenderUnit unit) const;
-	void endDraw() const;
+	void drawInDebugMode(const CustomBufferData& data) const;
 
 public:
 	Renderer(Game* const game);
 	~Renderer();
 
 	void render(const float dt) const;
-
+	void endDraw() const override;
+	void prepareShaders(const RenderUnit) const;
 	void setProjection(const Mat4 projection) const;
 };
 

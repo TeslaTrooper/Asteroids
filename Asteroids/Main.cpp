@@ -1,8 +1,8 @@
 #include "Window.h"
 
 int main(void) {
-	Window window = Window();
-	window.run();
+	BaseOpenGLWindow* window = new Window();
+	window->run();
 
 	return 0;
 }
