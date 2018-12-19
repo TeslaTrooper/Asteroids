@@ -2,9 +2,11 @@
 #define MODEL_DATA
 
 #include <map>
-#include "Util.h"
 
-using namespace std;
+#include "Util.h"
+#include "structs.h"
+
+using namespace Binding;
 
 class ModelData {
 
@@ -59,6 +61,8 @@ public:
 	static const int shipMovingVertexCount;
 	static const int particleVertexCount;
 	static const int lineSegmentVertexCount;
+
+	static const int attributeSizes[];
 
 	Bindable getBindable(const Model model) const;
 	IndexData getTriangulatedModelData(const Model model) const;

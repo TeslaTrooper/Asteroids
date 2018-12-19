@@ -12,7 +12,6 @@ Renderer::Renderer(Game* const game) {
 	framebufferShader = new Shader(framebufferShaderID);
 
 	framebuffer = bufferConfigurator.createFrameBuffer({ WIN_WIDTH, WIN_HEIGHT });
-	screenQuad = bufferConfigurator.configureScreenQuad();
 
 	loadModelDatas();
 }
@@ -40,7 +39,7 @@ void Renderer::beginDraw() const {
 void Renderer::draw(const RenderUnit unit) const {
 	standardShader->setUniformMatrix4(TRANSFORM, unit.transformation);
 
-	BufferConfigurator::BufferData data = modelMap.at(unit.model);
+	CustomBufferData data = modelMap.at(unit.model);
 
 	glBindVertexArray(data.vao);
 	glEnable(GL_LINE_SMOOTH);
@@ -65,7 +64,7 @@ void Renderer::endDraw() const {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	framebufferShader->use();
-	glBindVertexArray(screenQuad.vao);
+	glBindVertexArray(framebuffer.screenQuad.vao);
 	glBindTexture(GL_TEXTURE_2D, framebuffer.textureAttachment);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
@@ -103,24 +102,26 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 	Bindable bindable = game->getBindable(model);
 
 	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
-	data.drawMode = drawMode;
+	CustomBufferData cData = { data.vao, 0, data.ebo, data.vbo, data.indexCount, 0, 0 };
+
+	cData.drawMode = drawMode;
 
 #ifdef DEBUG
 	if (drawMode != GL_TRIANGLES) {
 		IndexData triangles = game->getTriangulatedModelData(model);
 		Bindable triangleBindable = { bindable.vertexData, triangles };
 		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
-		data.vao1 = data1.vao;
-		data.indexCount1 = data1.indexCount;
-}
+		cData.vao1 = data1.vao;
+		cData.indexCount1 = data1.indexCount;
+	}
 #endif
 
-	modelMap[model] = data;
+	modelMap[model] = cData;
 }
 
 Renderer::~Renderer() {
-	for (const pair<Model, BufferConfigurator::BufferData>& value : modelMap) {
-		BufferConfigurator::BufferData data = value.second;
+	for (const pair<Model, CustomBufferData>& value : modelMap) {
+		CustomBufferData data = value.second;
 
 		glDeleteVertexArrays(1, &data.vao);
 		glDeleteBuffers(1, &data.ebo);

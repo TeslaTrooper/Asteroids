@@ -23,7 +23,7 @@ class Renderer {
 	BufferConfigurator::FrameBuffer framebuffer;
 	BufferConfigurator::BufferData screenQuad;
 	BufferConfigurator bufferConfigurator;
-	map<Model, BufferConfigurator::BufferData> modelMap;
+	map<Model, CustomBufferData> modelMap;
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);

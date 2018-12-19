@@ -2,7 +2,11 @@
 #define FONT_DATA
 
 #include <map>
+
 #include "Util.h"
+#include "structs.h"
+
+using namespace Binding;
 
 class FontData {
 
@@ -55,6 +59,8 @@ class FontData {
 	static const int char7IndexCount;
 	static const int char8IndexCount;
 	static const int char9IndexCount;
+
+	static const int attributeSizes[];
 
 public:
 

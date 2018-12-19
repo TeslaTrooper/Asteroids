@@ -4,6 +4,8 @@
 //#define DEBUG
 
 #include <vector>
+
+#include "structs.h"
 #include "Mat4.h"
 
 #define VERTEX_COMP_SIZE 2
@@ -51,21 +53,6 @@ struct Dimension {
 	float height;
 };
 
-struct IndexData {
-	const int* indices;
-	int count;
-};
-
-struct VertexData {
-	const float* vertices;
-	int count;
-};
-
-struct Bindable {
-	VertexData vertexData;
-	IndexData indexData;
-};
-
 struct RenderUnit {
 	Mat4 transformation;
 	Model model;
@@ -82,6 +69,14 @@ struct Triangle {
 
 		return cross.length() / 2.f;
 	}
+};
+
+struct CustomBufferData {
+	unsigned int vao, vao1;
+	unsigned int ebo;
+	unsigned int vbo;
+	int indexCount, indexCount1;
+	int drawMode;
 };
 
 struct CollisionInfo {
@@ -110,7 +105,7 @@ static Dimension operator*(const Dimension dim, const float scale) {
 	return { dim.width * scale, dim.height * scale };
 }
 
-static vector<Vec2> getTransformedVertices(const VertexData& vertexData, const Mat4& transformtion) {
+static vector<Vec2> getTransformedVertices(const Binding::VertexData& vertexData, const Mat4& transformtion) {
 	vector<Vec2> transformedVertices;
 
 	for (int i = 0; i < vertexData.count * 2; i += VERTEX_COMP_SIZE) {
@@ -121,7 +116,7 @@ static vector<Vec2> getTransformedVertices(const VertexData& vertexData, const M
 	return transformedVertices;
 }
 
-static vector<Triangle> convertVerticesToTriangles(const vector<Vec2> vertices, const IndexData& indexData) {
+static vector<Triangle> convertVerticesToTriangles(const vector<Vec2> vertices, const Binding::IndexData& indexData) {
 	if (indexData.count % 3 != 0) {
 		printf("Wrong arguments! Unable create triangles.");
 		return vector<Triangle>();

@@ -217,18 +217,24 @@ const int FontData::char9Indices[] = {
 };
 const int FontData::char9IndexCount = 24;
 
+const int FontData::attributeSizes[] = {
+	2
+};
+
 FontData::FontData() {
-	vertexDataMap[Model::CHARA] = { { charAVertices, charAVertexCount },{ charAIndices, charAIndexCount } };
-	vertexDataMap[Model::CHAR0] = { { char0Vertices, char0VertexCount },{ char0Indices, char0IndexCount } };
-	vertexDataMap[Model::CHAR1] = { { char1Vertices, char1VertexCount },{ char1Indices, char1IndexCount } };
-	vertexDataMap[Model::CHAR2] = { { char2Vertices, char2VertexCount },{ char2Indices, char2IndexCount } };
-	vertexDataMap[Model::CHAR3] = { { char3Vertices, char3VertexCount },{ char3Indices, char3IndexCount } };
-	vertexDataMap[Model::CHAR4] = { { char4Vertices, char4VertexCount },{ char4Indices, char4IndexCount } };
-	vertexDataMap[Model::CHAR5] = { { char5Vertices, char5VertexCount },{ char5Indices, char5IndexCount } };
-	vertexDataMap[Model::CHAR6] = { { char6Vertices, char6VertexCount },{ char6Indices, char6IndexCount } };
-	vertexDataMap[Model::CHAR7] = { { char7Vertices, char7VertexCount },{ char7Indices, char7IndexCount } };
-	vertexDataMap[Model::CHAR8] = { { char8Vertices, char8VertexCount },{ char8Indices, char8IndexCount } };
-	vertexDataMap[Model::CHAR9] = { { char9Vertices, char9VertexCount },{ char9Indices, char9IndexCount } };
+	AttributeData attribData = { attributeSizes, 1 };
+
+	vertexDataMap[Model::CHARA] = { { charAVertices, VERTEX_COMP_SIZE, charAVertexCount },{ charAIndices, charAIndexCount }, attribData };
+	vertexDataMap[Model::CHAR0] = { { char0Vertices, VERTEX_COMP_SIZE, char0VertexCount },{ char0Indices, char0IndexCount }, attribData };
+	vertexDataMap[Model::CHAR1] = { { char1Vertices, VERTEX_COMP_SIZE, char1VertexCount },{ char1Indices, char1IndexCount }, attribData };
+	vertexDataMap[Model::CHAR2] = { { char2Vertices, VERTEX_COMP_SIZE, char2VertexCount },{ char2Indices, char2IndexCount }, attribData };
+	vertexDataMap[Model::CHAR3] = { { char3Vertices, VERTEX_COMP_SIZE, char3VertexCount },{ char3Indices, char3IndexCount }, attribData };
+	vertexDataMap[Model::CHAR4] = { { char4Vertices, VERTEX_COMP_SIZE, char4VertexCount },{ char4Indices, char4IndexCount }, attribData };
+	vertexDataMap[Model::CHAR5] = { { char5Vertices, VERTEX_COMP_SIZE, char5VertexCount },{ char5Indices, char5IndexCount }, attribData };
+	vertexDataMap[Model::CHAR6] = { { char6Vertices, VERTEX_COMP_SIZE, char6VertexCount },{ char6Indices, char6IndexCount }, attribData };
+	vertexDataMap[Model::CHAR7] = { { char7Vertices, VERTEX_COMP_SIZE, char7VertexCount },{ char7Indices, char7IndexCount }, attribData };
+	vertexDataMap[Model::CHAR8] = { { char8Vertices, VERTEX_COMP_SIZE, char8VertexCount },{ char8Indices, char8IndexCount }, attribData };
+	vertexDataMap[Model::CHAR9] = { { char9Vertices, VERTEX_COMP_SIZE, char9VertexCount },{ char9Indices, char9IndexCount }, attribData };
 }
 
 FontData::~FontData() {
