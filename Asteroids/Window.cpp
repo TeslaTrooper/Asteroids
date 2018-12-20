@@ -39,6 +39,6 @@ void Window::checkInput(const float dt) {
 
 void Window::loop(float dt) {
 	game->update(dt);
-	renderer->render(dt);
+	renderer->update(dt);
 	checkInput(dt);
 }

@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "Mat4.h"
 #include "BaseOpenGLWindow.h"
+#include "BaseOpenGLRenderer.h"
 
 #define FRAME_RATE 60
 
@@ -14,7 +15,7 @@
 #define WIN_POS_Y 100
 
 class Window : public BaseOpenGLWindow {
-	Renderer* renderer;
+	BaseOpenGLRenderer* renderer;
 	Game* game;
 
 	void checkInput(const float dt);

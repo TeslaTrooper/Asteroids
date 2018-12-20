@@ -11,14 +11,12 @@ Renderer::Renderer(Game* const game) {
 	GLuint framebufferShaderID = framebufferShaderProgramm.createShaderProgram("framebufferShader.vert", "framebufferShader.frag");
 	framebufferShader = new Shader(framebufferShaderID);
 
-	framebuffer = bufferConfigurator.createFrameBuffer({ WIN_WIDTH, WIN_HEIGHT });
+	createFrameBuffer(WIN_WIDTH, WIN_HEIGHT);
 
 	loadModelDatas();
 }
 
-void Renderer::render(const float dt) const {
-	BaseOpenGLRenderer::beginDraw(framebuffer.id);
-
+void Renderer::render() const {
 	vector<RenderUnit> units = game->getRenderUnits();
 	for each (RenderUnit unit in units) {
 		prepareShaders(unit);
@@ -31,7 +29,7 @@ void Renderer::render(const float dt) const {
 #endif
 	}
 
-	endDraw();
+	framebufferShader->use();
 }
 
 void Renderer::prepareShaders(const RenderUnit unit) const {
@@ -44,20 +42,6 @@ void Renderer::drawInDebugMode(const CustomBufferData& data) const {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
-void Renderer::endDraw() const {
-	BaseOpenGLRenderer::endDraw();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	framebufferShader->use();
-	glBindVertexArray(framebuffer.screenQuad.vao);
-	glBindTexture(GL_TEXTURE_2D, framebuffer.textureAttachment);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void Renderer::setProjection(const Mat4 projection) const {
@@ -92,7 +76,7 @@ void Renderer::loadModelDatas() {
 void Renderer::loadModelData(const Model model, const int drawMode) {
 	Bindable bindable = game->getBindable(model);
 
-	BufferConfigurator::BufferData data = bufferConfigurator.configure(bindable);
+	BufferConfigurator::BufferData data = configure(bindable);
 	CustomBufferData cData = { data.vao, 0, data.ebo, data.vbo, data.indexCount, 0, 0 };
 
 	cData.drawMode = drawMode;
