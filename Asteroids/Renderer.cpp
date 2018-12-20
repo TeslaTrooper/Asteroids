@@ -22,7 +22,7 @@ void Renderer::render() const {
 		prepareShaders(unit);
 
 		CustomBufferData data = modelMap.at(unit.model);
-		BaseOpenGLRenderer::draw({ data.vao, data.drawMode, data.indexCount });
+		BaseOpenGLRenderer::draw({ data.vao, data.ebo, data.vbo, data.indexCount, data.drawMode });
 
 #ifdef DEBUG
 		drawInDebugMode(data);
@@ -76,10 +76,8 @@ void Renderer::loadModelDatas() {
 void Renderer::loadModelData(const Model model, const int drawMode) {
 	Bindable bindable = game->getBindable(model);
 
-	BufferConfigurator::BufferData data = configure(bindable);
-	CustomBufferData cData = { data.vao, 0, data.ebo, data.vbo, data.indexCount, 0, 0 };
-
-	cData.drawMode = drawMode;
+	RenderData data = configure(bindable, drawMode);
+	CustomBufferData cData = { data.vao, 0, data.ebo, data.vbo, data.indexCount, 0, data.drawMode };
 
 #ifdef DEBUG
 	if (drawMode != GL_TRIANGLES) {
@@ -92,7 +90,7 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 #endif
 
 	modelMap[model] = cData;
-}
+	}
 
 Renderer::~Renderer() {
 	for (const pair<Model, CustomBufferData>& value : modelMap) {
