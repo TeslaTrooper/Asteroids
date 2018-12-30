@@ -40,6 +40,7 @@ public:
 	int getEntityCount() const;
 
 	vector<GameObject*> get() const;
+	vector<Entity*> getAsEntities() const;
 	GameObject* getPlayer() const;
 	vector<GameObject*> get(const ModelClass modelClass) const;
 };

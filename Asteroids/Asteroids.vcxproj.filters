@@ -66,9 +66,6 @@
     <ClCompile Include="FontBuilder.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsEngine.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="BindableProvider.cpp">
       <Filter>Source Files\core\api</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
       <Filter>Header Files\core\api</Filter>
     </ClInclude>
     <ClInclude Include="FontBuilder.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsEngine.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="BindableProvider.h">

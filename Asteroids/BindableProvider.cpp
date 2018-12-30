@@ -1,12 +1,11 @@
 #include "BindableProvider.h"
 
 BindableProvider::BindableProvider() {
-	this->modelData = new ModelData();
 	this->fontData = new FontData();
 }
 
 BindableProvider::~BindableProvider() {
-	delete modelData;
+	ModelData::clear();
 	delete fontData;
 }
 
@@ -18,7 +17,7 @@ Bindable BindableProvider::getBindable(const Model model) const {
 		case Model::ASTEROID4:
 		case Model::SAUCER:
 		case Model::PROJECTILE:
-		case Model::SHIP: return modelData->getBindable(model);
+		case Model::SHIP: return ModelData::getBindable(model);
 		case Model::CHARA:
 		case Model::CHAR0:
 		case Model::CHAR1:
@@ -30,12 +29,12 @@ Bindable BindableProvider::getBindable(const Model model) const {
 		case Model::CHAR7:
 		case Model::CHAR8:
 		case Model::CHAR9: return fontData->getBindable(model);
-		default: return modelData->getBindable(model);
+		default: return ModelData::getBindable(model);
 	}
 }
 
 #ifdef DEBUG
 IndexData BindableProvider::getTriangulatedModelData(const Model model) const {
-	return modelData->getTriangulatedModelData(model);
+	return ModelData::getTriangulatedModel(model);
 }
 #endif

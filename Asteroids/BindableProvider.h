@@ -7,7 +7,6 @@
 
 class BindableProvider {
 
-	ModelData* modelData;
 	FontData* fontData;
 
 public:

@@ -58,19 +58,6 @@ struct RenderUnit {
 	Model model;
 };
 
-struct Triangle {
-	Vec2 p1, p2, p3;
-
-	float getArea() const {
-		Vec2 edge1 = p2.sub(p1);
-		Vec2 edge2 = p3.sub(p1);
-
-		Vec2 cross = edge1.cross(edge2);
-
-		return cross.length() / 2.f;
-	}
-};
-
 struct CustomBufferData {
 	unsigned int vao, vao1;
 	unsigned int ebo;
@@ -85,53 +72,8 @@ struct CollisionInfo {
 	Vec2 collisionLocation;
 };
 
-static Vec2 operator+(const Vec2& vec1, const Vec2& vec2) {
-	return Vec2(vec1.x + vec2.x, vec1.y + vec2.y);
-};
-
-static Vec2 operator*(const float scalar, const Vec2& vec) {
-	return Vec2(vec.x * scalar, vec.y * scalar);
-};
-
-static Vec2 operator*(const int scalar, const Vec2& vec) {
-	return Vec2(vec.x * scalar, vec.y * scalar);
-};
-
-static Vec2 operator*(const Vec2& vec, const float scalar) {
-	return Vec2(vec.x * scalar, vec.y * scalar);
-};
-
 static Dimension operator*(const Dimension dim, const float scale) {
 	return { dim.width * scale, dim.height * scale };
-}
-
-static vector<Vec2> getTransformedVertices(const Binding::VertexData& vertexData, const Mat4& transformtion) {
-	vector<Vec2> transformedVertices;
-
-	for (int i = 0; i < vertexData.count * 2; i += VERTEX_COMP_SIZE) {
-		Vec2 tmpVec = Vec2(vertexData.vertices[i], vertexData.vertices[i + 1]);
-		transformedVertices.push_back(transformtion.transform(tmpVec));
-	}
-
-	return transformedVertices;
-}
-
-static vector<Triangle> convertVerticesToTriangles(const vector<Vec2> vertices, const Binding::IndexData& indexData) {
-	if (indexData.count % 3 != 0) {
-		printf("Wrong arguments! Unable create triangles.");
-		return vector<Triangle>();
-	}
-
-	vector<Triangle> triangles;
-	for (int i = 0; i < indexData.count; i += 3) {
-		Vec2 p1 = vertices.at(indexData.indices[i]);
-		Vec2 p2 = vertices.at(indexData.indices[i + 1]);
-		Vec2 p3 = vertices.at(indexData.indices[i + 2]);
-
-		triangles.push_back({ p1, p2, p3 });
-	}
-
-	return triangles;
 }
 
 static ModelClass getClassFromModel(const Model model) {
@@ -159,17 +101,6 @@ static Vec2 getRandomPosition() {
 	int y = random(0, WIN_HEIGHT);
 
 	return Vec2(x, y);
-}
-
-namespace customMath {
-	// Source: https://stackoverflow.com/questions/1375882/mathematically-find-max-value-without-conditional-comparison
-	static float min(const float a, const float b) {
-		return ((a + b) - abs(a - b)) / 2;
-	}
-
-	static float max(const float a, const float b) {
-		return ((a + b) + abs(a - b)) / 2;
-	}
 }
 
 #endif UTIL

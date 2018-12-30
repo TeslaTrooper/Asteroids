@@ -13,7 +13,6 @@
 
 class Game {
 
-	ModelData modelData;
 	FontData fontdata;
 	FontBuilder fontBuilder;
 	BindableProvider bindableProvider;

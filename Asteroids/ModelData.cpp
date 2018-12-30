@@ -187,19 +187,31 @@ const int ModelData::attributeSizes[] = {
 	2
 };
 
-ModelData::ModelData() {
-	dataMap[Model::ASTEROID1] = { { a1Vertices, VERTEX_COMP_SIZE, a1VertexCount }, { a1Triangles, 30 } };
-	dataMap[Model::ASTEROID2] = { { a2Vertices, VERTEX_COMP_SIZE, a2VertexCount }, { a2Triangles, 30 } };
-	dataMap[Model::ASTEROID3] = { { a3Vertices, VERTEX_COMP_SIZE, a3VertexCount }, { a3Triangles, 27 } };
-	dataMap[Model::ASTEROID4] = { { a4Vertices, VERTEX_COMP_SIZE, a4VertexCount }, { a4Triangles, 24 } };
-	dataMap[Model::SHIP] = { { shipVertices, VERTEX_COMP_SIZE, shipVertexCount }, { shipTriangles, 9 } };
-	dataMap[Model::SAUCER] = { { saucerVertices, VERTEX_COMP_SIZE, saucerVertexCount }, { saucerTriangles, 18 } };
-	dataMap[Model::SHIP_MOVING] = { { shipMovingVertices, VERTEX_COMP_SIZE, shipMovingVertexCount }, { shipTriangles, 9 } };
-	dataMap[Model::PROJECTILE] = { { particleVertices, VERTEX_COMP_SIZE, particleVertexCount }, { particleTriangles, 6 } };
-	dataMap[Model::LINE_SEGMENT] = { { lineSegmentVertices, VERTEX_COMP_SIZE, lineSegmentVertexCount }, { {}, 0 } };
-}
+const map<Model, ModelData::Data> ModelData::dataMap = {
+	{ Model::ASTEROID1, { { ModelData::a1Vertices, VERTEX_COMP_SIZE, ModelData::a1VertexCount }, { ModelData::a1Triangles, 30 } } },
+	{ Model::ASTEROID2, { { ModelData::a2Vertices, VERTEX_COMP_SIZE, ModelData::a2VertexCount }, { ModelData::a2Triangles, 30 } } },
+	{ Model::ASTEROID3, { { ModelData::a3Vertices, VERTEX_COMP_SIZE, ModelData::a3VertexCount }, { ModelData::a3Triangles, 27 } } },
+	{ Model::ASTEROID4, { { ModelData::a4Vertices, VERTEX_COMP_SIZE,  ModelData::a4VertexCount }, { ModelData::a4Triangles, 24 } } },
+	{ Model::SHIP, { { ModelData::shipVertices, VERTEX_COMP_SIZE, ModelData::shipVertexCount }, { ModelData::shipTriangles, 9 } } },
+	{ Model::SAUCER, { { ModelData::saucerVertices, VERTEX_COMP_SIZE, ModelData::saucerVertexCount }, { ModelData::saucerTriangles, 18 } } },
+	{ Model::SHIP_MOVING, { { ModelData::shipMovingVertices, VERTEX_COMP_SIZE, ModelData::shipMovingVertexCount }, { ModelData::shipTriangles, 9 } } },
+	{ Model::PROJECTILE, { { ModelData::particleVertices, VERTEX_COMP_SIZE, ModelData::particleVertexCount }, { ModelData::particleTriangles, 6 } } },
+	{ Model::LINE_SEGMENT, { { ModelData::lineSegmentVertices, VERTEX_COMP_SIZE, ModelData::lineSegmentVertexCount } } }
+};
 
-ModelData::~ModelData() {
+const map<Model, Bindable> ModelData::bindings = {
+	{ Model::ASTEROID1, { dataMap.at(Model::ASTEROID1).vertexData, calcIndices(dataMap.at(Model::ASTEROID1).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::ASTEROID2, { dataMap.at(Model::ASTEROID2).vertexData, calcIndices(dataMap.at(Model::ASTEROID2).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::ASTEROID3, { dataMap.at(Model::ASTEROID3).vertexData, calcIndices(dataMap.at(Model::ASTEROID3).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::ASTEROID4, { dataMap.at(Model::ASTEROID4).vertexData, calcIndices(dataMap.at(Model::ASTEROID4).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::SHIP, { dataMap.at(Model::SHIP).vertexData, calcIndices(dataMap.at(Model::SHIP).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::SAUCER, { dataMap.at(Model::SAUCER).vertexData, calcIndices(dataMap.at(Model::SAUCER).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::SHIP_MOVING, { dataMap.at(Model::SHIP_MOVING).vertexData, calcIndices(dataMap.at(Model::SHIP_MOVING).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::PROJECTILE, { dataMap.at(Model::PROJECTILE).vertexData, calcIndices(dataMap.at(Model::PROJECTILE).vertexData.count), { attributeSizes, 1 } } },
+	{ Model::LINE_SEGMENT, { dataMap.at(Model::LINE_SEGMENT).vertexData, calcIndices(dataMap.at(Model::LINE_SEGMENT).vertexData.count), { attributeSizes, 1 } } }
+};
+
+void ModelData::clear() {
 	delete[] & a1Vertices;
 	delete[] & a2Vertices;
 	delete[] & a3Vertices;
@@ -208,19 +220,15 @@ ModelData::~ModelData() {
 	delete[] & saucerVertices;
 }
 
-Bindable ModelData::getBindable(const Model model) const {
-	VertexData vertexData = dataMap.at(model).vertexData;
-	IndexData indexData = calcIndices(vertexData.count);
-	AttributeData attribData = { attributeSizes, 1 };
-
-	return { vertexData, indexData, attribData };
+Bindable ModelData::getBindable(const Model model) {
+	return bindings.at(model);
 }
 
-IndexData ModelData::getTriangulatedModelData(const Model model) const {
-	return dataMap.at(model).collisionTriangles;
+IndexData ModelData::getTriangulatedIndexData(const Model model) {
+	return dataMap.at(model).triangulatedIndexData;
 }
 
-IndexData ModelData::calcIndices(const int vertexCount) const {
+IndexData ModelData::calcIndices(const int vertexCount) {
 	int* indices = new int[vertexCount * VERTEX_COMP_SIZE];
 
 	for (int i = 0, j = 0; i < vertexCount; i++, j += 2) {

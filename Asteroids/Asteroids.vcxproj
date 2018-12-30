@@ -173,7 +173,6 @@
     <ClCompile Include="InternalLogic.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelData.cpp" />
-    <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Saucer.cpp" />
     <ClCompile Include="Ship.cpp" />
@@ -192,7 +191,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InternalLogic.h" />
     <ClInclude Include="ModelData.h" />
-    <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Saucer.h" />
     <ClInclude Include="Ship.h" />

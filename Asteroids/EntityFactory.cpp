@@ -80,6 +80,17 @@ vector<GameObject*> EntityFactory::get() const {
 	return linearizeMap(ModelClass::CLASS_UNDEFINED);
 }
 
+vector<Entity*> EntityFactory::getAsEntities() const {
+	vector<Entity*> entities;
+	vector<GameObject*> objects = linearizeMap(ModelClass::CLASS_UNDEFINED);
+
+	for each (GameObject* o in objects) {
+		entities.push_back((Entity*) o);
+	}
+
+	return entities;
+}
+
 GameObject* EntityFactory::getPlayer() const {
 	vector<GameObject*> playerVector = entities.at(ModelClass::CLASS_SHIP);
 
@@ -109,7 +120,7 @@ int EntityFactory::getPlayerProjectileCount() const {
 GameObject* EntityFactory::createParticle(const Vec2 position, const Model model, const float size) {
 	// First, let's define a random rotation around entire circle
 	Vec2 direction = Vec2::getRotatedInstance(random(0, 359));
-	Vec2 movement = random(PARTICLE_MIN_VELOCITY, PARTICLE_MAX_VELOCITY) * direction;
+	Vec2 movement = direction * random(PARTICLE_MIN_VELOCITY, PARTICLE_MAX_VELOCITY);
 
 	GameObject* particle = createStatic(model, position, size, movement, false);
 	particle->setInvincible(true);

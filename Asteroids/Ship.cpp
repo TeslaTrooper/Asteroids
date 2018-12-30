@@ -21,7 +21,7 @@ void Ship::update(const float dt) {
 
 void Ship::updateMoveAnimation() {
 	// If there is no acceleration, switch to default model
-	if (acceleration == 0) {
+	if (getAcceleration() == 0) {
 		model = Model::SHIP;
 		return;
 	}

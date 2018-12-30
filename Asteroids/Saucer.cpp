@@ -53,7 +53,7 @@ ProjectileParams Saucer::getBySimpleBehaviour() const {
 
 	float r = (ModelData::SAUCER_CROP_BOX.width / 2) * getScale();
 	Vec2 circleOrigin = getPosition().add(Vec2(r, (ModelData::SAUCER_CROP_BOX.height / 2) * getScale()));
-	Vec2 position = circleOrigin + r * direction;
+	Vec2 position = circleOrigin + (direction * r);
 
 	return { position, movement };
 }
@@ -63,7 +63,7 @@ ProjectileParams Saucer::getByAdvancedBehaviour(const Vec2 shipPosition) const {
 	Vec2 circleOrigin = getPosition().add(Vec2(r, (ModelData::SAUCER_CROP_BOX.height / 2) * getScale()));
 
 	Vec2 direction = circleOrigin.rotateTo(shipPosition, 1);
-	Vec2 position = circleOrigin + r * direction;
+	Vec2 position = circleOrigin + (direction * r);
 	Vec2 movement = direction.mul(PROJECTILE_SPEED);
 
 	return { position, movement };

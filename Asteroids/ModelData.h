@@ -7,21 +7,18 @@
 #include "structs.h"
 
 using namespace Binding;
+using namespace PhysX;
 
 class ModelData {
 
+public:
+
 	struct Data {
 		VertexData vertexData;
-		IndexData collisionTriangles;
+		IndexData triangulatedIndexData;
 	};
 
-	map<Model, Data> dataMap;
-
-	IndexData calcIndices(const int vertexCount) const;
-
-public:
-	ModelData();
-	~ModelData();
+	static void clear();
 
 	static const Dimension ASTEROID_CROP_BOX;
 	static const Dimension SHIP_CROP_BOX;
@@ -64,10 +61,16 @@ public:
 
 	static const int attributeSizes[];
 
-	Bindable getBindable(const Model model) const;
-	IndexData getTriangulatedModelData(const Model model) const;
-
+	static Bindable getBindable(const Model model);
+	static IndexData getTriangulatedIndexData(const Model model);
 	static Dimension getCropBox(const ModelClass modelClass, const float scale);
+
+private:
+
+	static const map<Model, Data> dataMap;
+	static const map<Model, Bindable> bindings;
+	static IndexData calcIndices(const int vertexCount);
+
 };
 
 #endif MODEL_DATA

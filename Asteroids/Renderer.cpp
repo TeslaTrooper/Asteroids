@@ -83,14 +83,15 @@ void Renderer::loadModelData(const Model model, const int drawMode) {
 	if (drawMode != GL_TRIANGLES) {
 		IndexData triangles = game->getTriangulatedModelData(model);
 		Bindable triangleBindable = { bindable.vertexData, triangles };
-		BufferConfigurator::BufferData data1 = bufferConfigurator.configure(triangleBindable);
-		cData.vao1 = data1.vao;
-		cData.indexCount1 = data1.indexCount;
+		RenderData d1 = configure(triangleBindable, GL_TRIANGLES);
+
+		cData.vao1 = d1.vao;
+		cData.indexCount1 = d1.indexCount;
 	}
 #endif
 
 	modelMap[model] = cData;
-	}
+}
 
 Renderer::~Renderer() {
 	for (const pair<Model, CustomBufferData>& value : modelMap) {

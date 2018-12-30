@@ -4,24 +4,19 @@
 #include "Util.h"
 #include "Vec2.h"
 #include "ModelData.h"
+#include "Entity.h"
 
 #define UNDEFINED_LIFETIME -1
 
-class GameObject {
+class GameObject : public Entity {
 
 	Model model;
 	ModelClass modelClass;
-
-	Vec2 position;
-	Vec2 direction;
-	Vec2 movement;
 
 	CollisionInfo* collisionInfo;
 
 	float lifetime, maxLifetime;
 	float scale;
-	float acceleration;
-	float vmax;
 
 	int angle;
 
@@ -29,6 +24,18 @@ class GameObject {
 
 	friend class Ship;
 	friend class Saucer;
+
+	// Copy constructor 
+	GameObject(const GameObject& obj) : GameObject(obj.model, obj.getPosition(), obj.scale) {}
+
+	// copy assignment operator 
+	GameObject& operator=(const GameObject& tmp_obj) {
+		model = tmp_obj.model;
+		setPosition(tmp_obj.getPosition());
+		scale = tmp_obj.scale;
+
+		return *this;
+	}
 
 public:
 
@@ -40,33 +47,28 @@ public:
 
 	virtual void update(const float dt);
 
+	bool canCollide() const override;
+	bool canCollideWith(const Entity* const e) const override;
+	void updateTransformation() override;
+	VertexData getVertexData() const override;
+	IndexData getTriangulatedIndexData() const override;
+
 	void setAcceleration(const float value);
 	void setDirection(const Vec2 direction);
-	void setMovement(const Vec2 movement);
-	void setVMax(const float value);
-	void setPosition(const Vec2 position);
 	void setAngle(const int angle);
 	void rotate(const int direction, const float dt);
-	void setCollisionInfo(const CollisionInfo info);
 	void setIsPlayerProjectile(const bool value);
 	void setInvincible(const bool value);
 	void setMaxLifetime(const float value);
 	void setVisible(const bool value);
 	void markForCleanup();
 
-	Vec2 getPosition() const { return position; };
-	Vec2 getDirection() const { return direction; };
-	float getAcceleration() const { return acceleration; };
-	float getVMax() const { return vmax; };
 	int getAngle() const { return angle; };
-	Vec2 getMovement() const { return movement; };
 	Model getModel() const { return model; };
-	CollisionInfo getCollisionInfo() const { return *collisionInfo; };
 	ModelClass getModelClass() const { return modelClass; };
 	float getLifetime() const { return lifetime; };
 	bool isAlive() const { return alive; };
 	float getScale() const { return scale; };
-	bool hasIntersection() const { return collisionInfo != nullptr; };
 	bool isPlayerProjectile() const { return playerProjectile; };
 	bool isVisible() const { return visible; };
 	bool isInvincible() const { return invincible; };

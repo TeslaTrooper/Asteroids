@@ -1,14 +1,15 @@
 #include "InternalLogic.h"
 
 void InternalLogic::update(const float dt) {
-	vector<GameObject*> objects = entityFactory->get();
+	const vector<Entity*> entities = entityFactory->getAsEntities();
 
-	physicsEngine.update(objects, dt);
-	resolveColliions(objects);
-	updateScore(objects);
+	physicsEngine.update(entities, dt);
 	entityFactory->update();
 	checkForMissingPlayer(dt);
+	entitySpawner.update(dt);
+	shipController.update(dt);
 
+	const vector<GameObject*> objects = entityFactory->get();
 	for each (GameObject* obj in objects) {
 		obj->update(dt);
 	}
@@ -20,9 +21,6 @@ void InternalLogic::update(const float dt) {
 	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER)) {
 		checkSaucerBehaviour(saucer);
 	}
-
-	entitySpawner.update(dt);
-	shipController.update(dt);
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
@@ -64,7 +62,7 @@ void InternalLogic::shipShoot() {
 	Vec2 shipHead = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 transformedHead = player->getRenderUnit().transformation.transform(shipHead);
 	Vec2 shipDirection = Vec2::getRotatedInstance(player->getAngle());
-	Vec2 position = transformedHead + GAP_PROJECTILE_SHIP * shipDirection;
+	Vec2 position = transformedHead + (shipDirection * GAP_PROJECTILE_SHIP);
 
 	// Calculate movement vector
 	Vec2 movement = shipDirection.mul(PROJECTILE_SPEED + player->getMovement().length());
@@ -73,27 +71,31 @@ void InternalLogic::shipShoot() {
 	entityFactory->createPlayerProjectile(position, SIZE_MEDIUM, movement);
 }
 
-void InternalLogic::resolveColliions(const vector<GameObject*> objects) {
-	for each (GameObject* obj in objects) {
-		if (!obj->hasIntersection()) {
-			continue;
-		}
+void InternalLogic::resolveCollision(Entity* e1, Entity* e2, Vec2 location) const {
+	GameObject* o1 = (GameObject*) e1;
+	GameObject* o2 = (GameObject*) e2;
 
-		if (obj->getModelClass() == CLASS_ASTEROID) {
-			breakAsteroidIntoPieces(obj);
-		}
-
-		if (obj->getModelClass() == ModelClass::CLASS_SHIP) {
-			entityFactory->createShipParticleEffect(obj->getCollisionInfo().collisionLocation);
-		} else {
-			entityFactory->createSimpleParticleEffect(obj->getCollisionInfo().collisionLocation);
-		}
-
-		obj->markForCleanup();
+	if (o1->getModelClass() == CLASS_ASTEROID) {
+		breakAsteroidIntoPieces(o1);
 	}
+
+	if (o2->getModelClass() == CLASS_ASTEROID) {
+		breakAsteroidIntoPieces(o2);
+	}
+
+	if (o1->getModelClass() == ModelClass::CLASS_SHIP || o2->getModelClass() == ModelClass::CLASS_SHIP) {
+		entityFactory->createShipParticleEffect(location);
+	} else {
+		entityFactory->createSimpleParticleEffect(location);
+	}
+
+	updateScore(o1, o2);
+
+	o1->markForCleanup();
+	o2->markForCleanup();
 }
 
-void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) {
+void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) const {
 	if (object->getScale() <= SIZE_SMALL) {
 		return;
 	}
@@ -103,7 +105,7 @@ void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) {
 	}
 }
 
-void InternalLogic::createAsteroidPiece(GameObject const * const object) {
+void InternalLogic::createAsteroidPiece(GameObject const * const object) const {
 	Vec2 position = object->getPosition();
 	Vec2 parentMovement = object->getMovement();
 
@@ -132,46 +134,48 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 }
 
 // TODO
-void InternalLogic::updateScore(const vector<GameObject*> objects) {
+void InternalLogic::updateScore(const GameObject* const o1, const GameObject* const o2) const {
 	// When does the current score need to be updated?
 	// - Intersection Asteroid <-> Projectile (player)
 	// - Intersection Asteroid <-> Ship
 	// - Intersection Saucer <-> Projectile (player)
 	// - Intersection Saucer <-> Ship
 
-	// We need to know, which objects had a collision
-	// Currently, we only know, if a single entity had a collision, or not.
-	// So we have to store at collision time, which objects caused that collision
+	// Scoring only makes sense, if the ship or a player-projectile 
+	// is involved in the collision.
 
-	// Maybe there is another way, to recognize that - without any complex collision-info-storage-stuff
+	ModelClass c1 = o1->getModelClass();
+	ModelClass c2 = o2->getModelClass();
 
-	for each (GameObject* obj in objects) {
-		if (!obj->hasIntersection()) {
-			continue;
-		}
+	bool c1IsShip = c1 == ModelClass::CLASS_SHIP;
+	bool c2IsShip = c2 == ModelClass::CLASS_SHIP;
+	bool o1IsPlayerProjectile = o1->isPlayerProjectile() && o1->getModelClass() == ModelClass::CLASS_PROJECTILE;
+	bool o2IsPlayerProjectile = o2->isPlayerProjectile() && o2->getModelClass() == ModelClass::CLASS_PROJECTILE;
 
-		CollisionInfo intersector = obj->getCollisionInfo();
-		ModelClass classOfObj = obj->getModelClass();
-		ModelClass classOfIntersector = intersector.classOfObj;
+	// Make sure, we have a valid collision, which affects current score
+	// This is only the case, if either the ship, or the ship projectile has intersection
+	// XOR operator prevents scoring, if player hits own ship.
+	if ((c1IsShip || c2IsShip) ^ (o1IsPlayerProjectile || o2IsPlayerProjectile)) {
+		int gain = 0;
 
-		bool isShip = classOfObj == ModelClass::CLASS_SHIP;
-		bool isPlayerProjectile = classOfObj == ModelClass::CLASS_PROJECTILE && obj->isPlayerProjectile();
+		if (c1IsShip || o1IsPlayerProjectile)
+			gain = determineGainedScore(o2->getScale(), c2);
 
-		// Make sure, we have a valid collision, which affects current score
-		// This is only the case, if either the ship, or the ship projectile has intersection
-		if (isShip || isPlayerProjectile) {
-			score += determineGainedScore(intersector.objSize, classOfIntersector);
+		if (c2IsShip || o2IsPlayerProjectile)
+			gain = determineGainedScore(o1->getScale(), c1);
 
-			updateRemainingLifes();
-		}
+		stats->score += gain;
+		printf("Gain: %i\n", gain);
+
+		updateRemainingLifes();
 	}
 }
 
-float InternalLogic::determineGainedScore(const float objSize, const ModelClass classOfIntersector) {
-	float gainedScore = 0;
+int InternalLogic::determineGainedScore(const float objSize, const ModelClass classOfIntersector) const {
+	int gainedScore = 0;
 
 	if (classOfIntersector == ModelClass::CLASS_SAUCER) {
-		gainedScore = objSize == SIZE_MEDIUM ? SCORE_MEDIUM_SAUCER : SCORE_SMALL_SAUCER;
+		gainedScore = objSize == SIZE_MEDIUM ? SCORE_MEDIUM_SAUCER : SCORE_LARGE_SAUCER;
 	}
 
 	if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
@@ -189,11 +193,11 @@ float InternalLogic::determineGainedScore(const float objSize, const ModelClass 
 	return gainedScore;
 }
 
-void InternalLogic::updateRemainingLifes() {
+void InternalLogic::updateRemainingLifes() const {
 	// Every LIFE_PER_SCORE points, player gains one extra life
-	if (score >= lifePerScore) {
-		lifes++;
-		lifePerScore += LIFE_PER_SCORE;
+	if (stats->score >= stats->lifePerScore) {
+		stats->lifes++;
+		stats->lifePerScore += LIFE_PER_SCORE;
 	}
 }
 
@@ -214,7 +218,7 @@ void InternalLogic::checkForMissingPlayer(const float dt) {
 
 void InternalLogic::createPlayer() {
 	entityFactory->createPlayerInCenter(SIZE_LARGE);
-	lifes--;
+	stats->lifes--;
 }
 
 void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
@@ -232,7 +236,7 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 	Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 p3 = Vec2(ModelData::shipVertices[4], ModelData::shipVertices[5]);
 
-	Mat4 transformation = player->getRenderUnit().transformation;
+	Mat4 transformation = player->getTransformation();
 
 	p1 = transformation.transform(p1);
 	p2 = transformation.transform(p2);

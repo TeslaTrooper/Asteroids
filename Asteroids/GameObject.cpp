@@ -1,11 +1,11 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const Model model, const Vec2 position, const float scale) {
+GameObject::GameObject(const Model model, const Vec2 position, const float scale) : Entity(new RigidBody()) {
 	this->model = model;
-	this->position = position;
+	setPosition(position);
 	this->scale = scale;
-	this->acceleration = 0;
-	this->vmax = 0;
+	setAcceleration(0);
+	setVMax(0);
 	this->angle = 270;
 	this->lifetime = 0;
 	this->maxLifetime = UNDEFINED_LIFETIME;
@@ -18,15 +18,20 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->modelClass = getClassFromModel(model);
 
 	// Default direction points upwards
-	this->direction = Vec2(0, 1);
+	setDirection(Vec2(0, 1));
 }
 
 void GameObject::update(const float dt) {
+	if (!isAlive())
+		return;
+
 	this->lifetime += dt;
 
 	if (maxLifetime != UNDEFINED_LIFETIME && lifetime > maxLifetime) {
 		markForCleanup();
 	}
+
+	updateTransformation();
 }
 
 void GameObject::setDirection(const Vec2 direction) {
@@ -35,28 +40,16 @@ void GameObject::setDirection(const Vec2 direction) {
 		return;
 	}
 
-	this->direction = direction;
+	Entity::setDirection(direction);
 }
 
 void GameObject::setAcceleration(const float value) {
 	if (value == 0) {
-		this->acceleration = 0;
+		Entity::setAcceleration(0);
 	} else {
-		this->direction = Vec2::getRotatedInstance(angle);
-		this->acceleration = vmax / value;
+		setDirection(Vec2::getRotatedInstance(angle));
+		Entity::setAcceleration(getVMax() / value);
 	}
-}
-
-void GameObject::setVMax(const float value) {
-	this->vmax = value;
-}
-
-void GameObject::setPosition(const Vec2 position) {
-	this->position = position;
-}
-
-void GameObject::setMovement(const Vec2 movement) {
-	this->movement = movement;
 }
 
 void GameObject::setInvincible(const bool value) {
@@ -69,16 +62,6 @@ void GameObject::setMaxLifetime(const float value) {
 
 void GameObject::setVisible(const bool value) {
 	this->visible = value;
-}
-
-void GameObject::setCollisionInfo(const CollisionInfo info) {
-	if (this->collisionInfo == nullptr) {
-		collisionInfo = new CollisionInfo();
-	}
-
-	this->collisionInfo->classOfObj = info.classOfObj;
-	this->collisionInfo->objSize = info.objSize;
-	this->collisionInfo->collisionLocation = info.collisionLocation;
 }
 
 void GameObject::setIsPlayerProjectile(const bool value) {
@@ -97,17 +80,13 @@ void GameObject::setAngle(const int angle) {
 	}
 
 	this->angle %= 360;
-	if (acceleration > 0) {
-		this->direction = Vec2::getRotatedInstance(angle);
+	if (getAcceleration() > 0) {
+		setDirection(Vec2::getRotatedInstance(angle));
 	}
 }
 
 RenderUnit GameObject::getRenderUnit() const {
-	Dimension modelDim = ModelData::getCropBox(modelClass, 1);
-	Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
-	Mat4 transformation = Mat4::getTransformation(position, Vec2(scale, scale), (float) angle, rotationOrigin);
-
-	return { transformation , model };
+	return { getTransformation() , model };
 }
 
 void GameObject::rotate(const int direction, const float dt) {
@@ -122,4 +101,38 @@ void GameObject::rotate(const int direction, const float dt) {
 	} else {
 		setAngle(angle + dAngle);
 	}
+}
+
+bool GameObject::canCollide() const {
+	if (!this->isVisible())
+		return false;
+
+	if (this->isInvincible())
+		return false;
+
+	if (!isAlive())
+		return false;
+
+	return true;
+}
+
+bool GameObject::canCollideWith(const Entity* const e) const {
+	GameObject* o = (GameObject*) e;
+
+	return this->getModelClass() != o->getModelClass();
+}
+
+void GameObject::updateTransformation() {
+	Dimension modelDim = ModelData::getCropBox(modelClass, 1);
+	Vec2 rotationOrigin = Vec2(modelDim.width / 2, modelDim.height / 2);
+
+	setTransformation(Mat4::getTransformation(getPosition(), Vec2(scale, scale), (float) angle, rotationOrigin));
+}
+
+VertexData GameObject::getVertexData() const {
+	return ModelData::getBindable(model).vertexData;
+}
+
+IndexData GameObject::getTriangulatedIndexData() const {
+	return ModelData::getTriangulatedIndexData(model);
 }
