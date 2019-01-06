@@ -26,10 +26,10 @@ class Renderer : public BaseOpenGLRenderer {
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
 	void drawInDebugMode(const CustomBufferData& data) const;
-	void prepareShaders(const RenderUnit) const;
+	void prepareShaders(const RenderUnit unit) const;
 
 	void render() const override;
-	void setProjection(const Mat4 projection) const override;
+	void initProjection() const;
 
 public:
 	Renderer(Game* const game);

@@ -70,7 +70,7 @@ public:
 	vector<GameObject*> getEntities() { return entityFactory->get(); };
 	vector<RenderUnit> getRenderUnits() const;
 
-	void resolveCollision(Entity* e1, Entity* e2, Vec2 location) const override;
+	void resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const override;
 };
 
 #endif INTERNAL_LOGIC

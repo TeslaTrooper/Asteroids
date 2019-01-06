@@ -1,12 +1,12 @@
-#include "Game.h"
+#include "GameImpl.h"
 
-void Game::update(const float dt) {
+void GameImpl::update(const float dt) {
 	internalLogic.update(dt);
 	updateUIElements(dt);
 	prepareRenderUnits();
 }
 
-void Game::updateUIElements(const float dt) {
+void GameImpl::updateUIElements(const float dt) {
 	fontBuilder.clear();
 
 	int fps = (int) (1000 / (dt * 1e3));
@@ -21,7 +21,7 @@ void Game::updateUIElements(const float dt) {
 	fontBuilder.buildString(scoreLabel.c_str(), 5, Vec2((float) 5, WIN_HEIGHT - ((FontData::h * 5) + 5)));
 }
 
-void Game::prepareRenderUnits() {
+void GameImpl::prepareRenderUnits() {
 	renderUnits.clear();
 
 	vector<RenderUnit> ui = fontBuilder.get();
@@ -48,11 +48,11 @@ void Game::prepareRenderUnits() {
 	}
 }
 
-vector<RenderUnit> Game::getRenderUnits() const {
+vector<RenderUnit> GameImpl::getRenderUnits() const {
 	return renderUnits;
 }
 
-Bindable Game::getBindable(const Model model) const {
+Bindable GameImpl::getBindable(const Model model) const {
 	return bindableProvider.getBindable(model);
 }
 
@@ -62,22 +62,22 @@ IndexData Game::getTriangulatedModelData(const Model model) const {
 }
 #endif
 
-void Game::moveShip(const bool moving, const float dt) {
+void GameImpl::moveShip(const bool moving, const float dt) {
 	internalLogic.moveShip(moving, dt);
 }
 
-void Game::rotateLeft(const float dt) {
+void GameImpl::rotateLeft(const float dt) {
 	internalLogic.rotatePlayerLeft(dt);
 }
 
-void Game::rotateRight(const float dt) {
+void GameImpl::rotateRight(const float dt) {
 	internalLogic.rotatePlayerRight(dt);
 }
 
-void Game::shipShoot() {
+void GameImpl::shipShoot() {
 	internalLogic.shipShoot();
 }
 
-void Game::hyperspace() {
+void GameImpl::hyperspace() {
 	internalLogic.hyperspace();
 }

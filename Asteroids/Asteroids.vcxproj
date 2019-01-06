@@ -168,7 +168,7 @@
     <ClCompile Include="EntitySpawner.cpp" />
     <ClCompile Include="FontBuilder.cpp" />
     <ClCompile Include="FontData.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameImpl.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InternalLogic.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -181,6 +181,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APIFactory.h" />
     <ClInclude Include="BindableProvider.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="EntityFactory.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="FontBuilder.h" />
     <ClInclude Include="FontData.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameImpl.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InternalLogic.h" />
     <ClInclude Include="ModelData.h" />

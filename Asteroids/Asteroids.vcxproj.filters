@@ -13,129 +13,147 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\view">
-      <UniqueIdentifier>{6997b944-2108-4ddf-bba4-535efdac12d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\view">
+    <Filter Include="Header Files\ui">
       <UniqueIdentifier>{e9dffdda-975d-4b5e-ab69-a7d5f202d99c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core">
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{6997b944-2108-4ddf-bba4-535efdac12d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\logic">
       <UniqueIdentifier>{c454d5ce-d427-4769-b5c7-292956edf717}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core">
+    <Filter Include="Source Files\logic">
       <UniqueIdentifier>{f5052872-deec-40e4-b63b-476a1e677efe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\api">
-      <UniqueIdentifier>{adb74072-59d4-4e88-90bc-3669cd8c7f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core\api">
+    <Filter Include="Source Files\logic\api">
       <UniqueIdentifier>{9d764652-e9b7-4e24-b71c-4f44752233f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\entities">
+    <Filter Include="Header Files\logic\api">
+      <UniqueIdentifier>{adb74072-59d4-4e88-90bc-3669cd8c7f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\logic\core">
+      <UniqueIdentifier>{4859d5a0-fff9-490d-92b4-c3a4a3544d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\logic\core">
+      <UniqueIdentifier>{6fe0f167-a473-406f-b5a8-4cf659abe818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\logic\core\entities">
       <UniqueIdentifier>{f80eb480-268f-498c-b4d5-5c420a4d5530}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\entites">
+    <Filter Include="Source Files\logic\core\entites">
       <UniqueIdentifier>{4d56fe3c-8502-413a-ba9e-483bafa45798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\view">
+      <UniqueIdentifier>{9c2a1e4f-fc00-47a1-9683-f798d58afa4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\view">
+      <UniqueIdentifier>{c7596b42-19a1-487e-8dcf-09f1588cde5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files\view</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
-      <Filter>Source Files\view</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\view</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\core</Filter>
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="Util.h">
-      <Filter>Header Files\core\api</Filter>
+      <Filter>Header Files\logic\api</Filter>
     </ClCompile>
     <ClCompile Include="ModelData.cpp">
-      <Filter>Source Files\core\api</Filter>
+      <Filter>Source Files\logic\api</Filter>
     </ClCompile>
     <ClCompile Include="FontData.cpp">
-      <Filter>Source Files\core\api</Filter>
-    </ClCompile>
-    <ClCompile Include="FontBuilder.cpp">
-      <Filter>Source Files\core</Filter>
+      <Filter>Source Files\logic\api</Filter>
     </ClCompile>
     <ClCompile Include="BindableProvider.cpp">
-      <Filter>Source Files\core\api</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalLogic.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityFactory.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="EntitySpawner.cpp">
-      <Filter>Source Files\core</Filter>
+      <Filter>Source Files\logic\api</Filter>
     </ClCompile>
     <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\core\entites</Filter>
+      <Filter>Source Files\logic\core\entites</Filter>
     </ClCompile>
     <ClCompile Include="Saucer.cpp">
-      <Filter>Source Files\core\entites</Filter>
+      <Filter>Source Files\logic\core\entites</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\core\entites</Filter>
+      <Filter>Source Files\logic\core\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityFactory.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="EntitySpawner.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="FontBuilder.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalLogic.cpp">
+      <Filter>Source Files\logic\core</Filter>
     </ClCompile>
     <ClCompile Include="ShipController.cpp">
-      <Filter>Source Files\core</Filter>
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="GameImpl.cpp">
+      <Filter>Source Files\logic\api</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
-      <Filter>Header Files\view</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files\view</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\view</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\ui</Filter>
     </ClInclude>
     <ClInclude Include="ModelData.h">
-      <Filter>Header Files\core\api</Filter>
+      <Filter>Header Files\logic\api</Filter>
     </ClInclude>
     <ClInclude Include="FontData.h">
-      <Filter>Header Files\core\api</Filter>
-    </ClInclude>
-    <ClInclude Include="FontBuilder.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\logic\api</Filter>
     </ClInclude>
     <ClInclude Include="BindableProvider.h">
-      <Filter>Header Files\core\api</Filter>
-    </ClInclude>
-    <ClInclude Include="InternalLogic.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityFactory.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="EntitySpawner.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\logic\api</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files\core\entities</Filter>
+      <Filter>Header Files\logic\core\entities</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
-      <Filter>Header Files\core\entities</Filter>
+      <Filter>Header Files\logic\core\entities</Filter>
     </ClInclude>
     <ClInclude Include="Saucer.h">
-      <Filter>Header Files\core\entities</Filter>
+      <Filter>Header Files\logic\core\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory.h">
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitySpawner.h">
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="FontBuilder.h">
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="InternalLogic.h">
+      <Filter>Header Files\logic\core</Filter>
     </ClInclude>
     <ClInclude Include="ShipController.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\logic\api</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\ui\view</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\ui\view</Filter>
+    </ClInclude>
+    <ClInclude Include="GameImpl.h">
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="APIFactory.h">
+      <Filter>Header Files\logic\api</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

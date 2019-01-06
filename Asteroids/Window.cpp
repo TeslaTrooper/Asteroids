@@ -3,9 +3,8 @@
 Window::Window() : BaseOpenGLWindow(WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL") {
 	registerKeyCallback(Controller::key_callback);
 
-	game = new Game();
+	game = APIFactory::getInstance();
 	renderer = new Renderer(game);
-	renderer->setProjection(getProjectionMatrix());
 }
 
 Window::~Window() {

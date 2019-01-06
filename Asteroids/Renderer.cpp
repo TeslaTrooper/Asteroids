@@ -12,8 +12,13 @@ Renderer::Renderer(Game* const game) {
 	framebufferShader = new Shader(framebufferShaderID);
 
 	createFrameBuffer(WIN_WIDTH, WIN_HEIGHT);
-
+	initProjection();
 	loadModelDatas();
+}
+
+void Renderer::initProjection() const {
+	standardShader->use();
+	standardShader->setUniformMatrix4(PROJECTION, Projection::getOrthographicProjection(WIN_WIDTH, WIN_HEIGHT));
 }
 
 void Renderer::render() const {
@@ -42,11 +47,6 @@ void Renderer::drawInDebugMode(const CustomBufferData& data) const {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_TRIANGLES, data.indexCount1, GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
-void Renderer::setProjection(const Mat4 projection) const {
-	standardShader->use();
-	standardShader->setUniformMatrix4(PROJECTION, projection);
 }
 
 void Renderer::loadModelDatas() {

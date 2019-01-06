@@ -8,6 +8,7 @@
 #include "Mat4.h"
 #include "BaseOpenGLWindow.h"
 #include "BaseOpenGLRenderer.h"
+#include "APIFactory.h"
 
 #define FRAME_RATE 60
 
@@ -24,7 +25,7 @@ public:
 	Window();
 	~Window();
 
-	void loop(float dt);
+	void loop(float dt) override;
 };
 
 #endif WINDOW

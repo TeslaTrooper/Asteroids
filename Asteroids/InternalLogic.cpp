@@ -71,7 +71,7 @@ void InternalLogic::shipShoot() {
 	entityFactory->createPlayerProjectile(position, SIZE_MEDIUM, movement);
 }
 
-void InternalLogic::resolveCollision(Entity* e1, Entity* e2, Vec2 location) const {
+void InternalLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const {
 	GameObject* o1 = (GameObject*) e1;
 	GameObject* o2 = (GameObject*) e2;
 
