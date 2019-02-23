@@ -145,7 +145,7 @@ GameObject* EntityFactory::createStatic(const Model model, const Vec2 position,
 void EntityFactory::configureAsStatic(GameObject* object, const Vec2 movement, const bool isPlayerProjectile) {
 	object->setAngle(0);
 	object->setVMax(movement.length());
-	object->setAcceleration(1);
+	object->setAcceleration(5);
 	object->setDirection(movement.norm());
 	object->setMovement(movement);
 	object->setIsPlayerProjectile(isPlayerProjectile);
