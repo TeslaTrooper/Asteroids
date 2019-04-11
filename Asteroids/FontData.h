@@ -2,9 +2,9 @@
 #define FONT_DATA
 
 #include <map>
+#include <structs.h>
 
 #include "Util.h"
-#include "structs.h"
 
 using namespace Binding;
 

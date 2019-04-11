@@ -2,12 +2,11 @@
 #define WINDOW
 
 #include <stdio.h>
+#include <BaseOpenGLWindow.h>
+#include <BaseOpenGLRenderer.h>
 
 #include "Controller.h"
 #include "Renderer.h"
-#include "Mat4.h"
-#include "BaseOpenGLWindow.h"
-#include "BaseOpenGLRenderer.h"
 #include "APIFactory.h"
 
 #define FRAME_RATE 60

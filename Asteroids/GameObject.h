@@ -1,10 +1,11 @@
 #ifndef GAME_OBJECT
 #define GAME_OBJECT
 
+#include <Vec2.h>
+#include <Entity.h>
+
 #include "Util.h"
-#include "Vec2.h"
 #include "ModelData.h"
-#include "Entity.h"
 
 #define UNDEFINED_LIFETIME -1
 
@@ -53,7 +54,7 @@ public:
 	VertexData getVertexData() const override;
 	IndexData getTriangulatedIndexData() const override;
 
-	void setAcceleration(const float value);
+	void setAcceleration(const float value) override;
 	void setDirection(const Vec2 direction);
 	void setAngle(const int angle);
 	void rotate(const int direction, const float dt);

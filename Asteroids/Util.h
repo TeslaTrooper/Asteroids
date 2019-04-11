@@ -4,9 +4,8 @@
 //#define DEBUG
 
 #include <vector>
+#include <structs.h>
 
-#include "structs.h"
-#include "Mat4.h"
 
 #define VERTEX_COMP_SIZE 2
 #define WIN_WIDTH 900
@@ -17,24 +16,25 @@
 #define SIZE_SMALL 0.5f
 
 #define MAX_PROJECTILE 4
-#define PROJECTILE_MAX_LIFETIME 1.5f
+#define PROJECTILE_MAX_LIFETIME 1.f
 #define GAP_PROJECTILE_SHIP 10
-#define PROJECTILE_SPEED 6
+#define PROJECTILE_SPEED 700
 #define ROTATION_ZONE 45
-#define ASTEROID_MIN_VELOCITY 20
-#define ASTEROID_MAX_VELOCITY 50
+#define ASTEROID_MIN_VELOCITY 100
+#define ASTEROID_MAX_VELOCITY 175
 #define ASTEROID_PIECE_COUNT 2
 
 #define PARTICLE_COUNT 4
 #define PARTICLE_MAX_LIFETIME 1
 #define PARTICLE_MIN_VELOCITY 1
-#define PARTICLE_MAX_VELOCITY 2
+#define PARTICLE_MAX_VELOCITY 150
 
 #define INITAL_ENTITY_COUNT 2
 #define SMALL_SAUCER_INTERVAL 40
 #define BIG_SAUCER_INTERVAL 20
-#define SAUCER_MIN_VELOCITY 10
-#define SAUCER_MAX_VELOCITY 30
+#define SAUCER_MIN_VELOCITY 50
+#define SAUCER_MAX_VELOCITY 100
+#define SHIP_VELOCITY 450
 
 enum ModelClass {
 	CLASS_ASTEROID, CLASS_SHIP, CLASS_SAUCER, CLASS_PROJECTILE, CLASS_LINE_SEGMENT, CLASS_UNDEFINED
@@ -56,14 +56,6 @@ struct Dimension {
 struct RenderUnit {
 	Mat4 transformation;
 	Model model;
-};
-
-struct CustomBufferData {
-	unsigned int vao, vao1;
-	unsigned int ebo;
-	unsigned int vbo;
-	int indexCount, indexCount1;
-	int drawMode;
 };
 
 struct CollisionInfo {

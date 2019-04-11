@@ -8,7 +8,7 @@ EntitySpawner::EntitySpawner(EntityFactory* const entityFactory) : entityFactory
 	this->totalEntityCount = INITAL_ENTITY_COUNT;
 
 	checkForAsteroidCreation();
-};
+}
 
 void EntitySpawner::update(const float dt) {
 	elapsedTime += dt;
@@ -29,7 +29,7 @@ void EntitySpawner::checkForAsteroidCreation() {
 		Model randomAsteroidModel = (Model) random(0, 3);
 		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_ASTEROID, SIZE_LARGE));
 		float size = getRandomSize();
-		Vec2 movement = getRandomMovement();
+		Vec2 movement = getRandomMovement(ASTEROID_MIN_VELOCITY, ASTEROID_MAX_VELOCITY);
 
 		entityFactory->createAsteroid(randomAsteroidModel, position, size, movement);
 	}
@@ -40,14 +40,14 @@ void EntitySpawner::checkForSaucerCreation() {
 		lastBigSaucerTimeStamp = elapsedTime;
 
 		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_SAUCER, SIZE_LARGE));
-		entityFactory->createSaucer(position, SIZE_LARGE, getRandomMovement());
+		entityFactory->createSaucer(position, SIZE_LARGE, getRandomMovement(SAUCER_MIN_VELOCITY, SAUCER_MAX_VELOCITY));
 	}
 
 	if ((elapsedTime - lastSmallSaucerTimeStamp) >= SMALL_SAUCER_INTERVAL) {
 		lastSmallSaucerTimeStamp = elapsedTime;
 
 		Vec2 position = getPosition(ModelData::getCropBox(ModelClass::CLASS_SAUCER, SIZE_MEDIUM));
-		entityFactory->createSaucer(position, SIZE_MEDIUM, getRandomMovement());
+		entityFactory->createSaucer(position, SIZE_MEDIUM, getRandomMovement(SAUCER_MIN_VELOCITY, SAUCER_MAX_VELOCITY));
 	}
 }
 
@@ -66,14 +66,13 @@ float EntitySpawner::getRandomSize() {
 	return SIZE_LARGE;
 }
 
-Vec2 EntitySpawner::getRandomMovement() {
+Vec2 EntitySpawner::getRandomMovement(int min, int max) {
 	int randomAngle = random(0, 359);
 	Vec2 direction = Vec2::getRotatedInstance(randomAngle);
 
-	int randomVelocity = random(SAUCER_MIN_VELOCITY, SAUCER_MAX_VELOCITY);
-	float velocity = randomVelocity / 10.f;
+	int randomVelocity = random(min, max);
 
-	return direction.mul(velocity);
+	return direction * randomVelocity;
 }
 
 Vec2 EntitySpawner::getPosition(const Dimension cropBox) {

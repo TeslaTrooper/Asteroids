@@ -1,8 +1,10 @@
 #ifndef INTERNAL_LOGIC
 #define INTERNAL_LOGIC
 
+#include <PhysicsEngine.h>
+#include <SoundMaster.h>
+
 #include "EntityFactory.h"
-#include "PhysicsEngine.h"
 #include "EntitySpawner.h"
 #include "ShipController.h"
 
@@ -35,6 +37,7 @@ class InternalLogic : CollisionCallback {
 	EntitySpawner entitySpawner;
 	PhysicsEngine physicsEngine;
 	ShipController shipController;
+	//SoundMaster soundMaster;
 
 	void checkForOutOfBoundsObjects(GameObject* obj) const;
 	void breakAsteroidIntoPieces(GameObject const * const object) const;

@@ -8,7 +8,6 @@ Window::Window() : BaseOpenGLWindow(WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT,
 }
 
 Window::~Window() {
-	BaseOpenGLWindow::~BaseOpenGLWindow();
 	delete renderer;
 }
 

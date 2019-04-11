@@ -1,0 +1,43 @@
+﻿Build started 09.04.2019 15:56:30.
+     1>Project "C:\Users\Stefan\Documents\Visual Studio 2015\Projects\Asteroids\Asteroids\Asteroids.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /IC:\OpenGL\include /IC:\OpenGL\lib /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt BindableProvider.cpp Controller.cpp EntityFactory.cpp EntitySpawner.cpp FontBuilder.cpp FontData.cpp GameImpl.cpp GameObject.cpp InternalLogic.cpp Main.cpp ModelData.cpp Renderer.cpp Saucer.cpp Ship.cpp ShipController.cpp Util.h Window.cpp
+         BindableProvider.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Controller.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         EntityFactory.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         EntitySpawner.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         FontBuilder.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         FontData.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         GameImpl.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         GameObject.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         InternalLogic.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Main.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         ModelData.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Renderer.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Renderer.h(6): fatal error C1083: Cannot open include file: 'ShaderProgram.h': No such file or directory
+         Saucer.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Ship.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         ShipController.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Util.h
+     1>Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+         Window.cpp
+     1>c:\users\stefan\documents\visual studio 2015\projects\asteroids\asteroids\Util.h(8): fatal error C1083: Cannot open include file: 'structs.h': No such file or directory
+     1>Done Building Project "C:\Users\Stefan\Documents\Visual Studio 2015\Projects\Asteroids\Asteroids\Asteroids.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.18

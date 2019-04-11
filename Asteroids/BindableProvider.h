@@ -14,9 +14,6 @@ public:
 	~BindableProvider();
 
 	Bindable getBindable(const Model model) const;
-#ifdef DEBUG
-	IndexData getTriangulatedModelData(const Model model) const;
-#endif
 
 };
 

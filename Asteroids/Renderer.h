@@ -2,17 +2,19 @@
 #define RENDERER
 
 #include <map>
+#include <ShaderFactory.h>
+#include <Shader.h>
+#include <BufferConfigurator.h>
+#include <BaseOpenGLRenderer.h>
 
-#include "ShaderProgram.h"
-#include "Shader.h"
 #include "Game.h"
 #include "Util.h"
 #include "ModelData.h"
-#include "BufferConfigurator.h"
-#include "BaseOpenGLRenderer.h"
 
 #define PROJECTION "projection"
 #define TRANSFORM "transform"
+#define DRAW_MODE_LINE DrawMode::LINES
+#define DRAW_MODE_TRIANGLES DrawMode::TRIANGLES
 
 class Renderer : public BaseOpenGLRenderer {
 
@@ -21,11 +23,10 @@ class Renderer : public BaseOpenGLRenderer {
 	Shader* standardShader;
 	Shader* framebufferShader;
 
-	map<Model, CustomBufferData> modelMap;
+	map<Model, RenderData> modelMap;
 
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
-	void drawInDebugMode(const CustomBufferData& data) const;
 	void prepareShaders(const RenderUnit unit) const;
 
 	void render() const override;

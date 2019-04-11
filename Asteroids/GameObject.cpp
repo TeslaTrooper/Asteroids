@@ -1,11 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const Model model, const Vec2 position, const float scale) : Entity(new RigidBody()) {
+GameObject::GameObject(const Model model, const Vec2 position, const float scale) : Entity() {
 	this->model = model;
-	setPosition(position);
 	this->scale = scale;
-	setAcceleration(0);
-	setVMax(0);
 	this->angle = 270;
 	this->lifetime = 0;
 	this->maxLifetime = UNDEFINED_LIFETIME;
@@ -19,6 +16,7 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 
 	// Default direction points upwards
 	setDirection(Vec2(0, 1));
+	setPosition(position);
 }
 
 void GameObject::update(const float dt) {

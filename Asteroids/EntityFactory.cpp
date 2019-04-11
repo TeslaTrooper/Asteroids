@@ -20,7 +20,7 @@ void EntityFactory::update() {
 
 GameObject* EntityFactory::createPlayer(const Vec2 position, const float size) {
 	GameObject* object = new Ship(position, size);
-	object->setVMax(5);
+	object->setVMax(SHIP_VELOCITY);
 
 	entities[object->getModelClass()].push_back(object);
 
@@ -145,7 +145,7 @@ GameObject* EntityFactory::createStatic(const Model model, const Vec2 position,
 void EntityFactory::configureAsStatic(GameObject* object, const Vec2 movement, const bool isPlayerProjectile) {
 	object->setAngle(0);
 	object->setVMax(movement.length());
-	object->setAcceleration(5);
+	object->setAcceleration(1);
 	object->setDirection(movement.norm());
 	object->setMovement(movement);
 	object->setIsPlayerProjectile(isPlayerProjectile);

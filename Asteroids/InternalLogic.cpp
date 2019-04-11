@@ -49,6 +49,7 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 }
 
 void InternalLogic::shipShoot() {
+	//soundMaster.play();
 	// Prevent player from shooting more than MAX_PROJECTILE entities
 	if (entityFactory->getPlayerProjectileCount() >= MAX_PROJECTILE) {
 		return;
@@ -128,9 +129,8 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 	// Next step is to change velocity
 	// To keep it simple, the new velocity is just a random number
 	int randomVelocity = random(ASTEROID_MIN_VELOCITY, ASTEROID_MAX_VELOCITY);
-	float velocity = randomVelocity / 10.f;
 
-	return rotatedMovement.norm().mul(velocity);
+	return rotatedMovement.norm() * randomVelocity;
 }
 
 // TODO

@@ -3,7 +3,7 @@
 ShipController::ShipController(EntityFactory* const entityFactory) : entityFactory(entityFactory) {
 	this->inProgress = false;
 	this->delayCtr = 0;
-};
+}
 
 void ShipController::update(const float dt) {
 	if (inProgress)

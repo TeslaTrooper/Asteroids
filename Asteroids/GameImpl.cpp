@@ -56,12 +56,6 @@ Bindable GameImpl::getBindable(const Model model) const {
 	return bindableProvider.getBindable(model);
 }
 
-#ifdef DEBUG
-IndexData Game::getTriangulatedModelData(const Model model) const {
-	return bindableProvider.getTriangulatedModelData(model);
-}
-#endif
-
 void GameImpl::moveShip(const bool moving, const float dt) {
 	internalLogic.moveShip(moving, dt);
 }
