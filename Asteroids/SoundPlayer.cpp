@@ -20,10 +20,6 @@ void SoundPlayer::update(float dt) {
 		return;
 
 	bool evenSecond = ((int) elapsedTime) % 2 == 0;
-
-	// Distinguish between even and uneven seconds
-	// For every even second, play SOUND_BEAT1
-	// For every uneven second, play SOUND_BEAT2
 	if (beat != 0 && evenSecond)
 		soundMaster.play(SOUND_BEAT1, PLAY_MODE_ONCE, false);
 	else if (beat != 1 && !evenSecond)
@@ -62,8 +58,6 @@ void SoundPlayer::playSaucerSmall() const {
 }
 
 void SoundPlayer::playThrust() const {
-	// Currently, SOUND_THRUST cannot be loaded via WaveLoader
-	// => Instead, we use SOUND_BEAT1 temporarily
 	soundMaster.play(SOUND_THRUST, PLAY_MODE_LOOP, false);
 }
 
