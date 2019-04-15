@@ -181,6 +181,7 @@
     <ClCompile Include="Saucer.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipController.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Util.h" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -201,6 +202,7 @@
     <ClInclude Include="Saucer.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipController.h" />
+    <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

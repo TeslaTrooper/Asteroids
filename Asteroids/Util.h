@@ -95,4 +95,19 @@ static Vec2 getRandomPosition() {
 	return Vec2(x, y);
 }
 
+namespace SoundFiles {
+
+	static const char* const bangLarge = "sounds/bangLarge.wav";
+	static const char* const bangMedium = "sounds/bangMedium.wav";
+	static const char* const bangSmall = "sounds/bangSmall.wav";
+	static const char* const beat1 = "sounds/beat1.wav";
+	static const char* const beat2 = "sounds/beat2.wav";
+	static const char* const extraShip = "sounds/extraShip.wav";
+	static const char* const fire = "sounds/fire.wav";
+	static const char* const saucerBig = "sounds/saucerBig.wav";
+	static const char* const saucerSmall = "sounds/saucerSmall.wav";
+	static const char* const thrust = "sounds/thrust.wav";
+
+}
+
 #endif UTIL

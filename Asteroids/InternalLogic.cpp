@@ -8,6 +8,7 @@ void InternalLogic::update(const float dt) {
 	checkForMissingPlayer(dt);
 	entitySpawner.update(dt);
 	shipController.update(dt);
+	soundPlayer.update(dt);
 
 	const vector<GameObject*> objects = entityFactory->get();
 	for each (GameObject* obj in objects) {
@@ -18,9 +19,25 @@ void InternalLogic::update(const float dt) {
 		checkForOutOfBoundsObjects(obj);
 	}
 
+	bool largeSaucerExist = false;
+	bool smallSaucerExist = false;
 	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER)) {
+		if (saucer->getScale() == SIZE_LARGE) {
+			largeSaucerExist = true;
+			soundPlayer.playSaucerBig();
+		} else if (saucer->getScale() == SIZE_MEDIUM) {
+			smallSaucerExist = true;
+			soundPlayer.playSaucerSmall();
+		}
+
 		checkSaucerBehaviour(saucer);
 	}
+
+	if (!largeSaucerExist)
+		soundPlayer.stopSaucerBig();
+
+	if (!smallSaucerExist)
+		soundPlayer.stopSaucerSmall();
 }
 
 void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
@@ -49,7 +66,6 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 }
 
 void InternalLogic::shipShoot() {
-	//soundMaster.play();
 	// Prevent player from shooting more than MAX_PROJECTILE entities
 	if (entityFactory->getPlayerProjectileCount() >= MAX_PROJECTILE) {
 		return;
@@ -70,6 +86,8 @@ void InternalLogic::shipShoot() {
 
 	// Create projectile
 	entityFactory->createPlayerProjectile(position, SIZE_MEDIUM, movement);
+
+	soundPlayer.playFire();
 }
 
 void InternalLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const {
@@ -97,13 +115,13 @@ void InternalLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& locatio
 }
 
 void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) const {
-	if (object->getScale() <= SIZE_SMALL) {
-		return;
-	}
+	soundPlayer.playBang(object->getScale());
 
-	for (int i = 0; i < ASTEROID_PIECE_COUNT; i++) {
+	if (object->getScale() <= SIZE_SMALL)
+		return;
+
+	for (int i = 0; i < ASTEROID_PIECE_COUNT; i++)
 		createAsteroidPiece(object);
-	}
 }
 
 void InternalLogic::createAsteroidPiece(GameObject const * const object) const {
@@ -198,6 +216,7 @@ void InternalLogic::updateRemainingLifes() const {
 	if (stats->score >= stats->lifePerScore) {
 		stats->lifes++;
 		stats->lifePerScore += LIFE_PER_SCORE;
+		soundPlayer.playExtraShip();
 	}
 }
 
@@ -231,7 +250,6 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 	if (player == nullptr)
 		return;
 
-
 	Vec2 p1 = Vec2(ModelData::shipVertices[0], ModelData::shipVertices[1]);
 	Vec2 p2 = Vec2(ModelData::shipVertices[2], ModelData::shipVertices[3]);
 	Vec2 p3 = Vec2(ModelData::shipVertices[4], ModelData::shipVertices[5]);
@@ -261,6 +279,11 @@ void InternalLogic::rotatePlayerRight(const float dt) {
 
 void InternalLogic::moveShip(const bool moving, const float dt) {
 	shipController.moveShip(moving, dt);
+
+	if (moving)
+		soundPlayer.playThrust();
+	else
+		soundPlayer.stopThrust();
 }
 
 void InternalLogic::hyperspace() {

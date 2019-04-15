@@ -102,6 +102,9 @@
     <ClCompile Include="GameImpl.cpp">
       <Filter>Source Files\logic\api</Filter>
     </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="APIFactory.h">
       <Filter>Header Files\logic\api</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>Header Files\logic\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

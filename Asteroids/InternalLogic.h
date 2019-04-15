@@ -2,11 +2,11 @@
 #define INTERNAL_LOGIC
 
 #include <PhysicsEngine.h>
-#include <SoundMaster.h>
 
 #include "EntityFactory.h"
 #include "EntitySpawner.h"
 #include "ShipController.h"
+#include "SoundPlayer.h"
 
 #define PLAYER_CREATION_DELAY 2
 
@@ -37,7 +37,7 @@ class InternalLogic : CollisionCallback {
 	EntitySpawner entitySpawner;
 	PhysicsEngine physicsEngine;
 	ShipController shipController;
-	//SoundMaster soundMaster;
+	SoundPlayer soundPlayer;
 
 	void checkForOutOfBoundsObjects(GameObject* obj) const;
 	void breakAsteroidIntoPieces(GameObject const * const object) const;
@@ -55,7 +55,10 @@ public:
 		entityFactory(entityFactory), entitySpawner(entityFactory), shipController(ShipController(entityFactory)), stats(new GameStats()),
 		physicsEngine(this) {};
 
-	~InternalLogic() {};
+	~InternalLogic() {
+		delete stats;
+		delete entityFactory;
+	};
 
 	// Main logic loop
 	void update(const float dt);
