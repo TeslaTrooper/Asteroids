@@ -8,9 +8,9 @@ SoundPlayer::SoundPlayer() : elapsedTime(0), isBackgroundSoundPlaying(true), bea
 	soundMaster.load(SOUND_BEAT2, SoundFiles::beat2);
 	soundMaster.load(SOUND_EXTRA_SHIP, SoundFiles::extraShip);
 	soundMaster.load(SOUND_FIRE, SoundFiles::fire);
-	soundMaster.load(SOUND_SAUCER_BIG, SoundFiles::beat1);
-	soundMaster.load(SOUND_SAUCER_SMALL, SoundFiles::beat2);
-	soundMaster.load(SOUND_THRUST, SoundFiles::beat1);
+	soundMaster.load(SOUND_SAUCER_BIG, SoundFiles::saucerBig);
+	soundMaster.load(SOUND_SAUCER_SMALL, SoundFiles::saucerSmall);
+	soundMaster.load(SOUND_THRUST, SoundFiles::thrust);
 }
 
 void SoundPlayer::update(float dt) {
