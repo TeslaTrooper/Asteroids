@@ -12,12 +12,12 @@
 #define SOUND_SAUCER_SMALL	9
 #define SOUND_THRUST		10
 
-#include <SoundMaster.h>
+#include <SoundDriver.h>
 #include "Util.h"
 
 class SoundPlayer {
 
-	SoundMaster soundMaster;
+	SoundDriver soundDriver;
 
 	float elapsedTime;
 	bool isBackgroundSoundPlaying;
@@ -33,14 +33,12 @@ public:
 	void playBackgroundSound();
 	void playExtraShip() const;
 	void playFire() const;
-	void playSaucerBig() const;
-	void playSaucerSmall() const;
+	void playSaucer(float type) const;
 	void playThrust() const;
 
 	void stopThrust() const;
 	void stopBackgroundSound();
-	void stopSaucerBig() const;
-	void stopSaucerSmall() const;
+	void stopSaucer(float type) const;
 };
 
 #endif SOUND_PLAYER

@@ -2,13 +2,14 @@
 #define GAME_IMPL
 
 #include "Game.h"
+#include "GameLogic.h"
 
 class GameImpl : public Game {
 
 	FontData fontdata;
 	FontBuilder fontBuilder;
 	BindableProvider bindableProvider;
-	InternalLogic internalLogic;
+	GameLogic gameLogic;
 
 	vector<RenderUnit> renderUnits;
 
@@ -19,7 +20,7 @@ public:
 	GameImpl(const GameImpl& impl) = delete;
 	void operator=(const GameImpl&) = delete;
 
-	GameImpl() : internalLogic(InternalLogic(new EntityFactory())) {}
+	GameImpl() : gameLogic(GameLogic(new EntityFactory())) {}
 	~GameImpl() {};
 
 	void update(const float dt) override;

@@ -3,26 +3,18 @@
 
 #include <vector>
 #include <string>
+#include <InternalLogic.h>
 
 #include "Util.h"
 #include "ModelData.h"
 #include "FontData.h"
 #include "FontBuilder.h"
 #include "BindableProvider.h"
-#include "InternalLogic.h"
 
 /*
 	Represents the main interface to the core logic of the game.
 */
-struct Game {
-
-	/*
-		Calling this method will perform an entire update in terms of program logic.
-
-		@param dt
-			defines the time since last frame.
-	*/
-	virtual void update(const float dt) = 0;
+struct Game : public InternalLogic {
 
 
 	/*
@@ -84,10 +76,6 @@ struct Game {
 		Calling this method performs hyperspace on the player's ship.
 	*/
 	virtual void hyperspace() = 0;
-
-#ifdef DEBUG
-	IndexData getTriangulatedModelData(const Model model) const;
-#endif
 
 };
 

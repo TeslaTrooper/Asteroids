@@ -87,9 +87,6 @@
     <ClCompile Include="FontBuilder.cpp">
       <Filter>Source Files\logic\core</Filter>
     </ClCompile>
-    <ClCompile Include="InternalLogic.cpp">
-      <Filter>Source Files\logic\core</Filter>
-    </ClCompile>
     <ClCompile Include="ShipController.cpp">
       <Filter>Source Files\logic\core</Filter>
     </ClCompile>
@@ -99,10 +96,13 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\ui\view</Filter>
     </ClCompile>
-    <ClCompile Include="GameImpl.cpp">
-      <Filter>Source Files\logic\api</Filter>
-    </ClCompile>
     <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameImpl.cpp">
+      <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
       <Filter>Source Files\logic\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,14 +137,8 @@
     <ClInclude Include="FontBuilder.h">
       <Filter>Header Files\logic\core</Filter>
     </ClInclude>
-    <ClInclude Include="InternalLogic.h">
-      <Filter>Header Files\logic\core</Filter>
-    </ClInclude>
     <ClInclude Include="ShipController.h">
       <Filter>Header Files\logic\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\logic\api</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Header Files\ui\view</Filter>
@@ -159,6 +153,12 @@
       <Filter>Header Files\logic\api</Filter>
     </ClInclude>
     <ClInclude Include="SoundPlayer.h">
+      <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\logic\api</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
       <Filter>Header Files\logic\core</Filter>
     </ClInclude>
   </ItemGroup>

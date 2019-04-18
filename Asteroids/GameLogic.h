@@ -1,5 +1,5 @@
-#ifndef INTERNAL_LOGIC
-#define INTERNAL_LOGIC
+#ifndef GAME_LOGIC
+#define GAME_LOGIC
 
 #include <PhysicsEngine.h>
 
@@ -19,7 +19,7 @@
 #define INITIAL_LIFE_COUNT 4
 #define LIFE_PER_SCORE 10000
 
-class InternalLogic : CollisionCallback {
+class GameLogic : CollisionCallback {
 
 	struct GameStats {
 		int score;
@@ -49,13 +49,14 @@ class InternalLogic : CollisionCallback {
 	void createPlayer();
 	void checkForMissingPlayer(const float dt);
 	void checkSaucerBehaviour(Saucer* saucer);
+	void checkSaucerSound(const float size) const;
 
 public:
-	InternalLogic(EntityFactory* const entityFactory) : playerIsMissing(false), shipCreationCtr(PLAYER_CREATION_DELAY),
+	GameLogic(EntityFactory* const entityFactory) : playerIsMissing(false), shipCreationCtr(PLAYER_CREATION_DELAY),
 		entityFactory(entityFactory), entitySpawner(entityFactory), shipController(ShipController(entityFactory)), stats(new GameStats()),
 		physicsEngine(this) {};
 
-	~InternalLogic() {
+	~GameLogic() {
 		delete stats;
 		delete entityFactory;
 	};
@@ -79,4 +80,4 @@ public:
 	void resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const override;
 };
 
-#endif INTERNAL_LOGIC
+#endif GAME_LOGIC

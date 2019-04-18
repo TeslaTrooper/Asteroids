@@ -6,7 +6,6 @@
 #include <BaseOpenGLRenderer.h>
 
 #include "Controller.h"
-#include "Renderer.h"
 #include "APIFactory.h"
 
 #define FRAME_RATE 60
@@ -15,16 +14,14 @@
 #define WIN_POS_Y 100
 
 class Window : public BaseOpenGLWindow {
-	BaseOpenGLRenderer* renderer;
-	Game* game;
 
-	void checkInput(const float dt);
+	BaseOpenGLRenderer* const renderer;
+	Game* const game;
 
 public:
-	Window();
-	~Window();
+	Window(BaseOpenGLRenderer* const renderer, Game* const game);
 
-	void loop(float dt) override;
+	void checkInput(float dt) override;
 };
 
 #endif WINDOW

@@ -187,3 +187,17 @@ void EntityFactory::remove(GameObject* object) {
 int EntityFactory::getEntityCount() const {
 	return (int) entities.at(ModelClass::CLASS_ASTEROID).size();
 }
+
+bool EntityFactory::saucerExist(const float size) const {
+	vector<GameObject*> saucers = entities.at(ModelClass::CLASS_SAUCER);
+
+	if (saucers.size() == 0)
+		return false;
+
+	for each (Saucer* saucer in saucers) {
+		if (saucer->getScale() == size)
+			return true;
+	}
+
+	return false;
+}

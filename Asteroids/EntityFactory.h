@@ -38,6 +38,7 @@ public:
 	void createShipParticleEffect(const Vec2 position);
 	int getPlayerProjectileCount() const;
 	int getEntityCount() const;
+	bool saucerExist(const float size) const;
 
 	vector<GameObject*> get() const;
 	vector<Entity*> getAsEntities() const;

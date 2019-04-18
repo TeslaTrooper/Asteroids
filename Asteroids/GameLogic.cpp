@@ -1,46 +1,30 @@
-#include "InternalLogic.h"
+#include "GameLogic.h"
 
-void InternalLogic::update(const float dt) {
+void GameLogic::update(const float dt) {
 	const vector<Entity*> entities = entityFactory->getAsEntities();
 
 	physicsEngine.update(entities, dt);
 	entityFactory->update();
-	checkForMissingPlayer(dt);
 	entitySpawner.update(dt);
 	shipController.update(dt);
 	soundPlayer.update(dt);
+	checkForMissingPlayer(dt);
 
 	const vector<GameObject*> objects = entityFactory->get();
-	for each (GameObject* obj in objects) {
+	for each (GameObject* obj in objects)
 		obj->update(dt);
-	}
 
-	for each (GameObject* obj in objects) {
+	for each (GameObject* obj in objects)
 		checkForOutOfBoundsObjects(obj);
-	}
 
-	bool largeSaucerExist = false;
-	bool smallSaucerExist = false;
-	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER)) {
-		if (saucer->getScale() == SIZE_LARGE) {
-			largeSaucerExist = true;
-			soundPlayer.playSaucerBig();
-		} else if (saucer->getScale() == SIZE_MEDIUM) {
-			smallSaucerExist = true;
-			soundPlayer.playSaucerSmall();
-		}
-
+	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER))
 		checkSaucerBehaviour(saucer);
-	}
 
-	if (!largeSaucerExist)
-		soundPlayer.stopSaucerBig();
-
-	if (!smallSaucerExist)
-		soundPlayer.stopSaucerSmall();
+	checkSaucerSound(SIZE_LARGE);
+	checkSaucerSound(SIZE_MEDIUM);
 }
 
-void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
+void GameLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 	Vec2 cPos = obj->getPosition();
 	// Take width as crop box for repositioning
 	float a = ModelData::getCropBox(obj->getModelClass(), obj->getScale()).width;
@@ -65,11 +49,10 @@ void InternalLogic::checkForOutOfBoundsObjects(GameObject* obj) const {
 		obj->setPosition(Vec2(cPos.x, (float) (y + a)));
 }
 
-void InternalLogic::shipShoot() {
+void GameLogic::shipShoot() {
 	// Prevent player from shooting more than MAX_PROJECTILE entities
-	if (entityFactory->getPlayerProjectileCount() >= MAX_PROJECTILE) {
+	if (entityFactory->getPlayerProjectileCount() >= MAX_PROJECTILE)
 		return;
-	}
 
 	Ship* player = (Ship*) entityFactory->getPlayer();
 	if (player == nullptr || player->isInHyperspace())
@@ -90,23 +73,20 @@ void InternalLogic::shipShoot() {
 	soundPlayer.playFire();
 }
 
-void InternalLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const {
+void GameLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& location) const {
 	GameObject* o1 = (GameObject*) e1;
 	GameObject* o2 = (GameObject*) e2;
 
-	if (o1->getModelClass() == CLASS_ASTEROID) {
+	if (o1->getModelClass() == CLASS_ASTEROID)
 		breakAsteroidIntoPieces(o1);
-	}
 
-	if (o2->getModelClass() == CLASS_ASTEROID) {
+	if (o2->getModelClass() == CLASS_ASTEROID)
 		breakAsteroidIntoPieces(o2);
-	}
 
-	if (o1->getModelClass() == ModelClass::CLASS_SHIP || o2->getModelClass() == ModelClass::CLASS_SHIP) {
+	if (o1->getModelClass() == ModelClass::CLASS_SHIP || o2->getModelClass() == ModelClass::CLASS_SHIP)
 		entityFactory->createShipParticleEffect(location);
-	} else {
+	else
 		entityFactory->createSimpleParticleEffect(location);
-	}
 
 	updateScore(o1, o2);
 
@@ -114,7 +94,7 @@ void InternalLogic::resolveCollision(Entity* e1, Entity* e2, const Vec2& locatio
 	o2->markForCleanup();
 }
 
-void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) const {
+void GameLogic::breakAsteroidIntoPieces(GameObject const * const object) const {
 	soundPlayer.playBang(object->getScale());
 
 	if (object->getScale() <= SIZE_SMALL)
@@ -124,7 +104,7 @@ void InternalLogic::breakAsteroidIntoPieces(GameObject const * const object) con
 		createAsteroidPiece(object);
 }
 
-void InternalLogic::createAsteroidPiece(GameObject const * const object) const {
+void GameLogic::createAsteroidPiece(GameObject const * const object) const {
 	Vec2 position = object->getPosition();
 	Vec2 parentMovement = object->getMovement();
 
@@ -135,7 +115,7 @@ void InternalLogic::createAsteroidPiece(GameObject const * const object) const {
 	entityFactory->createAsteroid(randomAsteroidModel, position, childScale, childMovement);
 }
 
-Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const {
+Vec2 GameLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const {
 	// We want a movement, which has similar direction related to parent movemnt
 	// and some small change in velocity (slower or faster is possible)
 
@@ -152,7 +132,7 @@ Vec2 InternalLogic::calcMovementOfChildAsteroid(const Vec2 parentMovement) const
 }
 
 // TODO
-void InternalLogic::updateScore(const GameObject* const o1, const GameObject* const o2) const {
+void GameLogic::updateScore(const GameObject* const o1, const GameObject* const o2) const {
 	// When does the current score need to be updated?
 	// - Intersection Asteroid <-> Projectile (player)
 	// - Intersection Asteroid <-> Ship
@@ -189,12 +169,11 @@ void InternalLogic::updateScore(const GameObject* const o1, const GameObject* co
 	}
 }
 
-int InternalLogic::determineGainedScore(const float objSize, const ModelClass classOfIntersector) const {
+int GameLogic::determineGainedScore(const float objSize, const ModelClass classOfIntersector) const {
 	int gainedScore = 0;
 
-	if (classOfIntersector == ModelClass::CLASS_SAUCER) {
+	if (classOfIntersector == ModelClass::CLASS_SAUCER)
 		gainedScore = objSize == SIZE_MEDIUM ? SCORE_MEDIUM_SAUCER : SCORE_LARGE_SAUCER;
-	}
 
 	if (classOfIntersector == ModelClass::CLASS_ASTEROID) {
 		if (objSize == SIZE_LARGE) {
@@ -211,7 +190,7 @@ int InternalLogic::determineGainedScore(const float objSize, const ModelClass cl
 	return gainedScore;
 }
 
-void InternalLogic::updateRemainingLifes() const {
+void GameLogic::updateRemainingLifes() const {
 	// Every LIFE_PER_SCORE points, player gains one extra life
 	if (stats->score >= stats->lifePerScore) {
 		stats->lifes++;
@@ -220,7 +199,7 @@ void InternalLogic::updateRemainingLifes() const {
 	}
 }
 
-void InternalLogic::checkForMissingPlayer(const float dt) {
+void GameLogic::checkForMissingPlayer(const float dt) {
 	if (entityFactory->getPlayer() == nullptr)
 		playerIsMissing = true;
 
@@ -235,15 +214,14 @@ void InternalLogic::checkForMissingPlayer(const float dt) {
 	}
 }
 
-void InternalLogic::createPlayer() {
+void GameLogic::createPlayer() {
 	entityFactory->createPlayerInCenter(SIZE_LARGE);
 	stats->lifes--;
 }
 
-void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
-	if (!saucer->canShoot()) {
+void GameLogic::checkSaucerBehaviour(Saucer* saucer) {
+	if (!saucer->canShoot())
 		return;
-	}
 
 	// Calculate center of player ship mx, my
 	GameObject* player = entityFactory->getPlayer();
@@ -269,28 +247,36 @@ void InternalLogic::checkSaucerBehaviour(Saucer* saucer) {
 	entityFactory->createSaucerProjectile(params.position, SIZE_MEDIUM, params.movement);
 }
 
-void InternalLogic::rotatePlayerLeft(const float dt) {
+void GameLogic::checkSaucerSound(const float size) const {
+	if (entityFactory->saucerExist(size))
+		soundPlayer.playSaucer(size);
+	else
+		soundPlayer.stopSaucer(size);
+}
+
+void GameLogic::rotatePlayerLeft(const float dt) {
 	shipController.rotatePlayerLeft(dt);
 }
 
-void InternalLogic::rotatePlayerRight(const float dt) {
+void GameLogic::rotatePlayerRight(const float dt) {
 	shipController.rotatePlayerRight(dt);
 }
 
-void InternalLogic::moveShip(const bool moving, const float dt) {
+void GameLogic::moveShip(const bool moving, const float dt) {
 	shipController.moveShip(moving, dt);
 
-	if (moving)
+	Ship* player = (Ship*) entityFactory->getPlayer();
+	if (moving && player != nullptr && !player->isInHyperspace())
 		soundPlayer.playThrust();
 	else
 		soundPlayer.stopThrust();
 }
 
-void InternalLogic::hyperspace() {
+void GameLogic::hyperspace() {
 	shipController.hyperspace();
 }
 
-vector<RenderUnit> InternalLogic::getRenderUnits() const {
+vector<RenderUnit> GameLogic::getRenderUnits() const {
 	vector<RenderUnit> units;
 	vector<GameObject*> entities = entityFactory->get();
 

@@ -1,14 +1,8 @@
 #include "Window.h"
 
-Window::Window() : BaseOpenGLWindow(WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL") {
+Window::Window(BaseOpenGLRenderer* const renderer, Game* const game) : 
+	BaseOpenGLWindow(game, renderer, WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL"), game(game), renderer(renderer) {
 	registerKeyCallback(Controller::key_callback);
-
-	game = APIFactory::getInstance();
-	renderer = new Renderer(game);
-}
-
-Window::~Window() {
-	delete renderer;
 }
 
 void Window::checkInput(const float dt) {
@@ -32,11 +26,6 @@ void Window::checkInput(const float dt) {
 	}
 	if (Controller::isKeyShiftPressed()) {
 		game->hyperspace();
+		game->update(dt);
 	}
-}
-
-void Window::loop(float dt) {
-	game->update(dt);
-	renderer->update(dt);
-	checkInput(dt);
 }

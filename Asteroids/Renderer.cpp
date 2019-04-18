@@ -1,13 +1,11 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Game* const game) {
-	this->game = game;
-
+void Renderer::setup() {
 	standardShader = ShaderFactory::createShader("shader.vert", "shader.frag");
 	framebufferShader = ShaderFactory::createShader("framebufferShader.vert", "framebufferShader.frag");
 
-	createFrameBuffer(WIN_WIDTH, WIN_HEIGHT);
 	initProjection();
+	createFrameBuffer(WIN_WIDTH, WIN_HEIGHT);
 	loadModelDatas();
 }
 

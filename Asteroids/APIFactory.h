@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Game.h"
 #include "GameImpl.h"
 
 class APIFactory {

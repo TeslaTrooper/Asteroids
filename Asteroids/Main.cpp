@@ -1,7 +1,12 @@
 #include "Window.h"
+#include "Renderer.h"
+#include "APIFactory.h"
 
 int main(void) {
-	BaseOpenGLWindow* window = new Window();
+	Game* game = APIFactory::getInstance();
+	BaseOpenGLRenderer* renderer = new Renderer(game);
+
+	BaseOpenGLWindow* window = new Window(renderer, game);
 	window->run();
 
 	return 0;

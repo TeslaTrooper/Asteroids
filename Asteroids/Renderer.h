@@ -18,7 +18,7 @@
 
 class Renderer : public BaseOpenGLRenderer {
 
-	Game* game;
+	Game* const game;
 
 	Shader* standardShader;
 	Shader* framebufferShader;
@@ -28,12 +28,14 @@ class Renderer : public BaseOpenGLRenderer {
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
 	void prepareShaders(const RenderUnit unit) const;
+	void setup() override;
 
 	void render() const override;
 	void initProjection() const;
 
 public:
-	Renderer(Game* const game);
+
+	Renderer(Game* const game) : game(game) {};
 	~Renderer();
 
 };
