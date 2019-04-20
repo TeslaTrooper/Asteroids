@@ -9,5 +9,7 @@ int main(void) {
 	BaseOpenGLWindow* window = new Window(renderer, game);
 	window->run();
 
+	delete window;
+
 	return 0;
 }

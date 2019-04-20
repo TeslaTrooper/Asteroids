@@ -2,29 +2,25 @@
 
 Window::Window(BaseOpenGLRenderer* const renderer, Game* const game) : 
 	BaseOpenGLWindow(game, renderer, WIN_POS_X, WIN_POS_Y, WIN_WIDTH, WIN_HEIGHT, "Asteroids | OpenGL"), game(game), renderer(renderer) {
-	registerKeyCallback(Controller::key_callback);
+	registerKeyListener();
 }
 
 void Window::checkInput(const float dt) {
-	if (Controller::isKeyDownPressed()) {
-		printf("Down\n");
-	}
-	if (Controller::isKeyUpPressed()) {
-		//printf("Up\n");
-	}
+	game->moveShip(UserInputController::isKeyPressed(KEY_UP), dt);
 
-	game->moveShip(Controller::isKeyUpPressed(), dt);
-
-	if (Controller::isKeyRightPressed()) {
+	if (UserInputController::isKeyPressed(KEY_RIGHT))
 		game->rotateRight(dt);
-	}
-	if (Controller::isKeyLeftPressed()) {
+
+	if (UserInputController::isKeyPressed(KEY_LEFT))
 		game->rotateLeft(dt);
-	}
-	if (Controller::isKeySpacePressed()) {
+
+	if (UserInputController::isKeyPressed(KEY_SPACE)) {
+		UserInputController::release(KEY_SPACE);
 		game->shipShoot();
 	}
-	if (Controller::isKeyShiftPressed()) {
+
+	if (UserInputController::isKeyPressed(KEY_SHIFT)) {
+		UserInputController::release(KEY_SHIFT);
 		game->hyperspace();
 		game->update(dt);
 	}

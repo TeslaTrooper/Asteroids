@@ -54,9 +54,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="Util.h">
       <Filter>Header Files\logic\api</Filter>
     </ClCompile>
@@ -107,9 +104,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Controller.h">
-      <Filter>Header Files\ui</Filter>
-    </ClInclude>
     <ClInclude Include="ModelData.h">
       <Filter>Header Files\logic\api</Filter>
     </ClInclude>

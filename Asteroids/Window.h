@@ -5,7 +5,6 @@
 #include <BaseOpenGLWindow.h>
 #include <BaseOpenGLRenderer.h>
 
-#include "Controller.h"
 #include "APIFactory.h"
 
 #define FRAME_RATE 60

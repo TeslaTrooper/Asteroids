@@ -169,7 +169,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BindableProvider.cpp" />
-    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="EntitySpawner.cpp" />
     <ClCompile Include="FontBuilder.cpp" />
@@ -190,7 +189,6 @@
   <ItemGroup>
     <ClInclude Include="APIFactory.h" />
     <ClInclude Include="BindableProvider.h" />
-    <ClInclude Include="Controller.h" />
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="EntitySpawner.h" />
     <ClInclude Include="FontBuilder.h" />
