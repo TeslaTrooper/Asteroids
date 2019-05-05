@@ -10,7 +10,6 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	this->playerProjectile = true;
 	this->visible = true;
 	this->invincible = false;
-	this->collisionInfo = nullptr;
 
 	this->modelClass = getClassFromModel(model);
 

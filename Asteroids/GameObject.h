@@ -14,8 +14,6 @@ class GameObject : public Entity {
 	Model model;
 	ModelClass modelClass;
 
-	CollisionInfo* collisionInfo;
-
 	float lifetime, maxLifetime;
 	float scale;
 
