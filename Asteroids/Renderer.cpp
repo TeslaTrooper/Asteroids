@@ -1,11 +1,12 @@
 #include "Renderer.h"
 
-void Renderer::setup() {
+void Renderer::setup(int defaultFramebufferWidth, int defaultFramebufferHeight) {
+	BaseOpenGLRenderer::setup(defaultFramebufferWidth, defaultFramebufferHeight);
 	standardShader = ShaderFactory::createShader("shader.vert", "shader.frag");
 	framebufferShader = ShaderFactory::createShader("framebufferShader.vert", "framebufferShader.frag");
 
 	initProjection();
-	createFrameBuffer(WIN_WIDTH, WIN_HEIGHT);
+	createFrameBuffer(0, 0, WIN_WIDTH, WIN_HEIGHT);
 	loadModelDatas();
 }
 

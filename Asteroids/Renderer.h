@@ -28,7 +28,7 @@ class Renderer : public BaseOpenGLRenderer {
 	void loadModelDatas();
 	void loadModelData(const Model model, const int drawMode);
 	void prepareShaders(const RenderUnit unit) const;
-	void setup() override;
+	void setup(int defaultFramebufferWidth, int defaultFramebufferHeight) override;
 
 	void render() const override;
 	void initProjection() const;

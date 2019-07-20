@@ -2,6 +2,7 @@
 #define GAME_LOGIC
 
 #include <PhysicsEngine.h>
+#include <GameWorld.h>
 
 #include "EntityFactory.h"
 #include "EntitySpawner.h"
@@ -38,6 +39,7 @@ class GameLogic : CollisionCallback {
 	PhysicsEngine physicsEngine;
 	ShipController shipController;
 	SoundPlayer soundPlayer;
+	GameWorld gameWorld;
 
 	void checkForOutOfBoundsObjects(GameObject* obj) const;
 	void breakAsteroidIntoPieces(GameObject const * const object) const;
@@ -54,7 +56,7 @@ class GameLogic : CollisionCallback {
 public:
 	GameLogic(EntityFactory* const entityFactory) : playerIsMissing(false), shipCreationCtr(PLAYER_CREATION_DELAY),
 		entityFactory(entityFactory), entitySpawner(entityFactory), shipController(ShipController(entityFactory)), stats(new GameStats()),
-		physicsEngine(this) {};
+		physicsEngine(this), gameWorld(GameWorld(WIN_WIDTH, WIN_HEIGHT, WORLD_TYPE_LOOP)) {};
 
 	~GameLogic() {
 		delete stats;

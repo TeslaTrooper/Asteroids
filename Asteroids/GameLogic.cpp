@@ -2,6 +2,7 @@
 
 void GameLogic::update(const float dt) {
 	const vector<Entity*> entities = entityFactory->getAsEntities();
+	printf("Entity count:%i\n", entities.size());
 
 	physicsEngine.update(entities, dt);
 	entityFactory->update();
@@ -14,8 +15,7 @@ void GameLogic::update(const float dt) {
 	for each (GameObject* obj in objects)
 		obj->update(dt);
 
-	for each (GameObject* obj in objects)
-		checkForOutOfBoundsObjects(obj);
+	gameWorld.update(dt, entities);
 
 	for each (Saucer* saucer in entityFactory->get(ModelClass::CLASS_SAUCER))
 		checkSaucerBehaviour(saucer);

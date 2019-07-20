@@ -16,6 +16,9 @@ GameObject::GameObject(const Model model, const Vec2 position, const float scale
 	// Default direction points upwards
 	setDirection(Vec2(0, 1));
 	setPosition(position);
+
+	Dimension d = ModelData::getCropBox(getModelClass(), scale);
+	setBbox(Vec2(d.width, d.height));
 }
 
 void GameObject::update(const float dt) {
