@@ -22,32 +22,32 @@
     <ProjectGuid>{DBAE2388-0846-4487-B58C-FC1052026AE4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Asteroids</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -71,13 +71,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\includes;C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\$(IntDir);$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\includes;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\libs\Win32;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\$(IntDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\includes;C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Stefan\Documents\Visual Studio 2015\Projects\CodeBase\$(IntDir);$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\in8cludes;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\li8bs\Win64;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\$(IntDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
