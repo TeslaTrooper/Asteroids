@@ -2,7 +2,6 @@
 
 void GameLogic::update(const float dt) {
 	const vector<Entity*> entities = entityFactory->getAsEntities();
-	printf("Entity count:%i\n", entities.size());
 
 	physicsEngine.update(entities, dt);
 	entityFactory->update();

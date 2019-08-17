@@ -87,9 +87,6 @@
     <ClCompile Include="ShipController.cpp">
       <Filter>Source Files\logic\core</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files\ui\view</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\ui\view</Filter>
     </ClCompile>
@@ -101,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="GameLogic.cpp">
       <Filter>Source Files\logic\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\ui\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>Header Files\ui\view</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files\ui\view</Filter>
-    </ClInclude>
     <ClInclude Include="GameImpl.h">
       <Filter>Header Files\logic\core</Filter>
     </ClInclude>
@@ -154,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="GameLogic.h">
       <Filter>Header Files\logic\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files\ui\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

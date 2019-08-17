@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 void Renderer::setup(int defaultFramebufferWidth, int defaultFramebufferHeight) {
-	BaseOpenGLRenderer::setup(defaultFramebufferWidth, defaultFramebufferHeight);
+	BaseRenderer::setup(defaultFramebufferWidth, defaultFramebufferHeight);
 	standardShader = ShaderFactory::createShader("shader.vert", "shader.frag");
 	framebufferShader = ShaderFactory::createShader("framebufferShader.vert", "framebufferShader.frag");
 
@@ -20,7 +20,7 @@ void Renderer::render() const {
 	for each (RenderUnit unit in units) {
 		prepareShaders(unit);
 
-		BaseOpenGLRenderer::draw(modelMap.at(unit.model));
+		BaseRenderer::draw(modelMap.at(unit.model));
 	}
 
 	framebufferShader->use();

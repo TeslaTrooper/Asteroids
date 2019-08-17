@@ -76,7 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\in8cludes;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\includes;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\CodeBase;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\li8bs\Win64;C:\Users\stefa\Documents\Visual Studio 2019\Projects\CodeBase\$(IntDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -184,7 +184,7 @@
     <ClCompile Include="ShipController.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="Util.h" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIFactory.h" />
@@ -203,7 +203,7 @@
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipController.h" />
     <ClInclude Include="SoundPlayer.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Controller.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="framebufferShader.frag" />

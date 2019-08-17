@@ -5,7 +5,7 @@
 #include <ShaderFactory.h>
 #include <Shader.h>
 #include <BufferConfigurator.h>
-#include <BaseOpenGLRenderer.h>
+#include <BaseRenderer.h>
 
 #include "Game.h"
 #include "Util.h"
@@ -16,7 +16,7 @@
 #define DRAW_MODE_LINE DrawMode::LINES
 #define DRAW_MODE_TRIANGLES DrawMode::TRIANGLES
 
-class Renderer : public BaseOpenGLRenderer {
+class Renderer : public BaseRenderer {
 
 	Game* const game;
 

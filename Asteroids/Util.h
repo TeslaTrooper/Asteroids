@@ -8,6 +8,9 @@
 
 
 #define VERTEX_COMP_SIZE 2
+
+#define WIN_POS_X 50
+#define WIN_POS_Y 100
 #define WIN_WIDTH 900
 #define WIN_HEIGHT 600
 
